@@ -1,0 +1,132 @@
+\documentclass[12pt,oneside]{report}
+
+% Basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{
+  a4paper,
+  left=30mm,
+  right=30mm,
+  top=30mm,
+  bottom=30mm
+}
+
+\title{Thesis Title: \\ Attack on CTF RSA-with-root-oracle}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This short note describes the exploitation of a server which leaks random square roots modulo an RSA modulus \(n=pq\). Repeatedly querying the oracle for roots of a fixed quadratic residue reveals all four square roots; from those roots one can recover \(n\), factor it, and then compute a valid RSA signature for a provided message \(m\).
+\end{abstract}
+
+\chapter*{Attack overview}
+\label{ch:overview}
+
+\section*{Setup and oracle}
+The server selects primes \(p,q\) with
+\[
+p\equiv q \equiv 3 \pmod 4,
+\qquad n = p q,
+\qquad e = 65537.
+\]
+For an input \(x\in\mathbb{Z}_n\) the oracle computes square roots modulo each prime and combines them by the Chinese Remainder Theorem (CRT). Concretely, let
+\[
+r_p \equiv x^{(p+1)/4} \pmod p,\qquad r_q \equiv x^{(q+1)/4} \pmod q,
+\]
+which are square roots of \(x\) modulo \(p\) and \(q\) respectively (when \(x\) is a quadratic residue). The oracle picks independent signs \(a,b\in\{\pm 1\}\) and returns the CRT recombination
+\[
+r = a\,r_p\cdot A + b\,r_q\cdot B \pmod n,
+\]
+where we define the CRT basis elements
+\[
+A \equiv q\cdot (q^{-1}\bmod p),\qquad B \equiv p\cdot (p^{-1}\bmod q),
+\]
+so that
+\[
+A \equiv 1 \pmod p,\quad A \equiv 0 \pmod q,\qquad
+B \equiv 0 \pmod p,\quad B \equiv 1 \pmod q.
+\]
+
+Thus the oracle's output is one of the four values
+\[
+R = \big\{ \; a\,r_p A + b\,r_q B \pmod n \;:\; a,b\in\{\pm1\}\; \big\}.
+\]
+
+\section*{Recovering \(n\) and factoring}
+There are four distinct roots in \(R\). Two important algebraic observations follow from the CRT decomposition \(r = a r_p A + b r_q B\).
+
+\subsection*{Complements sum to \(n\)}
+If we take the root with signs \((a,b)\) and the root with signs \((-a,-b)\), then their sum is
+\[
+r_{a,b} + r_{-a,-b}
+= (a r_p A + b r_q B) + (-a r_p A - b r_q B)
+\equiv 0 \pmod n.
+\]
+In integer representatives between \(0\) and \(n-1\), that means those two roots are complements:
+\[
+r_{-a,-b} \equiv n - r_{a,b}.
+\]
+Hence, after sorting the four roots (as integers in \([0,n-1]\)), the smallest and the largest will be such a complementary pair and satisfy
+\[
+\boxed{n \;=\; r_{\min} + r_{\max}.}
+\]
+
+This is why the solver can compute \(n\) simply as `roots[-1] + roots[0]`.
+
+\subsection*{Extracting a prime via a gcd}
+Consider two roots that share the same sign for the \(p\)-component but differ in sign for the \(q\)-component:
+\[
+r_{a,b} = a r_p A + b r_q B,\qquad
+r_{a,-b} = a r_p A - b r_q B.
+\]
+Their difference is
+\[
+r_{a,b} - r_{a,-b} = 2 b\, r_q B.
+\]
+Because \(B\equiv 0\pmod p\) and \(B\equiv 1\pmod q\), we have
+\[
+r_{a,b} - r_{a,-b} \equiv 0 \pmod p,
+\qquad r_{a,b} - r_{a,-b} \not\equiv 0 \pmod q
+\]
+(generically), so the integer \((r_{a,b}-r_{a,-b})\) is a nontrivial multiple of \(p\) but not of \(q\). Therefore
+\[
+\gcd\big(r_{a,b}-r_{a,-b},\, n\big) = p.
+\]
+In practice we collect the four roots, choose an appropriate pair (the exploit sorts roots and takes a neighboring pair) and compute
+\[
+\boxed{p \;=\; \gcd(r_i - r_j,\; n).}
+\]
+Having found \(p\) we set \(q = n / p\).
+
+\section*{Forge the signature}
+Once \(p,q\) are known we compute
+\[
+\varphi(n) = (p-1)(q-1),
+\qquad d \equiv e^{-1} \pmod{\varphi(n)}.
+\]
+Given the challenge's printed value \(m\) the RSA signature is forged as
+\[
+\boxed{s \equiv m^d \pmod n.}
+\]
+Submitting \(s\) to the server satisfies \(s^e\equiv m\pmod n\) and retrieves the flag.
+
+\section*{Summary of steps used in the exploit}
+\begin{enumerate}
+  \item Repeatedly query the oracle with a fixed quadratic residue (the solver uses \(x=4\)) to collect several of the four square roots.
+  \item From the four roots compute \(n\) as the sum of the smallest and largest root.
+  \item Use a difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover one prime \(p\) (the other is \(q=n/p\)).
+  \item Compute \(d = e^{-1}\pmod{\varphi(n)}\) and then \(s=m^d\bmod n\).
+\end{enumerate}
+
+\bigskip
+\noindent\textbf{Notes.} In implementation you must collect distinct roots (the oracle returns them with random \(\pm\) choices) and ensure you parsed the server's printed \(m\) before forming the signature.
+
+\end{document}
