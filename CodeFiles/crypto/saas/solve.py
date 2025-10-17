@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from pwn import remote
 from math import gcd
 
