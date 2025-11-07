@@ -1,34 +1,168 @@
-\documentclass[12pt,oneside]{report}
+\documentclass[onecolumn,10pt]{article}
 
-% Basic packages
-\usepackage[utf8]{inputenc}
+% -----------------------
+% Fonts & encoding
+% -----------------------
+\usepackage[utf8]{inputenc} % ok for pdfLaTeX
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{geometry}
-\usepackage{hyperref}
-\usepackage{microtype}
+\usepackage{lmodern}        % fallback scalable fonts
+% If you prefer a Times-like document, use newtx (uncomment next two lines)
+\usepackage{newtxtext,newtxmath}
 
-\geometry{
-  a4paper,
-  left=30mm,
-  right=30mm,
-  top=30mm,
-  bottom=30mm
+% -----------------------
+% Layout & microtype
+% -----------------------
+\usepackage[margin=1in,top=0.9in,bottom=1in,left=0.9in,right=0.9in]{geometry} % single canonical geometry call
+\usepackage{microtype}
+\sloppy                              % tolerate a bit more raggedness to avoid overfull hboxes
+\setlength\emergencystretch{2em}     % help LaTeX avoid overfull lines
+
+% -----------------------
+% Math, symbols, and theorem tools
+% -----------------------
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}  % loads amsmath extras
+
+% -----------------------
+% Graphics, floats & captions
+% -----------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{caption}
+
+% -----------------------
+% Lists, spacing, titles
+% -----------------------
+\usepackage{enumitem}
+\setlist{itemsep=0.3em, topsep=0.5em}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% -----------------------
+% Code listings
+% -----------------------
+\usepackage{listings}
+\usepackage{xcolor}
+\lstdefinestyle{mypython}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=single
 }
 
-\title{Thesis Title: \\ Attack on CTF RSA-with-root-oracle}
-\author{Your Name}
+% -----------------------
+% Spacing, title & header
+% -----------------------
+\usepackage{setspace}
+\usepackage{parskip}  % better paragraph spacing than manual \vskip
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{abstract}
+
+\lstdefinestyle{mypython}{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  showstringspaces=false,
+  breaklines=true,
+}
+
+% -----------------------
+% Spacing, title & header
+% -----------------------
+\usepackage{setspace}
+\usepackage{parskip}  % better paragraph spacing than manual \vskip
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{abstract}
+
+% -----------------------
+% Hyperlinks (load near end)
+% -----------------------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  hidelinks=false,
+  pdfauthor={Sebastian Newberry},
+  pdftitle={Solving CTF Cryptography Problems with LLMs}
+}
+
+% ---------- Geometry ----------
+\geometry{
+  top=0.9in,
+  bottom=1in,
+  left=0.9in,
+  right=0.9in
+}
+
+% ---------- Title Customization ----------
+\pretitle{\begin{center}\Large\bfseries\rule{\linewidth}{0.8pt}\\[0.5em]}
+\posttitle{\\[0.5em]\rule{\linewidth}{0.8pt}\end{center}}
+\preauthor{\begin{center}\normalsize}
+\postauthor{\end{center}}
+\predate{\begin{center}\small}
+\postdate{\end{center}}
+
+\title{Thesis Title: \\ Solving CTF Cryptography Problems with LLMs}
+\author{Sebastian Newberry}
 \date{\today}
 
+% ---------- Section Formatting ----------
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\LARGE\bfseries\@title\par}\vskip0.5em
+    {\normalsize\@author\par}\vskip0.5em
+    {\small\@date\par}
+    \rule{\linewidth}{0.8pt}\par
+  \end{center}
+}
+\makeatother
+
 \begin{document}
+
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+
 \maketitle
 
 \begin{abstract}
-This short note describes the exploitation of a server which leaks random square roots modulo an RSA modulus \(n=pq\). Repeatedly querying the oracle for roots of a fixed quadratic residue reveals all four square roots; from those roots one can recover \(n\), factor it, and then compute a valid RSA signature for a provided message \(m\).
+  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally retain an edge. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2, Qwen) often match or beat peers in coding and web-agent tasks (e.g., LiveCodeBench, SWE-bench Verified, BrowseComp), especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/code, GLM-4.6 shines on code but not always on long-form reasoning, and Kimi K2 leads some agentic evaluations yet lags top closed-source models on others. These disparities highlight how architecture (dense vs. MoE), alignment strategy, tool-use policies, and test-time compute budget shape results—and why single “leaderboards” can mask important modality- and task-specific trade-offs. In this report, I will be focusing on testing these LLMs in trying to solve complex cybersecurity challenges. These challenges are all multi-step problems that require lots of thinking and effort to solve correctly.
 \end{abstract}
 
-\chapter*{Attack overview}
-\label{ch:overview}
+\section*{Purpose}
+Purpose: Companies today are turning to automated solutions like large language models to penetration test their infrastructure. 
+
+\vspace{1em}
+\begin{center}
+  {\Huge\bfseries SmileyCTF 2025 -- SaaS (Cryptography)}\\[0.25em]
+  {\large\textit{Difficulty: Easy}}
+  \vspace{0.5em}
+\end{center}
+\vspace{1em}
+
+
 
 \section*{Setup and oracle}
 The server selects primes \(p,q\) with
@@ -60,52 +194,99 @@ Thus the oracle's output is one of the four values
 R = \big\{ \; a\,r_p A + b\,r_q B \pmod n \;:\; a,b\in\{\pm1\}\; \big\}.
 \]
 
-\section*{Recovering \(n\) and factoring}
-There are four distinct roots in \(R\). Two important algebraic observations follow from the CRT decomposition \(r = a r_p A + b r_q B\).
+\section*{Square roots modulo $n$ and factor recovery}
 
-\subsection*{Complements sum to \(n\)}
-If we take the root with signs \((a,b)\) and the root with signs \((-a,-b)\), then their sum is
+Let $p$ and $q$ be distinct primes with $p\equiv q \equiv 3 \pmod 4$, and let $n = pq$. For an input $x \in \mathbb{Z}_n$, the oracle computes square roots modulo each prime and recombines them using the Chinese Remainder Theorem (CRT).
+
+\subsection*{Square roots modulo a prime}
+
+Let $p$ be an odd prime with $p\equiv 3 \pmod 4$. If $x$ is a quadratic residue modulo $p$ (and $x\not\equiv 0 \pmod p$), Euler's criterion gives
 \[
-r_{a,b} + r_{-a,-b}
-= (a r_p A + b r_q B) + (-a r_p A - b r_q B)
-\equiv 0 \pmod n.
+x^{\frac{p-1}{2}} \equiv 1 \pmod p.
 \]
-In integer representatives between \(0\) and \(n-1\), that means those two roots are complements:
+Consider
+\[
+\left(x^{\frac{p+1}{4}}\right)^2 = x^{\frac{p+1}{2}} = x \cdot x^{\frac{p-1}{2}} \equiv x \cdot 1 \equiv x \pmod p,
+\]
+so \(x^{(p+1)/4}\) is indeed a square root of $x$ modulo $p$:
+\[
+\boxed{\left(x^{(p+1)/4}\right)^2 \equiv x \pmod p}.
+\]
+If $x$ is not a quadratic residue modulo $p$, the same computation yields
+\[
+\left(x^{(p+1)/4}\right)^2 \equiv -x \pmod p,
+\]
+Thus in all non-degenerate cases the value $r_p$ produced by the local exponentiation satisfies
+\[
+r_p^2 \equiv \pm x \pmod p,
+\]
+and similarly $r_q^2\equiv\pm x\pmod q$.
+
+\subsection*{CRT recombination of square roots modulo $n$}
+
+Let
+\[
+r_p \equiv x^{(p+1)/4} \pmod p,\qquad r_q \equiv x^{(q+1)/4} \pmod q,
+\]
+and define the CRT basis elements
+\[
+A \equiv q \cdot (q^{-1} \bmod p),\qquad B \equiv p \cdot (p^{-1} \bmod q),
+\]
+so that
+\[
+A \equiv 1 \pmod p, \; A \equiv 0 \pmod q, \quad
+B \equiv 0 \pmod p, \; B \equiv 1 \pmod q.
+\]
+For independent signs $a,b \in \{\pm 1\}$, the four CRT recombinations are
+\[
+r_{a,b} \equiv a r_p A + b r_q B \pmod n.
+\]
+Reducing modulo $p$ and $q$ shows that each $r_{a,b}$ is a square root of $x$ modulo $n$:
+\[
+r_{a,b}^2 \equiv r_p^2 \equiv x \pmod p, \qquad r_{a,b}^2 \equiv r_q^2 \equiv x \pmod q
+\quad \implies \quad r_{a,b}^2 \equiv x \pmod n.
+\]
+
+\subsection*{Recovering $n$ from complementary roots}
+
+If two roots correspond to opposite signs, say $(a,b)$ and $(-a,-b)$, then
+\[
+r_{a,b} + r_{-a,-b} \equiv 0 \pmod n.
+\]
+Taking integer representatives in $[0,n-1]$, this means
 \[
 r_{-a,-b} \equiv n - r_{a,b}.
 \]
-Hence, after sorting the four roots (as integers in \([0,n-1]\)), the smallest and the largest will be such a complementary pair and satisfy
+Hence, after sorting the four integer roots, the sum of the smallest and largest root recovers $n$:
 \[
-\boxed{n \;=\; r_{\min} + r_{\max}.}
+\boxed{n = r_{\min} + r_{\max}}.
 \]
 
-This is why the solver can compute \(n\) simply as `roots[-1] + roots[0]`.
+\subsection*{Extracting a prime via a GCD}
 
-\subsection*{Extracting a prime via a gcd}
-Consider two roots that share the same sign for the \(p\)-component but differ in sign for the \(q\)-component:
+Different sign choices produce distinct roots. Consider a pair differing only in the $q$-component:
 \[
 r_{a,b} = a r_p A + b r_q B,\qquad
 r_{a,-b} = a r_p A - b r_q B.
 \]
 Their difference is
 \[
-r_{a,b} - r_{a,-b} = 2 b\, r_q B.
+r_{a,b}-r_{a,-b} = 2 b\, r_q B.
 \]
-Because \(B\equiv 0\pmod p\) and \(B\equiv 1\pmod q\), we have
+Reducing this difference modulo the primes gives the two congruences
 \[
-r_{a,b} - r_{a,-b} \equiv 0 \pmod p,
-\qquad r_{a,b} - r_{a,-b} \not\equiv 0 \pmod q
+r_{a,b}-r_{a,-b} \equiv 0 \pmod p,
+\qquad
+r_{a,b}-r_{a,-b} \equiv 2 b\, r_q \pmod q.
 \]
-(generically), so the integer \((r_{a,b}-r_{a,-b})\) is a nontrivial multiple of \(p\) but not of \(q\). Therefore
+Thus the difference is divisible by $p$ and congruent to $2b r_q$ modulo $q$. Therefore the greatest common divisor yields the prime factor:
 \[
-\gcd\big(r_{a,b}-r_{a,-b},\, n\big) = p.
+\boxed{\gcd(r_{a,b}-r_{a,-b},\, n) = p.}
 \]
-In practice we collect the four roots, choose an appropriate pair (the exploit sorts roots and takes a neighboring pair) and compute
+Symmetrically, taking two roots that differ only in the $p$-component reveals $q$. In practice one collects the four CRT roots, picks an appropriate pair, and computes
 \[
-\boxed{p \;=\; \gcd(r_i - r_j,\; n).}
+p = \gcd(r_i - r_j,\, n), \qquad q = n/p.
 \]
-Having found \(p\) we set \(q = n / p\).
-
 \section*{Forge the signature}
 Once \(p,q\) are known we compute
 \[
@@ -125,8 +306,4 @@ Submitting \(s\) to the server satisfies \(s^e\equiv m\pmod n\) and retrieves th
   \item Use a difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover one prime \(p\) (the other is \(q=n/p\)).
   \item Compute \(d = e^{-1}\pmod{\varphi(n)}\) and then \(s=m^d\bmod n\).
 \end{enumerate}
-
-\bigskip
-\noindent\textbf{Notes.} In implementation you must collect distinct roots (the oracle returns them with random \(\pm\) choices) and ensure you parsed the server's printed \(m\) before forming the signature.
-
 \end{document}
