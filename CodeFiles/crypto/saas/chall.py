@@ -15,7 +15,7 @@ f = lambda x: ((choice([-1,1]) * pow(x, (p + 1) // 4, p)) * pow(q, -1, p) * q + 
 
 while True:
     try:
-        l = int(input(">>> ")) % n
+        l = int(input(">>> @")) % n
         print(f(l))
     except:
         break
