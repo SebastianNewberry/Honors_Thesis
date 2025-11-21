@@ -3074,6 +3074,7 @@
     <bcf:citekey order="2" intorder="1">anthropic_consumer_terms</bcf:citekey>
     <bcf:citekey order="3" intorder="1">chatgpt_suicide_lawsuit</bcf:citekey>
     <bcf:citekey order="4" intorder="1">wired_deepseek_censorship</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">noels_llm_censorship</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">

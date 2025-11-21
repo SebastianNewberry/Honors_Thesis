@@ -31,6 +31,7 @@
 \usepackage{wrapfig}
 \usepackage{booktabs}
 \usepackage{caption}
+\usepackage{subcaption}
 
 % -----------------------
 % Lists, spacing, titles
@@ -107,7 +108,7 @@
   backend=biber,
   style=apa,
   url=true,
-  doi=false,
+  doi=true,
   isbn=false
 ]{biblatex}
 
@@ -129,7 +130,7 @@
 \predate{\begin{center}\small}
 \postdate{\end{center}}
 
-\title{Solving CTF Cryptography Problems with LLMs}
+\title{Can Open-Source Large Language Models Replace Proprietary Closed-Source Models? An Empirical Study of CTF Problem-Solving Accuracy}
 \author{Sebastian Newberry}
 \date{\today}
 
@@ -157,10 +158,10 @@
 \maketitle
 
 \begin{abstract}
-  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally retain an edge. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2, Qwen) often match or beat peers in coding and web-agent tasks (e.g., LiveCodeBench, SWE-bench Verified, BrowseComp), especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 shines on code but not always on long-form reasoning, and Kimi K2 leads some agentic evaluations yet lags top closed-source models on others. These disparities highlight how architecture (dense vs. MoE), alignment strategy, tool-use policies, and test-time compute budget shape results—and why single “leaderboards” can mask important modality- and task-specific trade-offs. In this report, I will be focusing on testing these LLMs in trying to solve complex cybersecurity challenges. These challenges are all multi-step problems that require lots of thinking and effort to solve correctly. Measuring the ability for these LLMs to solve cybersecurity challenges presents a unique trial for them to really apply mathematic and programming knowledge to the real world.
+  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally retain an edge. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) often can match peers in coding and web-agent tasks (e.g. SWE-bench Verified), especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 shines on code but not always on long-form reasoning, and Kimi K2 leads some agentic evaluations yet lags top closed-source models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity issues. In order to do this, CTF challenges will be used in an attempt to emulate a real cyber environment where a company could decide to use an LLM. These challenges are all multi-step problems that require lots of thinking and effort to solve correctly. Measuring the ability for these LLMs to solve cybersecurity challenges presents a unique trial for them to apply mathematic and programming knowledge to the real world.
 \end{abstract}
 
-\section*{Introduction}
+\section{Introduction}
 Companies today are turning to automated solutions like large language models to penetration test their infrastructure. Closed-source models like OpenAI's GPT, Anthropic's Clauda, and aAI's Grok offer strong performance, but also offer drawbacks in terms of different aspects of the CIA triad that are vital to cybersecurity. the CIA triad stands for confidentiality, integrity, and availability. Each aspect of this triad is challenged in some way when a company decides to rely on a commercial LLM over an open-source LLM that is hosted on local infrastructure.
 
 \subsection*{CIA Triad}
@@ -191,14 +192,56 @@ Because of the risk of such outcomes, model responses are restricted, flagged fo
 This censorship concern has been shown in the past with DeepSeek censoring political topics that speak negatively about the Chinese government or CCP. Although this is true, since DeepSeek is open-source, it can be fine-tuned and adjusted by hobbyists and large providers to remove some of this bias and censorship from the model.
 
 According to Wired, "Hugging Face is also working on a project called Open R1 based on DeepSeek’s model. This project aims to 'deliver a fully open-source framework,' Yakefu says. The fact that R1 has been released as an open-source model 'enables it to transcend its origins and be customized to meet diverse needs and values.'" \parencite{wired_deepseek_censorship}
-\paragraph{Availability}  
-Penetration tests are often run during maintenance windows or incident-response escalations that tolerate zero external dependencies.  Commercial LLM APIs, however, can be rate-limited, throttled, and occasionally taken offline for hours or days during regional outages or capacity rebalancing.  A red-team exercise that stalls because the cloud endpoint returns 503 errors is an availability failure that can have negative effects on a company's bottom line.  Hosting open source models on internal GPU clusters can ensure that spontaneous third-party outages don't affect a company's infrastructure.
 
-\section*{Literature Review}
+In this conference paper by Springer, the authors of this paper thoroughly studied the censorship of AI by classifying it into soft and hard censorship \parencite{noels_llm_censorship}:
+
+The authors of this conference paper conducted an experiment in order to determine how drastic censorship is in LLMs. The experiment takes a dataset of 300,000 political figures and the authors take steps to get the best results from LLMs on whether or not they choose to answer questions about the political figure. This experiment modeled testing different countries of origin for politicians against the amount of hard and soft censorship instances for different AI models. It also measured censorship results for different large language models based on the language that was used to prompt the model.
+
+According to the conference paper:
+
+\begin{quote}
+  The prompting strategy is simple: each LLM in each language is asked about each political figure "Tell me about [Person X]." Based on the subselections listed above, we retain 156,486 responses to such prompts in total, of which 8.8\% are marked as hallucinations (see Appendix A) and 3.3\% as refusals. Because of the open-ended nature of the prompts, refusals rates tend to be far lower than in experiments where LLMs are directly subjected to political questionnaire tests
+\end{quote}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{hard_vs_soft_censorship.png}
+  \caption{}
+  \label{fig:1}
+\end{figure}
+
+Figure 1 defines soft censorship into "omission of praise" which refers to censorship that refuses to give credit to someone for positive things, and "omission of allegation" which refers to refusing to critize someone for negative things. It defines hard censorship as refusing to answer questions at all by either giving another internet source to answer for it (canned refusal), generating a response telling the user that it can't respond (generated refusal), or refusing to respond at all by throwing an API error or returning no text (error refusal).
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{hard_censorship_stats.png}
+        \caption{hard censorship statistics}
+        \label{fig:2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{selective_omission.png}
+        \caption{censorship of different political figures on LLMs}
+        \label{fig:3}
+    \end{subfigure}
+
+    \caption{Censorship and political leaders in LLMs based on }
+    \label{fig:2_3}
+\end{figure}
+
+Figure 2 (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in Figure 2 (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In Figure (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship.
+\paragraph{Availability}  
+Penetration tests are often run during maintenance windows or incident-response escalations that tolerate zero external dependencies.  Commercial LLM APIs, however, can be rate-limited, throttled, and occasionally taken offline for hours or days during regional outages or capacity rebalancing.  A red-team exercise that stalls because of an availability failure that can have negative effects on a company's bottom line.  Hosting open source models on internal GPU clusters can ensure that spontaneous third-party outages don't affect a company's infrastructure.
+
+\section{Literature Review}
 
 Talk about LLM benchmarks in this section, HLE (Humanity's Last Exam), etc...
 
-\section*{Methods}
+\section{Methods}
 
 For my experimentation on whether open-source LLMs can effectively replace closed-source LLMs for solving company cybersecurity problems, I will be using external providers that give me access to models hosted on their platforms. All of the open source models I will be showcasing do have the capabilities of being ran locally.
 
@@ -214,29 +257,42 @@ To show the limits of compute, I will go through trying to run one of these mode
 
 
 
-\section*{Using External Providers}
+\subsection*{Using External Providers}
 
-\subsection*{Openrouter}
+\subsubsection*{Openrouter}
 
-\subsection*{Continue.dev}
+\subsubsection*{Continue.dev}
 
 Continue.dev is an open source VSCode extension and also offers a CLI to allow AI to interact with your filesystem. I will be using this tool to allow LLMs to read my CTF files, and have a consistent prompt to test all LLMs equally.
 
-This is an example of adding a folder to Continue.dev to allow it to view a ctf challenge:
+Continue.dev supports both open and closed source LLMs, and supports any OpenAI API compatible model to connect to it.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{saas.png}
-  \caption{Including all files to be passed to the AI inside of the challenge folder}
-  \label{fig:example}
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{vscode_extension.png}
+        \caption{Continue.dev VSCode Extension}
+        \label{fig:4}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{models.png}
+        \caption{Continue.dev Supported Models}
+        \label{fig:4}
+    \end{subfigure}
+
+    \caption{Continue.dev features}
+    \label{fig:4_5}
 \end{figure}
 
-\section*{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
+\subsection*{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
 
 
 
-\section*{Solution}
-\section*{Setup and oracle}
+\subsubsection*{Solution}
 The server selects primes \(p,q\) with
 \[
 p\equiv q \equiv 3 \pmod 4,
@@ -266,11 +322,11 @@ Thus the oracle's output is one of the four values
 R = \big\{ \; a\,r_p A + b\,r_q B \pmod n \;:\; a,b\in\{\pm1\}\; \big\}.
 \]
 
-\section*{Square roots modulo $n$ and factor recovery}
+\subsubsection*{Square roots modulo $n$ and factor recovery}
 
 Let $p$ and $q$ be distinct primes with $p\equiv q \equiv 3 \pmod 4$, and let $n = pq$. For an input $x \in \mathbb{Z}_n$, the oracle computes square roots modulo each prime and recombines them using the Chinese Remainder Theorem (CRT).
 
-\subsection*{Square roots modulo a prime}
+\subsubsection*{Square roots modulo a prime}
 
 Let $p$ be an odd prime with $p\equiv 3 \pmod 4$. If $x$ is a quadratic residue modulo $p$ (and $x\not\equiv 0 \pmod p$), Euler's criterion gives
 \[
@@ -280,13 +336,13 @@ Consider
 \[
 \left(x^{\frac{p+1}{4}}\right)^2 = x^{\frac{p+1}{2}} = x \cdot x^{\frac{p-1}{2}} \equiv x \cdot 1 \equiv x \pmod p,
 \]
-so \(x^{(p+1)/4}\) is indeed a square root of $x$ modulo $p$:
+so \(x^{\frac{p+1}{4}}\) is indeed a square root of $x$ modulo $p$:
 \[
-\boxed{\left(x^{(p+1)/4}\right)^2 \equiv x \pmod p}.
+\boxed{\left(x^{\frac{p+1}{4}}\right)^2 \equiv x \pmod p}.
 \]
 If $x$ is not a quadratic residue modulo $p$, the same computation yields
 \[
-\left(x^{(p+1)/4}\right)^2 \equiv -x \pmod p,
+\left(x^{\frac{p+1}{4}}\right)^2 \equiv -x \pmod p,
 \]
 Thus in all non-degenerate cases the value $r_p$ produced by the local exponentiation satisfies
 \[
@@ -294,11 +350,11 @@ r_p^2 \equiv \pm x \pmod p,
 \]
 and similarly $r_q^2\equiv\pm x\pmod q$.
 
-\subsection*{CRT recombination of square roots modulo $n$}
+\subsubsection*{CRT recombination of square roots modulo $n$}
 
 Let
 \[
-r_p \equiv x^{(p+1)/4} \pmod p,\qquad r_q \equiv x^{(q+1)/4} \pmod q,
+r_p \equiv x^{\frac{p+1}{4}} \pmod p,\qquad r_q \equiv x^{\frac{q+1}{4}} \pmod q,
 \]
 and define the CRT basis elements
 \[
@@ -313,13 +369,8 @@ For independent signs $a,b \in \{\pm 1\}$, the four CRT recombinations are
 \[
 r_{a,b} \equiv a r_p A + b r_q B \pmod n.
 \]
-Reducing modulo $p$ and $q$ shows that each $r_{a,b}$ is a square root of $x$ modulo $n$:
-\[
-r_{a,b}^2 \equiv r_p^2 \equiv x \pmod p, \qquad r_{a,b}^2 \equiv r_q^2 \equiv x \pmod q
-\quad \implies \quad r_{a,b}^2 \equiv x \pmod n.
-\]
 
-\subsection*{Recovering $n$ from complementary roots}
+\subsubsection*{Recovering $n$ from complementary roots}
 
 If two roots correspond to opposite signs, say $(a,b)$ and $(-a,-b)$, then
 \[
@@ -334,7 +385,7 @@ Hence, after sorting the four integer roots, the sum of the smallest and largest
 \boxed{n = r_{\min} + r_{\max}}.
 \]
 
-\subsection*{Extracting a prime via a GCD}
+\subsubsection*{Extracting a prime via a GCD}
 
 Different sign choices produce distinct roots. Consider a pair differing only in the $q$-component:
 \[
@@ -359,7 +410,7 @@ Symmetrically, taking two roots that differ only in the $p$-component reveals $q
 \[
 p = \gcd(r_i - r_j,\, n), \qquad q = n/p.
 \]
-\section*{Forge the signature}
+\subsubsection*{Forge the signature}
 Once \(p,q\) are known we compute
 \[
 \varphi(n) = (p-1)(q-1),
@@ -371,7 +422,7 @@ Given the challenge's printed value \(m\) the RSA signature is forged as
 \]
 Submitting \(s\) to the server satisfies \(s^e\equiv m\pmod n\) and retrieves the flag.
 
-\section*{Summary of steps used in the exploit}
+\subsubsection*{Summary of steps used in the exploit}
 \begin{enumerate}
   \item Repeatedly query the oracle with a fixed number (this number does **NOT** have to be a quadratic residue. It can be a number that does not have a square root. the solver uses \(x=3\)) to collect several of the modular roots.
   \item From the four roots compute \(n\) as the sum of the smallest and largest root.
