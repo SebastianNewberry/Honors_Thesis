@@ -249,7 +249,83 @@ Penetration tests are often run during maintenance windows or incident-response 
 
 \section{Literature Review}
 
-Talk about LLM benchmarks in this section, HLE (Humanity's Last Exam), etc...
+\subsection{Benchmarks}
+
+To determine whether a new model represents an improvement, AI researchers rely on benchmarks. Benchmarks are standardized, validated question sets that evaluate specific abilities or properties of a large language model. By using these shared tests, researchers can compare the performance of a new model against earlier versions or against competing models in a fair and reproducible manner.
+
+\subsubsection{Gemini 3.0}
+
+In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The major benchmark it didn't outright beat was the SWE-bench verified benchmark.
+
+These are the results of the Gemini 3.0 benchmarks:
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{hard_censorship_stats.png}
+        \caption{hard censorship statistics}
+        \label{fig:2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{selective_omission.png}
+        \caption{censorship of different political figures on LLMs}
+        \label{fig:3}
+    \end{subfigure}
+
+    \caption{Censorship and political leaders in LLMs based on }
+    \label{fig:2_3}
+\end{figure}
+
+
+Some users of the model don't believe it is as good as it claims for some of these benchmarks. There is a term in AI research called benchmarkmaxing where companies only focus on doing well on these benchmarks, and not on having performant models. Some users think this could be the case for Gemini 3.0.
+
+\subsection{How AI Models Think}
+
+Large Language Models do not “think” in a human sense, but they do perform multi-step inference processes that can resemble reasoning. Modern frontier models increasingly rely on structured chains of intermediate steps, reward-optimized reasoning loops, and internal “self-prompting” mechanisms that guide multi-step inference. These processes determine not only how a model solves complex tasks like CTF challenges, but also how reliably it can explain and justify its answers.
+
+Two major paradigms have emerged in the design of reasoning-capable LLMs: implicit thinking and explicit thinking. Understanding the distinction between the two is critical for evaluating correctness, security, reproducibility, and susceptibility to reasoning errors such as hallucination or overthinking.
+
+\subsubsection{Implicit vs Explicit Thinking}
+
+In the following article, the tradeoff in explicit vs implicit thinking model,
+
+According to DigAI Lab,
+
+"Implicit reasoning inherently suppresses intermediate outputs, rendering the underlying computation process opaque. This lack of visibility prevents us from knowing whether the model is performing genuine multi-step reasoning or merely exploiting memorized knowledge and spurious correlations."\parencite{li2025implicitreasoninglargelanguage}
+
+Overall, Explicit reasoning generally provides more fine-grained logical structure, which can reduce hallucination in multi-step tasks by forcing the model to commit to intermediate steps. Implicit reasoning, by contrast, relies on latent internal states, which can make errors harder to detect and can lead to confident but incorrect conclusions. In the methods of this paper, both explicit and implicit thinking models will be tested. Explicit-thinking models may be particularly valuable for cybersecurity organizations because they provide detailed, step-by-step reasoning traces. These logs allow analysts to audit how the model arrived at its conclusions, verify that each step is logically sound, and detect any hallucinations or incorrect assumptions that may influence the final answer.
+
+In this paper, we will be testing a model that utilizes lots of explicit thinking (Kimi K2 Thinking) against a model that uses implicit thinking (Kimi K2 0905). Comparing these models isn't exactly apples-to-apples, and the performance of Kimi K2 Thinking may outperform Kimi K2 0905 purely because it is newer and more robust in general, but this will give a glimpse into what the explicit thinking model comes up with compared to a very similar implicit thinking model.
+
+The different thinking mechanisms along with the specific AI models used in this paper, are shown in the table below:
+
+\begin{table}[H]
+\centering
+\caption{Classification of LLMs by Reasoning Transparency}
+\begin{tabular}{llc}
+\toprule
+\textbf{Model} & \textbf{Thinking Type} \\
+\midrule
+GLM-4.6                & Implicit \\
+Kimi K2 Thinking       & Explicit \\
+DeepSeek R1            & Explicit \\
+Kimi K2 Instruct 0905  & Implicit \\
+\midrule
+GPT-5.1                & Implicit \\
+Claude Sonnet 4.5      & Implicit \\
+Grok 4.1               & Implicit \\
+Gemini 3.0 Pro Preview & Implicit \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Overthinking in AI Models}
+
+
 
 \section{Methods}
 
@@ -291,7 +367,7 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
         \centering
         \includegraphics[width=\linewidth]{models.png}
         \caption{Continue.dev Supported Models}
-        \label{fig:4}
+        \label{fig:5}
     \end{subfigure}
 
     \caption{Continue.dev features}
