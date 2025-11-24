@@ -267,11 +267,11 @@ To show the limits of compute, I will go through trying to run one of these mode
 
 
 
-\subsection*{Using External Providers}
+\subsection{Using External Providers}
 
-\subsubsection*{Openrouter}
+\subsubsection{Openrouter}
 
-\subsubsection*{Continue.dev}
+\subsubsection{Continue.dev}
 
 Continue.dev is an open source VSCode extension and also offers a CLI to allow AI to interact with your filesystem. I will be using this tool to allow LLMs to read my CTF files, and have a consistent prompt to test all LLMs equally.
 
@@ -298,11 +298,11 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
     \label{fig:4_5}
 \end{figure}
 
-\subsection*{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
+\subsection{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
 
 
 
-\subsubsection*{Solution}
+\subsubsection{Solution}
 The server selects primes \(p,q\) with
 \[
 p\equiv q \equiv 3 \pmod 4,
@@ -332,11 +332,11 @@ Thus the oracle's output is one of the four values
 R = \big\{ \; a\,r_p A + b\,r_q B \pmod n \;:\; a,b\in\{\pm1\}\; \big\}.
 \]
 
-\subsubsection*{Square roots modulo $n$ and factor recovery}
+\subsubsection{Square roots modulo $n$ and factor recovery}
 
 Let $p$ and $q$ be distinct primes with $p\equiv q \equiv 3 \pmod 4$, and let $n = pq$. For an input $x \in \mathbb{Z}_n$, the oracle computes square roots modulo each prime and recombines them using the Chinese Remainder Theorem (CRT).
 
-\subsubsection*{Square roots modulo a prime}
+\subsubsection{Square roots modulo a prime}
 
 Let $p$ be an odd prime with $p\equiv 3 \pmod 4$. If $x$ is a quadratic residue modulo $p$ (and $x\not\equiv 0 \pmod p$), Euler's criterion gives
 \[
@@ -360,7 +360,7 @@ r_p^2 \equiv \pm x \pmod p,
 \]
 and similarly $r_q^2\equiv\pm x\pmod q$.
 
-\subsubsection*{CRT recombination of square roots modulo $n$}
+\subsubsection{CRT recombination of square roots modulo $n$}
 
 Let
 \[
@@ -380,7 +380,7 @@ For independent signs $a,b \in \{\pm 1\}$, the four CRT recombinations are
 r_{a,b} \equiv a r_p A + b r_q B \pmod n.
 \]
 
-\subsubsection*{Recovering $n$ from complementary roots}
+\subsubsection{Recovering $n$ from complementary roots}
 
 If two roots correspond to opposite signs, say $(a,b)$ and $(-a,-b)$, then
 \[
@@ -395,7 +395,7 @@ Hence, after sorting the four integer roots, the sum of the smallest and largest
 \boxed{n = r_{\min} + r_{\max}}.
 \]
 
-\subsubsection*{Extracting a prime via a GCD}
+\subsubsection{Extracting a prime via a GCD}
 
 Different sign choices produce distinct roots. Consider a pair differing only in the $q$-component:
 \[
@@ -420,7 +420,7 @@ Symmetrically, taking two roots that differ only in the $p$-component reveals $q
 \[
 p = \gcd(r_i - r_j,\, n), \qquad q = n/p.
 \]
-\subsubsection*{Forge the signature}
+\subsubsection{Forge the signature}
 Once \(p,q\) are known we compute
 \[
 \varphi(n) = (p-1)(q-1),
@@ -432,7 +432,7 @@ Given the challenge's printed value \(m\) the RSA signature is forged as
 \]
 Submitting \(s\) to the server satisfies \(s^e\equiv m\pmod n\) and retrieves the flag.
 
-\subsubsection*{Summary of steps used in the exploit}
+\subsubsection{Summary of steps used in the exploit}
 \begin{enumerate}
   \item Repeatedly query the oracle with a fixed number (this number does **NOT** have to be a quadratic residue. It can be a number that does not have a square root. the solver uses \(x=3\)) to collect several of the modular roots.
   \item From the four roots compute \(n\) as the sum of the smallest and largest root.
