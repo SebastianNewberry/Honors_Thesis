@@ -216,7 +216,7 @@ According to the conference paper:
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{hard_vs_soft_censorship.png}
-  \caption{}
+  \caption{Different types of hard and soft censorship}
   \label{fig:1}
 \end{figure}
 
@@ -239,7 +239,7 @@ Figure 1 defines soft censorship into "omission of praise" which refers to censo
         \label{fig:3}
     \end{subfigure}
 
-    \caption{Censorship and political leaders in LLMs based on }
+    \caption{Censorship and political leaders in LLMs based on prompting language and person's country of birth}
     \label{fig:2_3}
 \end{figure}
 
@@ -253,32 +253,21 @@ Penetration tests are often run during maintenance windows or incident-response 
 
 To determine whether a new model represents an improvement, AI researchers rely on benchmarks. Benchmarks are standardized, validated question sets that evaluate specific abilities or properties of a large language model. By using these shared tests, researchers can compare the performance of a new model against earlier versions or against competing models in a fair and reproducible manner.
 
+\subsubsection{MMLU}
+
+\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains.
 \subsubsection{Gemini 3.0}
 
-In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The major benchmark it didn't outright beat was the SWE-bench verified benchmark.
+In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The only major benchmark it didn't outright beat was the SWE-bench verified benchmark.
 
 These are the results of the Gemini 3.0 benchmarks:
 
 \begin{figure}[H]
     \centering
-
-    \begin{subfigure}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{hard_censorship_stats.png}
-        \caption{hard censorship statistics}
-        \label{fig:2}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{selective_omission.png}
-        \caption{censorship of different political figures on LLMs}
-        \label{fig:3}
-    \end{subfigure}
-
-    \caption{Censorship and political leaders in LLMs based on }
-    \label{fig:2_3}
-\end{figure}
+    \includegraphics[width=0.5\textwidth]{gemini_benchmarks.png}
+    \caption{Gemini 3.0 benchmark results}
+    \label{fig:gemini-benchmarks}
+\end{figure}\parencite{google_gemini3_2025}
 
 
 Some users of the model don't believe it is as good as it claims for some of these benchmarks. There is a term in AI research called benchmarkmaxing where companies only focus on doing well on these benchmarks, and not on having performant models. Some users think this could be the case for Gemini 3.0.
@@ -288,6 +277,19 @@ Some users of the model don't believe it is as good as it claims for some of the
 Large Language Models do not “think” in a human sense, but they do perform multi-step inference processes that can resemble reasoning. Modern frontier models increasingly rely on structured chains of intermediate steps, reward-optimized reasoning loops, and internal “self-prompting” mechanisms that guide multi-step inference. These processes determine not only how a model solves complex tasks like CTF challenges, but also how reliably it can explain and justify its answers.
 
 Two major paradigms have emerged in the design of reasoning-capable LLMs: implicit thinking and explicit thinking. Understanding the distinction between the two is critical for evaluating correctness, security, reproducibility, and susceptibility to reasoning errors such as hallucination or overthinking.
+
+Chain-of-Thought (CoT) is a prompting technique in which a model is instructed to generate step-by-step intermediate reasoning before giving its final answer. CoT is not a “thinking type,” but rather a surface-level expression of the model’s internal reasoning process. Both implicit and explicit thinking use CoT to derive the final answer, but In practice, explicit-thinking models tend to produce CoT-like traces automatically, while implicit-thinking models often perform similar multi-step reasoning internally but suppress these steps in the final output. Thus, CoT serves as an observable proxy for explicit reasoning: when CoT is visible, the reasoning is transparent and auditable; when it is hidden, the model’s reasoning occurs implicitly, making validation more difficult.
+
+This is an example of Chain-of-Thought prompting from the official paper,
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{chain_of_thought.png}
+    \caption{Chain of Thought Thinking Process}
+    \label{fig:gemini-benchmarks}
+\end{figure}
+
+In the image above, the first box of each prompting method is the prompt that was used for the AI. The box below it is response from the AI model. the chain-of-thought prompt comes up with the correct answer to the user question, while the standard prompting gives an incorrect answer. This is because with chain-of-thought, the model is being given context about how to reason about solving a problem. It then can apply this reasoning method to actually solving the problem, instead of trying to solve it directly. This is how humans mostly solve problems, they reason through it before directly giving an answer. Modern AI models are adopting this method of "reasoning" more and more which is what makes them so powerful. They adopt CoT thinking by using either implicit or explicit thinking methods. \parencite{cot_thinking_2022}
 
 \subsubsection{Implicit vs Explicit Thinking}
 
@@ -408,11 +410,11 @@ Thus the oracle's output is one of the four values
 R = \big\{ \; a\,r_p A + b\,r_q B \pmod n \;:\; a,b\in\{\pm1\}\; \big\}.
 \]
 
-\subsubsection{Square roots modulo $n$ and factor recovery}
+\subsubsection*{Square roots modulo $n$ and factor recovery}
 
 Let $p$ and $q$ be distinct primes with $p\equiv q \equiv 3 \pmod 4$, and let $n = pq$. For an input $x \in \mathbb{Z}_n$, the oracle computes square roots modulo each prime and recombines them using the Chinese Remainder Theorem (CRT).
 
-\subsubsection{Square roots modulo a prime}
+\subsubsection*{Square roots modulo a prime}
 
 Let $p$ be an odd prime with $p\equiv 3 \pmod 4$. If $x$ is a quadratic residue modulo $p$ (and $x\not\equiv 0 \pmod p$), Euler's criterion gives
 \[
@@ -436,7 +438,7 @@ r_p^2 \equiv \pm x \pmod p,
 \]
 and similarly $r_q^2\equiv\pm x\pmod q$.
 
-\subsubsection{CRT recombination of square roots modulo $n$}
+\subsubsection*{CRT recombination of square roots modulo $n$}
 
 Let
 \[
@@ -456,7 +458,7 @@ For independent signs $a,b \in \{\pm 1\}$, the four CRT recombinations are
 r_{a,b} \equiv a r_p A + b r_q B \pmod n.
 \]
 
-\subsubsection{Recovering $n$ from complementary roots}
+\subsubsection*{Recovering $n$ from complementary roots}
 
 If two roots correspond to opposite signs, say $(a,b)$ and $(-a,-b)$, then
 \[
@@ -471,7 +473,7 @@ Hence, after sorting the four integer roots, the sum of the smallest and largest
 \boxed{n = r_{\min} + r_{\max}}.
 \]
 
-\subsubsection{Extracting a prime via a GCD}
+\subsubsection*{Extracting a prime via a GCD}
 
 Different sign choices produce distinct roots. Consider a pair differing only in the $q$-component:
 \[
@@ -496,7 +498,7 @@ Symmetrically, taking two roots that differ only in the $p$-component reveals $q
 \[
 p = \gcd(r_i - r_j,\, n), \qquad q = n/p.
 \]
-\subsubsection{Forge the signature}
+\subsubsection*{Forge the signature}
 Once \(p,q\) are known we compute
 \[
 \varphi(n) = (p-1)(q-1),
@@ -510,7 +512,7 @@ Submitting \(s\) to the server satisfies \(s^e\equiv m\pmod n\) and retrieves th
 
 \subsubsection{Summary of steps used in the exploit}
 \begin{enumerate}
-  \item Repeatedly query the oracle with a fixed number (this number does **NOT** have to be a quadratic residue. It can be a number that does not have a square root. the solver uses \(x=3\)) to collect several of the modular roots.
+  \item Repeatedly query the oracle with a fixed number (this number does \textbf{NOT} have to be a quadratic residue. It can be a number that does not have a square root. the solver uses \(x=3\)) to collect several of the modular roots.
   \item From the four roots compute \(n\) as the sum of the smallest and largest root.
   \item Use a difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover one prime \(p\) (the other is \(q=n/p\)).
   \item Compute \(d = e^{-1}\pmod{\varphi(n)}\) and then \(s=m^d\bmod n\).
