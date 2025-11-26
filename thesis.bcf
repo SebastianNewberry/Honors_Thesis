@@ -3077,9 +3077,11 @@
     <bcf:citekey order="5" intorder="1">noels_llm_censorship</bcf:citekey>
     <bcf:citekey order="6" intorder="1">hendrycks2021measuringmassivemultitasklanguage</bcf:citekey>
     <bcf:citekey order="7" intorder="1">hendrycks2021measuringmassivemultitasklanguage</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">google_gemini3_2025</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">cot_thinking_2022</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">li2025implicitreasoninglargelanguage</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">hendrycks2021measuringmassivemultitasklanguage</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">hendrycks2021measuringmassivemultitasklanguage</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">google_gemini3_2025</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">cot_thinking_2022</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">li2025implicitreasoninglargelanguage</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">

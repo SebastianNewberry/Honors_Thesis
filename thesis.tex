@@ -175,7 +175,7 @@
 \clearpage
 
 \section{Introduction}
-Companies today are turning to automated solutions like large language models to penetration test their infrastructure. Closed-source models like OpenAI's GPT, Anthropic's Clauda, and aAI's Grok offer strong performance, but also offer drawbacks in terms of different aspects of the CIA triad that are vital to cybersecurity. the CIA triad stands for confidentiality, integrity, and availability. Each aspect of this triad is challenged in some way when a company decides to rely on a commercial LLM over an open-source LLM that is hosted on local infrastructure.
+Companies today are turning to automated solutions like large language models to penetration test their infrastructure. Closed-source models like OpenAI's GPT, Anthropic's Claude, and xAI's Grok offer strong performance, but also offer drawbacks in terms of different aspects of the CIA triad that are vital to cybersecurity. The CIA triad stands for confidentiality, integrity, and availability. Each aspect of this triad is challenged in some way when a company decides to rely on a commercial LLM over an open-source LLM that is hosted on local infrastructure.
 
 \subsection{CIA Triad}
 
@@ -198,7 +198,7 @@ According to the \textit{Anthropic terms of service}, \begin{quote}We may use Ma
 
 
 This snippet from the Anthropic terms of service shows that this company retains the right to use your data to train its proprietary models. Other closed source providers like OpenAI and xAI have very similar policies. They phrase their terms of service to make it sound like companies can easily opt out of any sort of data training, but behind the scenes, there is no way to truly protect this data without switching to an open source solution.
-\subsubsection{Integrity}  
+\subsubsection{Integrity}
 Large language model providers face intense pressure to moderate and censor model outputs when user interactions trigger sensitive issues. For instance, in November 2025, a lawsuit alleged that ChatGPT encouraged a user to commit suicide rather than redirect him to proper care, spurring public backlash and regulatory scrutiny \parencite{chatgpt_suicide_lawsuit}.
 
 Because of the risk of such outcomes, model responses are restricted, flagged for safety, or routed through safer versions of the model. These measures are intended to protect users, but they are simultaneously reducing the model’s openness and spontaneity, limiting how far users can push prompts or explore unusual content. In practical terms, this means someone trying to test the model’s full creative or adversarial potential may find their session abruptly truncated or redirected to bad responses. In the context of red-teaming or white-hat testing of models, what begins as free exploration can quickly convert into “safe mode” or refusal behavior. Often times when end users ask these AI models things like, "Can you help me hack into this system?" The AI will refuse because it is unethical. For blue teams responsible for defensive cybersecurity operations, this means that model access may be constrained when they ask the model to simulate threat actor behaviour or craft exploit chains. The system may refuse or degrade answers, citing policy violation. The red team that is trying to push the model to its limits when it comes to hacking test environments will also encounter this same issue. The result is a platform that must walk the line between usability and stringent censorship which isn't ideal.
@@ -414,7 +414,7 @@ p\equiv q \equiv 3 \pmod 4,
 \]
 For an input \(x\in\mathbb{Z}_n\) the oracle computes square roots modulo each prime and combines them by the Chinese Remainder Theorem (CRT). Concretely, let
 \[
-r_p \equiv x^{(p+1)/4} \pmod p,\qquad r_q \equiv x^{(q+1)/4} \pmod q,
+r_p \equiv x^{\frac{p+1}{4}} \pmod p,\qquad r_q \equiv x^{\frac{q+1}{4}} \pmod q,
 \]
 which are square roots of \(x\) modulo \(p\) and \(q\) respectively (when \(x\) is a quadratic residue). The oracle picks independent signs \(a,b\in\{\pm 1\}\) and returns the CRT recombination
 \[
