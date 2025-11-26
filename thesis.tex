@@ -90,6 +90,8 @@
 \usepackage{fancyhdr}
 \usepackage{titling}
 \usepackage{abstract}
+\usepackage{csquotes}
+
 
 % -----------------------
 % Hyperlinks (load near end)
@@ -161,7 +163,9 @@
 
 
 \begin{abstract}
-  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally retain an edge. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) often can match peers in coding and web-agent tasks (e.g. SWE-bench Verified), especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 shines on code but not always on long-form reasoning, and Kimi K2 leads some agentic evaluations yet lags top closed-source models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity issues. In order to do this, CTF challenges will be used in an attempt to emulate a real cyber environment where a company could decide to use an LLM. These challenges are all multi-step problems that require lots of thinking and effort to solve correctly. Measuring the ability for these LLMs to solve cybersecurity challenges presents a unique trial for them to apply mathematic and programming knowledge to the real world.
+  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally retain an edge. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) often can match peers in coding and web-agent tasks (e.g. SWE-bench Verified), especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 shines on code but not always on long-form reasoning, and Kimi K2 leads some agentic evaluations yet lags top closed-source models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity issues. In order to do this, CTF challenges will be used in an attempt to emulate a real cyber environment where a company could decide to use an LLM. A CTF (capture the flag) challenge is a problem where users are tasked to exploit vulnerabilities in a practice cybersecurity environment. Once the user is successful in exploiting the practice environment, they receive a string of text which is the flag. Many times these challenges can have multiple solutions, but they almost all require complex thinking and problem-solving abilities to work through them. These CTF challenges are all multi-step problems that require lots of thinking and effort to solve correctly. Measuring the ability for LLMs to solve cybersecurity challenges presents a unique trial for them to apply mathematic and programming knowledge to the real world.
+  
+  As for the specific challenges being used, I took some challenges from the Wayne State University CTF in 2025. This was a CTF ran in 2025 where myself and others got together to create a CTF competition where people around the world could form teams and play together. All of the challenges from the Wayne State University CTF were challenges I made. In this paper, I will also compare the general performance of these LLMs to the performance of actual people trying to solve my challenges, in order to find out whether LLMs can be used to automate cybersecurity tasks effectively. Additional challenges will also be showcased from other CTFs to show the difference between my own CTF and another CTF when it comes to the ability for an LLM to solve these types of problems.
 \end{abstract}
 
 \clearpage
@@ -253,9 +257,30 @@ Penetration tests are often run during maintenance windows or incident-response 
 
 To determine whether a new model represents an improvement, AI researchers rely on benchmarks. Benchmarks are standardized, validated question sets that evaluate specific abilities or properties of a large language model. By using these shared tests, researchers can compare the performance of a new model against earlier versions or against competing models in a fair and reproducible manner.
 
-\subsubsection{MMLU}
+\subsubsection{MMLU, GPQA, HLE, and SWE Bench-Verified}
 
-\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains.
+\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark mostly consisted of multiple choice questions that mostly only required knowledge to solve and not reasoning. Figure 4 shows some examples of what a question coming from the MMLU benchmark would look like:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{MMLU_Sample_Questions.png}
+    \caption{Examples from the Conceptual Physics and College Mathematics STEM tasks. \parencite{hendrycks2021measuringmassivemultitasklanguage}}
+    \label{fig:gemini-benchmarks}
+\end{figure}
+
+According to the MMLU-PRO paper, \enquote{The questions in MMLU are mostly knowledge-driven without requiring too much reasoning, especially in the STEM subjects, which reduces its difficulty. In fact, most models achieve better performance with \enquote{direct} answer prediction without chain-of-thought}
+
+The following benchmarks are provided by the MMLU-PRO paper:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{MMLU_Sample_Questions.png}
+    \caption{MMLU-PRO benchmark results for open and closed source models \parencite{hendrycks2021measuringmassivemultitasklanguage}}
+    \label{fig:gemini-benchmarks}
+\end{figure}
+
+In these benchmarks, it is obvious that the top 7 closed-source models were measured to be more perfomant than the top 7 open source models based on overall percentage scores for number of questions answered correctly from the MMLU-PRO question bank. This is a significant finding, but I believe that it isn't as applicable to the competition between open and closed source models today. This paper was made on November 6th, 2024. Since then a multitude of newer models have come out.
+
 \subsubsection{Gemini 3.0}
 
 In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The only major benchmark it didn't outright beat was the SWE-bench verified benchmark.
@@ -312,7 +337,7 @@ The different thinking mechanisms along with the specific AI models used in this
 \toprule
 \textbf{Model} & \textbf{Thinking Type} \\
 \midrule
-GLM-4.6                & Implicit \\
+GLM-4.6                & Explicit \\
 Kimi K2 Thinking       & Explicit \\
 DeepSeek R1            & Explicit \\
 Kimi K2 Instruct 0905  & Implicit \\
