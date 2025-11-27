@@ -10,6 +10,7 @@
 *.synctex.gz
 *.bbl
 *.blg
+*.roo
 
 # VS Code LaTeX Workshop
 .vscode/

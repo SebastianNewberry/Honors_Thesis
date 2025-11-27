@@ -214,7 +214,7 @@ The authors of this conference paper conducted an experiment in order to determi
 According to the conference paper:
 
 \begin{quote}
-  The prompting strategy is simple: each LLM in each language is asked about each political figure "Tell me about [Person X]." Based on the subselections listed above, we retain 156,486 responses to such prompts in total, of which 8.8\% are marked as hallucinations (see Appendix A) and 3.3\% as refusals. Because of the open-ended nature of the prompts, refusals rates tend to be far lower than in experiments where LLMs are directly subjected to political questionnaire tests
+  The prompting strategy is simple: each LLM in each language is asked about each political figure "Tell me about [Person X]." Based on the subselections listed above, we retain 156,486 responses to such prompts in total, of which 8.8\% are marked as hallucinations (see Appendix A) and 3.3\% as refusals. Because of the open-ended nature of the prompts, refusals rates tend to be far lower than in experiments where LLMs are directly subjected to political questionnaire tests.
 \end{quote}
 
 \begin{figure}[H]
@@ -239,7 +239,7 @@ Figure 1 defines soft censorship into "omission of praise" which refers to censo
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{selective_omission.png}
-        \caption{censorship of different political figures on LLMs}
+        \caption{soft censorship statistics}
         \label{fig:3}
     \end{subfigure}
 
@@ -247,7 +247,7 @@ Figure 1 defines soft censorship into "omission of praise" which refers to censo
     \label{fig:2_3}
 \end{figure}
 
-Figure 2 (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in Figure 2 (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In Figure (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship.
+Figure 2 (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in Figure 2 (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In Figure (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
 \subsubsection{Availability}  
 Penetration tests are often run during maintenance windows or incident-response escalations that tolerate zero external dependencies.  Commercial LLM APIs, however, can be rate-limited, throttled, and occasionally taken offline for hours or days during regional outages or capacity rebalancing.  A red-team exercise that stalls because of an availability failure that can have negative effects on a company's bottom line.  Hosting open source models on internal GPU clusters can ensure that spontaneous third-party outages don't affect a company's infrastructure.
 
@@ -259,7 +259,7 @@ To determine whether a new model represents an improvement, AI researchers rely 
 
 \subsubsection{MMLU, GPQA, HLE, and SWE Bench-Verified}
 
-\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark mostly consisted of multiple choice questions that mostly only required knowledge to solve and not reasoning. Figure 4 shows some examples of what a question coming from the MMLU benchmark would look like:
+\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark mostly consisted of multiple choice questions that mostly only required knowledge to solve and not reasoning. Figure 3 shows some examples of what a question coming from the MMLU benchmark looks like:
 
 \begin{figure}[H]
     \centering
@@ -280,6 +280,10 @@ The following benchmarks are provided by the MMLU-PRO paper:
 \end{figure}
 
 In these benchmarks, it is obvious that the top 7 closed-source models were measured to be more perfomant than the top 7 open source models based on overall percentage scores for number of questions answered correctly from the MMLU-PRO question bank. This is a significant finding, but I believe that it isn't as applicable to the competition between open and closed source models today. This paper was made on November 6th, 2024. Since then a multitude of newer models have come out.
+
+\textbf{GPQA ( Google-Proof Q&A Benchmark)} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree. Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
+
+According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in Figure 5).
 
 \subsubsection{Gemini 3.0}
 
@@ -351,8 +355,6 @@ Gemini 3.0 Pro Preview & Implicit \\
 \end{table}
 
 \subsubsection{Overthinking in AI Models}
-
-
 
 \section{Methods}
 
