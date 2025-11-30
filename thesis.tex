@@ -367,12 +367,18 @@ The results from the vulnerability and exploitation evaluation in this study are
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{cysec_eval_2.png}
-    \caption{Summary of LLM performance in non-compliance with requests to help with cyber attacks (left), and average model
-performance across 10 categories of cyberattack tactics, techniques, and procedures (right). \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
+    \includegraphics[width=0.9\textwidth]{exploit_security_concepts_cysec_eval_2.png}
+    \caption{Exploitation capability scores broken down by model and test category. \parencite{bhatt2024cyberseceval2widerangingcybersecurity}}
     \label{fig:CyberMetric-dataset}
 \end{figure}
 
+According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection ctf challenge, and also basic buffer overflow challenges. Additionally, the closed-source GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in this report. I am going to be testing newer, more robust open source models and one of the challenges I will be testing on will involve a sql injection vulnerability.
+
+
+\subsubsection{Cybench}
+
+
+\subsubsection{NYU Cyber Bench}
 \subsection{Gemini 3.0}
 
 In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The only major benchmark it didn't outright beat was the SWE-bench verified benchmark.
