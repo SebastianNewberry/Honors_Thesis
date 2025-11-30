@@ -32,6 +32,8 @@
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{subcaption}
+\captionsetup[subfigure]{subrefformat=parens}
+
 
 % -----------------------
 % Lists, spacing, titles
@@ -233,18 +235,18 @@ Figure 1 defines soft censorship into "omission of praise" which refers to censo
         \centering
         \includegraphics[width=\linewidth]{hard_censorship_stats.png}
         \caption{hard censorship statistics}
-        \label{fig:2}
+        \label{fig:hard-censorship}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{selective_omission.png}
         \caption{soft censorship statistics}
-        \label{fig:3}
+        \label{fig:soft-censorship}
     \end{subfigure}
 
     \caption{Censorship and political leaders in LLMs based on prompting language and person's country of birth}
-    \label{fig:2_3}
+    \label{fig:hard-and-soft-censorship}
 \end{figure}
 
 Figure 2 (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in Figure 2 (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In Figure (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
@@ -253,19 +255,19 @@ Penetration tests are often run during maintenance windows or incident-response 
 
 \section{Literature Review}
 
-\subsection{Benchmarks}
+\subsection{General Benchmarks}
 
 To determine whether a new model represents an improvement, AI researchers rely on benchmarks. Benchmarks are standardized, validated question sets that evaluate specific abilities or properties of a large language model. By using these shared tests, researchers can compare the performance of a new model against earlier versions or against competing models in a fair and reproducible manner.
 
 \subsubsection{MMLU, GPQA, HLE, and SWE Bench-Verified}
 
-\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark mostly consisted of multiple choice questions that mostly only required knowledge to solve and not reasoning. Figure 3 shows some examples of what a question coming from the MMLU benchmark looks like:
+\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark mostly consist of multiple choice questions that mostly only required knowledge to solve and not reasoning. Figure 3 shows some examples of what a question coming from the MMLU benchmark looks like:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{MMLU_Sample_Questions.png}
     \caption{Examples from the Conceptual Physics and College Mathematics STEM tasks. \parencite{hendrycks2021measuringmassivemultitasklanguage}}
-    \label{fig:gemini-benchmarks}
+    \label{fig:MMLU-Sample-Questions}
 \end{figure}
 
 According to the MMLU-PRO paper, \enquote{The questions in MMLU are mostly knowledge-driven without requiring too much reasoning, especially in the STEM subjects, which reduces its difficulty. In fact, most models achieve better performance with \enquote{direct} answer prediction without chain-of-thought}
@@ -274,18 +276,104 @@ The following benchmarks are provided by the MMLU-PRO paper:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{MMLU_Sample_Questions.png}
+    \includegraphics[width=0.5\textwidth]{MMLU_PRO.png}
     \caption{MMLU-PRO benchmark results for open and closed source models \parencite{hendrycks2021measuringmassivemultitasklanguage}}
-    \label{fig:gemini-benchmarks}
+    \label{fig:MMLU-PRO}
 \end{figure}
 
 In these benchmarks, it is obvious that the top 7 closed-source models were measured to be more perfomant than the top 7 open source models based on overall percentage scores for number of questions answered correctly from the MMLU-PRO question bank. This is a significant finding, but I believe that it isn't as applicable to the competition between open and closed source models today. This paper was made on November 6th, 2024. Since then a multitude of newer models have come out.
 
-\textbf{GPQA ( Google-Proof Q&A Benchmark)} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree. Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
+\textbf{GPQA \texorpdfstring{(Google-Proof Q\&A Benchmark)}} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree.\\
+ Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
 
-According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in Figure 5).
+According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in figure ~\ref{fig:gemini-benchmarks}).
 
-\subsubsection{Gemini 3.0}
+\subsection{Cybersecurity Related Benchmarks}
+
+\subsubsection{CyberMetric}
+
+CyberMetric is one of the early approaches to determine how effective humans are at solving multiple-choice cybersecurity related problems versus LLMs. The authors of the paper created a list of 10,000 questions that were generated by AI (GPT-3.5 turbo) by retrieving relevant questions from the internet using RAG, and generating a question and multiple answers to turn these cybersecurity concepts into multiple choice questions. There was a wide variety of types of questions that this multiple choice set included. The images below show the different cyber related topics this paper aimed to cover, and the research questions this paper aims to address:
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{CyberMetric_research_questions.png}
+        \caption{CyberMetric research questions}
+        \label{fig:CyberMetric-research-questions}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{CyberMetric_Questions.png}
+        \caption{CyberMetric cybersecurity topics}
+        \label{fig:CyberMetric-topics}
+    \end{subfigure}
+
+    \caption{CyberMetric research methods \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
+    \label{fig:CyberMetric-questions-and-topics}
+\end{figure}
+
+
+The authors of this paper first conducted an experiment on a subset of cybersecurity questions taken from the original 10,000 that were generated by ChatGPT. They asked 30 participants to solve only 80 of these questions. This subset of 80 questions was manually verified by cybersecurity professionals to ensure they were relevant and accurate. The participants with more education in cybersecurity based on degree (PhD vs Ba/Ms degrees) performed better than people who didn't have as much education. This verified the validity of the dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{CyberMetric_accuracy.png}
+    \caption{CyberMetric benchmarks validating dataset. \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
+    \label{fig:CyberMetric-dataset}
+\end{figure}
+
+The LLMs then were tested against the multiple-choice questions in the CyberMetric benchmark by measuring the percentage of questions they answered correctly. They tested different subsets of the question bank (80 Qs, 500 Qs, 2k Qs, 10k Qs) to ensure that the LLMs perform similarly on the different subsets of questions. The CyberMetric-80 and CyberMetric-500 datasets were fully verified by human experts according to the paper.
+
+The result of the study was that this test concluded that machine intelligence has already surpassed humans in answering questions related to cybersecurity. This was the finding of the answer to the first research question, and the top performing model was GPT-4o which is a closed-source, proprietary model. According to the paper, these were the results:
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{human_vs_llm_performance.png}
+        \caption{Comparing Human vs LLM performance on CyberMetric-80}
+        \label{fig:CyberMetric_human_vs_llm_performance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{llm_performance_CyberMetric.png}
+        \caption{Ranking LLM performance on CyberMetric 80Qs, 500Qs, 2k Qs, 10k Qs}
+        \label{fig:CyberMetric_llm_performance}
+    \end{subfigure}
+
+    \caption{CyberMetric study results \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
+    \label{fig:2_3}
+\end{figure}
+
+The experiment in this report provides a unique comparison to the results in the CyberMetric report because as of today, closed and open source models are not only better than humans at solving cybersecurity challenges, but they are both starting to score very high on multiple benchmarks. In this report, it is shown that the open source model "Mixtral" scores almost as good as GPT 4o in the image above. Nowadays, there are far more advanced open and closed source models, and I will determine if this result is consistent with more recent models and ctf challenges.
+
+\subsubsection{CyberSecEval 2}
+
+The CyberSecEval 2 benchmark was created to test 3 major aspects of LLM security: 
+
+\paragraph{prompt injection evaluation}
+The first aspect involved testing for prompt injection. For example, if the user gave an LLM a secret key, and then later asked for the LLM to repeat that secret key, the benchmark would measure whether the LLM would actually repeat that secret key or refuse to answer the user's question based on the privacy implications of leaking a secret key.
+
+\paragraph{vulnerability exploitation evaluation}
+The second type of test, which is what our focus will be on in this report, is the ability for LLMs to exploit vulnerabilities. In order to measure this, the creators of the experiment used ctf challenges that were not too challenging, but challenging enough so that LLMs could solve them at least some of the time. In the paper, it also focused on drawing inspiration from actual vulnerabilities in software.
+
+\paragraph{code interpreter abuse evaluation}
+The last type of vulnerability that this benchmark evaluated is the willingness of an LLM to execute vulnerable code inside of a code interpreter. This can be crucial for things like an LLM executing code that it downloads from an untrusted website. It can be easy to trick a human into executing malicious programs or scripts downloaded from the internet, and with careful prompt engineering, it is most likely even easier to trick an LLM into doing this. In order to test this, the authors of the paper created a set of prompts that try to manipulate the LLM into running malicious code to take control of the system that the LLM is running on.
+
+The results from the vulnerability and exploitation evaluation in this study are shown below:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{cysec_eval_2.png}
+    \caption{Summary of LLM performance in non-compliance with requests to help with cyber attacks (left), and average model
+performance across 10 categories of cyberattack tactics, techniques, and procedures (right). \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
+    \label{fig:CyberMetric-dataset}
+\end{figure}
+
+\subsection{Gemini 3.0}
 
 In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The only major benchmark it didn't outright beat was the SWE-bench verified benchmark.
 
@@ -294,9 +382,9 @@ These are the results of the Gemini 3.0 benchmarks:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{gemini_benchmarks.png}
-    \caption{Gemini 3.0 benchmark results}
+    \caption{Gemini 3.0 benchmark results \parencite{google_gemini3_2025}}
     \label{fig:gemini-benchmarks}
-\end{figure}\parencite{google_gemini3_2025}
+\end{figure}
 
 
 Some users of the model don't believe it is as good as it claims for some of these benchmarks. There is a term in AI research called benchmarkmaxing where companies only focus on doing well on these benchmarks, and not on having performant models. Some users think this could be the case for Gemini 3.0.
@@ -315,7 +403,7 @@ This is an example of Chain-of-Thought prompting from the official paper,
     \centering
     \includegraphics[width=0.5\textwidth]{chain_of_thought.png}
     \caption{Chain of Thought Thinking Process}
-    \label{fig:gemini-benchmarks}
+    \label{fig:cot-thinking}
 \end{figure}
 
 In the image above, the first box of each prompting method is the prompt that was used for the AI. The box below it is response from the AI model. the chain-of-thought prompt comes up with the correct answer to the user question, while the standard prompting gives an incorrect answer. This is because with chain-of-thought, the model is being given context about how to reason about solving a problem. It then can apply this reasoning method to actually solving the problem, instead of trying to solve it directly. This is how humans mostly solve problems, they reason through it before directly giving an answer. Modern AI models are adopting this method of "reasoning" more and more which is what makes them so powerful. They adopt CoT thinking by using either implicit or explicit thinking methods. \parencite{cot_thinking_2022}
@@ -337,7 +425,7 @@ The different thinking mechanisms along with the specific AI models used in this
 \begin{table}[H]
 \centering
 \caption{Classification of LLMs by Reasoning Transparency}
-\begin{tabular}{llc}
+\begin{tabular}{lc}
 \toprule
 \textbf{Model} & \textbf{Thinking Type} \\
 \midrule
@@ -408,141 +496,162 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
 
 
 \subsubsection{Solution}
-The server selects primes \(p,q\) with
+
+The server selects primes \(p, q\) with
 \[
-p\equiv q \equiv 3 \pmod 4,
-\qquad n = p q,
-\qquad e = 65537.
+p \equiv q \equiv 3 \pmod{4}, \qquad n = p q, \qquad e = 65537.
 \]
-For an input \(x\in\mathbb{Z}_n\) the oracle computes square roots modulo each prime and combines them by the Chinese Remainder Theorem (CRT). Concretely, let
+For an input \(x \in \mathbb{Z}_n\), the oracle computes square roots modulo each prime and combines them using the Chinese Remainder Theorem (CRT). Concretely, let
 \[
-r_p \equiv x^{\frac{p+1}{4}} \pmod p,\qquad r_q \equiv x^{\frac{q+1}{4}} \pmod q,
+r_p \equiv x^{\frac{p+1}{4}} \pmod{p}, 
+\qquad 
+r_q \equiv x^{\frac{q+1}{4}} \pmod{q},
 \]
-which are square roots of \(x\) modulo \(p\) and \(q\) respectively (when \(x\) is a quadratic residue). The oracle picks independent signs \(a,b\in\{\pm 1\}\) and returns the CRT recombination
+which are square roots of \(x\) modulo \(p\) and \(q\) respectively (when \(x\) is a quadratic residue).  
+The oracle picks independent signs \(a, b \in \{\pm 1\}\) and returns the CRT recombination
 \[
-r = a\,r_p\cdot A + b\,r_q\cdot B \pmod n,
+r = a\, r_p A + b\, r_q B \pmod{n},
 \]
-where we define the CRT basis elements
+where the CRT basis elements are defined as
 \[
-A \equiv q\cdot (q^{-1}\bmod p),\qquad B \equiv p\cdot (p^{-1}\bmod q),
+A \equiv q \cdot (q^{-1} \bmod p),
+\qquad
+B \equiv p \cdot (p^{-1} \bmod q),
 \]
 so that
 \[
-A \equiv 1 \pmod p,\quad A \equiv 0 \pmod q,\qquad
-B \equiv 0 \pmod p,\quad B \equiv 1 \pmod q.
+A \equiv 1 \pmod{p}, \quad A \equiv 0 \pmod{q},
+\qquad
+B \equiv 0 \pmod{p}, \quad B \equiv 1 \pmod{q}.
 \]
 
 Thus the oracle's output is one of the four values
 \[
-R = \big\{ \; a\,r_p A + b\,r_q B \pmod n \;:\; a,b\in\{\pm1\}\; \big\}.
+R = \{\, a r_p A + b r_q B \pmod{n} \;:\; a,b\in\{\pm 1\} \,\}.
 \]
 
-\subsubsection*{Square roots modulo $n$ and factor recovery}
+\subsubsection*{Square roots modulo \(n\) and factor recovery}
 
-Let $p$ and $q$ be distinct primes with $p\equiv q \equiv 3 \pmod 4$, and let $n = pq$. For an input $x \in \mathbb{Z}_n$, the oracle computes square roots modulo each prime and recombines them using the Chinese Remainder Theorem (CRT).
+Let \(p\) and \(q\) be distinct primes with \(p \equiv q \equiv 3 \pmod{4}\), and let \(n = pq\).  
+For an input \(x \in \mathbb{Z}_n\), the oracle computes square roots modulo each prime and recombines them via CRT.
 
 \subsubsection*{Square roots modulo a prime}
 
-Let $p$ be an odd prime with $p\equiv 3 \pmod 4$. If $x$ is a quadratic residue modulo $p$ (and $x\not\equiv 0 \pmod p$), Euler's criterion gives
+Let \(p\) be an odd prime with \(p \equiv 3 \pmod{4}\).  
+If \(x\) is a quadratic residue modulo \(p\) (and \(x \not\equiv 0 \pmod{p}\)), Euler’s criterion gives
 \[
-x^{\frac{p-1}{2}} \equiv 1 \pmod p.
+x^{\frac{p-1}{2}} \equiv 1 \pmod{p}.
 \]
 Consider
 \[
-\left(x^{\frac{p+1}{4}}\right)^2 = x^{\frac{p+1}{2}} = x \cdot x^{\frac{p-1}{2}} \equiv x \cdot 1 \equiv x \pmod p,
+\left(x^{\frac{p+1}{4}}\right)^2 
+= x^{\frac{p+1}{2}}
+= x \cdot x^{\frac{p-1}{2}}
+\equiv x \cdot 1
+\equiv x \pmod{p},
 \]
-so \(x^{\frac{p+1}{4}}\) is indeed a square root of $x$ modulo $p$:
+so \(x^{\frac{p+1}{4}}\) is a square root of \(x\) modulo \(p\):
 \[
-\boxed{\left(x^{\frac{p+1}{4}}\right)^2 \equiv x \pmod p}.
+\boxed{\left(x^{\frac{p+1}{4}}\right)^2 \equiv x \pmod{p}}.
 \]
-If $x$ is not a quadratic residue modulo $p$, the same computation yields
-\[
-\left(x^{\frac{p+1}{4}}\right)^2 \equiv -x \pmod p,
-\]
-Thus in all non-degenerate cases the value $r_p$ produced by the local exponentiation satisfies
-\[
-r_p^2 \equiv \pm x \pmod p,
-\]
-and similarly $r_q^2\equiv\pm x\pmod q$.
 
-\subsubsection*{CRT recombination of square roots modulo $n$}
+If \(x\) is not a quadratic residue, then
+\[
+\left(x^{\frac{p+1}{4}}\right)^2 \equiv -x \pmod{p}.
+\]
+
+Thus, in all non-degenerate cases,
+\[
+r_p^2 \equiv \pm x \pmod{p},
+\qquad
+r_q^2 \equiv \pm x \pmod{q}.
+\]
+
+\subsubsection*{CRT recombination of square roots modulo \(n\)}
 
 Let
 \[
-r_p \equiv x^{\frac{p+1}{4}} \pmod p,\qquad r_q \equiv x^{\frac{q+1}{4}} \pmod q,
+r_p \equiv x^{\frac{p+1}{4}} \pmod{p},
+\qquad
+r_q \equiv x^{\frac{q+1}{4}} \pmod{q},
 \]
-and define the CRT basis elements
+and define
 \[
-A \equiv q \cdot (q^{-1} \bmod p),\qquad B \equiv p \cdot (p^{-1} \bmod q),
+A \equiv q(q^{-1} \bmod p), 
+\qquad 
+B \equiv p(p^{-1} \bmod q).
 \]
-so that
+Then for independent signs \(a,b\in\{\pm1\}\),
 \[
-A \equiv 1 \pmod p, \; A \equiv 0 \pmod q, \quad
-B \equiv 0 \pmod p, \; B \equiv 1 \pmod q.
-\]
-For independent signs $a,b \in \{\pm 1\}$, the four CRT recombinations are
-\[
-r_{a,b} \equiv a r_p A + b r_q B \pmod n.
+r_{a,b} \equiv a r_p A + b r_q B \pmod{n}.
 \]
 
-\subsubsection*{Recovering $n$ from complementary roots}
+\subsubsection*{Recovering \(n\) from complementary roots}
 
-If two roots correspond to opposite signs, say $(a,b)$ and $(-a,-b)$, then
+If two roots correspond to opposite signs, say \((a,b)\) and \((-a,-b)\), then
 \[
-r_{a,b} + r_{-a,-b} \equiv 0 \pmod n.
+r_{a,b} + r_{-a,-b} \equiv 0 \pmod{n}.
 \]
-Taking integer representatives in $[0,n-1]$, this means
+Taking representatives in \([0,n-1]\),
 \[
-r_{-a,-b} \equiv n - r_{a,b}.
+r_{-a,-b} = n - r_{a,b}.
 \]
-Hence, after sorting the four integer roots, the sum of the smallest and largest root recovers $n$:
+Thus, after sorting the four roots,
 \[
 \boxed{n = r_{\min} + r_{\max}}.
 \]
 
 \subsubsection*{Extracting a prime via a GCD}
 
-Different sign choices produce distinct roots. Consider a pair differing only in the $q$-component:
+Consider a pair differing only in the \(q\)-component:
 \[
-r_{a,b} = a r_p A + b r_q B,\qquad
+r_{a,b} = a r_p A + b r_q B,
+\qquad
 r_{a,-b} = a r_p A - b r_q B.
 \]
 Their difference is
 \[
-r_{a,b}-r_{a,-b} = 2 b\, r_q B.
+r_{a,b} - r_{a,-b} = 2b\, r_q B.
 \]
-Reducing this difference modulo the primes gives the two congruences
+Reducing modulo the primes:
 \[
-r_{a,b}-r_{a,-b} \equiv 0 \pmod p,
+r_{a,b}-r_{a,-b} \equiv 0 \pmod{p},
 \qquad
-r_{a,b}-r_{a,-b} \equiv 2 b\, r_q \pmod q.
+r_{a,b}-r_{a,-b} \equiv 2b r_q \pmod{q}.
 \]
-Thus the difference is divisible by $p$ and congruent to $2b r_q$ modulo $q$. Therefore the greatest common divisor yields the prime factor:
-\[
-\boxed{\gcd(r_{a,b}-r_{a,-b},\, n) = p.}
-\]
-Symmetrically, taking two roots that differ only in the $p$-component reveals $q$. In practice one collects the four CRT roots, picks an appropriate pair, and computes
-\[
-p = \gcd(r_i - r_j,\, n), \qquad q = n/p.
-\]
-\subsubsection*{Forge the signature}
-Once \(p,q\) are known we compute
-\[
-\varphi(n) = (p-1)(q-1),
-\qquad d \equiv e^{-1} \pmod{\varphi(n)}.
-\]
-Given the challenge's printed value \(m\) the RSA signature is forged as
-\[
-\boxed{s \equiv m^d \pmod n.}
-\]
-Submitting \(s\) to the server satisfies \(s^e\equiv m\pmod n\) and retrieves the flag.
 
-\subsubsection{Summary of steps used in the exploit}
+Thus,
+\[
+\boxed{\gcd(r_{a,b}-r_{a,-b},\, n) = p}.
+\]
+Similarly, a pair differing only in the \(p\)-component yields \(q\).  
+In practice, collect the four roots and compute:
+\[
+p = \gcd(r_i - r_j,\, n), \qquad q = \frac{n}{p}.
+\]
+
+\subsubsection*{Forge the signature}
+
+Once \(p\) and \(q\) are known:
+\[
+\varphi(n) = (p-1)(q-1), 
+\qquad 
+d \equiv e^{-1} \pmod{\varphi(n)}.
+\]
+Given the challenge value \(m\), the RSA signature is:
+\[
+\boxed{s \equiv m^d \pmod{n}}.
+\]
+
+Submitting \(s\) satisfies \(s^e \equiv m \pmod{n}\) and reveals the flag.
+
+\subsubsection*{Summary of steps used in the exploit}
+
 \begin{enumerate}
-  \item Repeatedly query the oracle with a fixed number (this number does \textbf{NOT} have to be a quadratic residue. It can be a number that does not have a square root. the solver uses \(x=3\)) to collect several of the modular roots.
-  \item From the four roots compute \(n\) as the sum of the smallest and largest root.
-  \item Use a difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover one prime \(p\) (the other is \(q=n/p\)).
-  \item Compute \(d = e^{-1}\pmod{\varphi(n)}\) and then \(s=m^d\bmod n\).
+  \item Repeatedly query the oracle with a fixed number (not necessarily a quadratic residue — the solver uses \(x = 3\)) to collect several modular roots.
+  \item Compute \(n\) as the sum of the smallest and largest of the four roots.
+  \item Use the difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover \(p\) (and then compute \(q=n/p\)).
+  \item Compute \(d = e^{-1} \pmod{\varphi(n)}\) and then \(s \equiv m^d \pmod{n}\).
 \end{enumerate}
 
 \newpage
