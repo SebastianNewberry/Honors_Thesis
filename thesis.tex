@@ -22,6 +22,7 @@
 % -----------------------
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}  % loads amsmath extras
+\usepackage{tikz}  % for drawing diagrams
 
 % -----------------------
 % Graphics, floats & captions
@@ -369,16 +370,73 @@ The results from the vulnerability and exploitation evaluation in this study are
     \centering
     \includegraphics[width=0.9\textwidth]{exploit_security_concepts_cysec_eval_2.png}
     \caption{Exploitation capability scores broken down by model and test category. \parencite{bhatt2024cyberseceval2widerangingcybersecurity}}
-    \label{fig:CyberMetric-dataset}
+    \label{fig:cysec-eval-2}
 \end{figure}
 
 According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection ctf challenge, and also basic buffer overflow challenges. Additionally, the closed-source GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in this report. I am going to be testing newer, more robust open source models and one of the challenges I will be testing on will involve a sql injection vulnerability.
 
+\subsubsection{NYU Cyber Bench}
+
+NYU CTF Bench is a specialized benchmark dataset designed specifically for evaluating large language models in offensive security tasks. Unlike general cybersecurity benchmarks that focus on theoretical knowledge or simplified vulnerability detection, NYU CTF Bench provides a comprehensive evaluation framework that more closely mirrors real-world cybersecurity scenarios. It is one of the first CTF benchmarks to include a large sample size of challenges in order to accurately measure LLM performance against hard ctf challenges.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{NYU_CTF_Bench_Vs_Others.png}
+    \caption{Comparison of LLM-Driven CTF Solving. \parencite{shao2025nyuctfbenchscalable}}
+    \label{fig:NYU-Cyber-Bench_Models}
+\end{figure}
+
+
+What distinguishes NYU CTF Bench from other benchmarks is its focus on interactive cybersecurity challenges. The benchmark utilizes Capture The Flag (CTF) challenges sourced from the CSAW competitions, which are well-established in the cybersecurity community for testing practical offensive security skills \parencite{shao2025nyuctfbenchscalable}. \\
+These challenges require multi-step reasoning, vulnerability identification, and exploit development. \\
+The benchmark allows researchers to assess not only whether LLMs can solve security challenges, but also how effectively they can plan and execute multi-step attack sequences.
+
+
+
+The benchmark also uses open-source models in their experimentation, but the problem is that it is comparing old, dated open source models to robust proprietary models. Since the time that this article was written, open-source models have advanced quite a bit. In the article, it uses Mixtral and Llama as representative open-source models, and neither of them solve any challenges according to the results below. Recently before this paper was releaased in February 2025, Deepseek was released in January 2025. Deepseek was one of the first robust open-source models, and its released even caused Nvidia stock to fall due to how good it was compared to top proprietary models. In this report, we will be using this Deepseek model, along with others that have came out since then that are even more robust.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{NYU_CTF_Bench_Table.png}
+    \caption{Performance and Failure Rates of Different LLMs. \parencite{shao2025nyuctfbenchscalable}}
+    \label{fig:NYU-Cyber-Bench-Performance}
+\end{figure}
+
 
 \subsubsection{Cybench}
 
+Cybench is a comprehensive benchmark developed by Stanford University for evaluating the cybersecurity capabilities of language models through practical Capture The Flag (CTF) challenges \parencite{zhang2025cybench}. What makes Cybench unique is its use of 40 professional-level CTF tasks sourced from four distinct competitions: HackTheBox 2024, SekaiCTF 2022-23, Glacier 2023, and HKCert 2023 \parencite{zhang2025cybench}.
 
-\subsubsection{NYU Cyber Bench}
+Unlike other cybersecurity benchmarks that rely on theoretical knowledge questions or simplified vulnerability detection, Cybench evaluates language model agents in realistic environments where they must autonomously identify vulnerabilities, develop exploits, and execute them to capture flags \parencite{zhang2025cybench}. Each task includes a complete environment setup with task descriptions, starter files, and evaluators that verify successful flag submissions.
+
+The key innovation of Cybench is its introduction of subtasks that break complex challenges into intermediate steps, enabling more granular assessment of agent capabilities and partial credit evaluation \parencite{zhang2025cybench}. This approach allows researchers to identify exactly where language models fail in multi-step exploitation processes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{cybench_agents.png}
+\caption{Overview of the agent flow. An agent acts on memory $m_t$, consisting of the initial prompt
+$m_0$ and the last three responses and observations $r_{t\text{-}3}, o_{t\text{-}3}, r_{t\text{-}2}, o_{t\text{-}2}, r_{t\text{-}1}, o_{t\text{-}1}$ to produce a
+response $r_t$ and an action $a_t$. It then executes action $a_t$ on environment $s_{t\text{-}1}$ to yield an observation
+$o_t$ and updated environment $s_t$. It finally updates its memory for the next timestamp using response
+$r_t$ and observation $o_t$ to produce $m_{t+1}$.
+\parencite{zhang2025cybench}}
+    \label{fig:cybench-agents}
+\end{figure}
+
+The results of the experiment these researchers at Stanford did is shown below:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{cybench_results.png}
+    \caption{Performance and Failure Rates of Different LLMs. \parencite{zhang2025cybench}}
+    \label{fig:Cybench-Performance}
+\end{figure}
+
+The Cybench evaluation revealed that even the best-performing models (Claude 3.5 Sonnet at 17.5\% and GPT-4o at 12.5\%) could only solve tasks with first solve times of 11 minutes or less, with none successfully solving challenges that took human teams longer than 11 minutes \parencite{zhang2025cybench}. This demonstrates the significant gap between current language model capabilities and human expertise in complex cybersecurity challenges. Additionally, it showed that LLMs even struggled with "subtask-guided performance" which involves breaking a problem down into pieces before attempting to solve it, then giving those separate steps and pieces to the LLM to solve by itself, and piece together those steps to solve the entire challenge. The LLMs were able to solve the subtasks pretty effectively compared to piecing together the subtasks to solve the challenge.
+
+Cybench has been adopted by major AI safety organizations including the US and UK AISI, Anthropic, Amazon, and OWASP, establishing it as the current state-of-the-art benchmark for evaluating language model cybersecurity capabilities \parencite{zhang2025cybench}.
+
+Even though this paper provides an in-depth view into how LLMs work with solving multi-step CTFs similar to what this report will provide, this benchmark was created in April 2025, and it also doesn't include some of the most robust open-source models that will be featured in this report like Kimi, GLM, and Deepseek.
 \subsection{Gemini 3.0}
 
 In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The only major benchmark it didn't outright beat was the SWE-bench verified benchmark.
@@ -401,7 +459,7 @@ Large Language Models do not “think” in a human sense, but they do perform m
 
 Two major paradigms have emerged in the design of reasoning-capable LLMs: implicit thinking and explicit thinking. Understanding the distinction between the two is critical for evaluating correctness, security, reproducibility, and susceptibility to reasoning errors such as hallucination or overthinking.
 
-Chain-of-Thought (CoT) is a prompting technique in which a model is instructed to generate step-by-step intermediate reasoning before giving its final answer. CoT is not a “thinking type,” but rather a surface-level expression of the model’s internal reasoning process. Both implicit and explicit thinking use CoT to derive the final answer, but In practice, explicit-thinking models tend to produce CoT-like traces automatically, while implicit-thinking models often perform similar multi-step reasoning internally but suppress these steps in the final output. Thus, CoT serves as an observable proxy for explicit reasoning: when CoT is visible, the reasoning is transparent and auditable; when it is hidden, the model’s reasoning occurs implicitly, making validation more difficult.
+Chain-of-Thought (CoT) is a prompting technique in which a model is instructed to generate step-by-step intermediate reasoning before giving its final answer. Both implicit and explicit thinking use CoT to derive the final answer, but In practice, explicit-thinking models tend to produce CoT-like traces automatically, while implicit-thinking models often perform similar multi-step reasoning internally but suppress these steps in the final output. Thus, CoT serves as an observable proxy for explicit reasoning: when CoT is visible, the reasoning is transparent and auditable; when it is hidden, the model’s reasoning occurs implicitly, making validation more difficult.
 
 This is an example of Chain-of-Thought prompting from the official paper,
 
@@ -431,24 +489,22 @@ The different thinking mechanisms along with the specific AI models used in this
 \begin{table}[H]
 \centering
 \caption{Classification of LLMs by Reasoning Transparency}
-\begin{tabular}{lc}
+\begin{tabular}{lcc}
 \toprule
-\textbf{Model} & \textbf{Thinking Type} \\
+\textbf{Model} & \textbf{Thinking Type} & \textbf{Date Created} \\
 \midrule
-GLM-4.6                & Explicit \\
-Kimi K2 Thinking       & Explicit \\
-DeepSeek R1            & Explicit \\
-Kimi K2 Instruct 0905  & Implicit \\
+GLM-4.6                & Explicit & 2025-09 \\
+Kimi K2 Thinking       & Explicit & 2025-11 \\
+DeepSeek R1            & Explicit & 2025-01 \\
+Kimi K2 0905           & Implicit & 2025-09 \\
 \midrule
-GPT-5.1                & Implicit \\
-Claude Sonnet 4.5      & Implicit \\
-Grok 4.1               & Implicit \\
-Gemini 3.0 Pro Preview & Implicit \\
+GPT-5.1                & Implicit & 2025-11 \\
+Claude Sonnet 4.5      & Implicit & 2025-02 \\
+Grok 4.1               & Implicit & 2025-11 \\
+Gemini 3.0 Pro Preview & Implicit & 2025-11 \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\subsubsection{Overthinking in AI Models}
 
 \section{Methods}
 
@@ -664,4 +720,5 @@ Submitting \(s\) satisfies \(s^e \equiv m \pmod{n}\) and reveals the flag.
 \printbibliography
 
 \end{document}
+
 
