@@ -373,7 +373,7 @@ The results from the vulnerability and exploitation evaluation in this study are
     \label{fig:cysec-eval-2}
 \end{figure}
 
-According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection ctf challenge, and also basic buffer overflow challenges. Additionally, the closed-source GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in this report. I am going to be testing newer, more robust open source models and one of the challenges I will be testing on will involve a sql injection vulnerability.
+According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection ctf challenges, and also basic buffer overflow challenges. Additionally, the closed-source GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in this report. I am going to be testing newer, more robust open source models and one of the challenges I will be testing on will involve a sql injection vulnerability.
 
 \subsubsection{NYU Cyber Bench}
 
@@ -393,7 +393,7 @@ The benchmark allows researchers to assess not only whether LLMs can solve secur
 
 
 
-The benchmark also uses open-source models in their experimentation, but the problem is that it is comparing old, dated open source models to robust proprietary models. Since the time that this article was written, open-source models have advanced quite a bit. In the article, it uses Mixtral and Llama as representative open-source models, and neither of them solve any challenges according to the results below. Recently before this paper was releaased in February 2025, Deepseek was released in January 2025. Deepseek was one of the first robust open-source models, and its released even caused Nvidia stock to fall due to how good it was compared to top proprietary models. In this report, we will be using this Deepseek model, along with others that have came out since then that are even more robust.
+The benchmark also uses open-source models in their experimentation, but the problem is that it is comparing old, dated open source models to robust proprietary models. Since the time that this article was written, open-source models have advanced quite a bit. In the article, it uses Mixtral and Llama as representative open-source models, and neither of them solve any challenges according to the results below. Before this paper was releaased in February 2025, Deepseek was released in January 2025. Deepseek was one of the first robust open-source models, and its released even caused Nvidia stock to fall due to how good it was compared to top proprietary models. In this report, I will be using this Deepseek model, along with others that have came out since then that are even more robust.
 
 \begin{figure}[H]
     \centering
@@ -409,8 +409,6 @@ Cybench is a comprehensive benchmark developed by Stanford University for evalua
 
 Unlike other cybersecurity benchmarks that rely on theoretical knowledge questions or simplified vulnerability detection, Cybench evaluates language model agents in realistic environments where they must autonomously identify vulnerabilities, develop exploits, and execute them to capture flags \parencite{zhang2025cybench}. Each task includes a complete environment setup with task descriptions, starter files, and evaluators that verify successful flag submissions.
 
-The key innovation of Cybench is its introduction of subtasks that break complex challenges into intermediate steps, enabling more granular assessment of agent capabilities and partial credit evaluation \parencite{zhang2025cybench}. This approach allows researchers to identify exactly where language models fail in multi-step exploitation processes.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{cybench_agents.png}
@@ -422,6 +420,8 @@ $r_t$ and observation $o_t$ to produce $m_{t+1}$.
 \parencite{zhang2025cybench}}
     \label{fig:cybench-agents}
 \end{figure}
+
+The key innovation of Cybench is its introduction of subtasks that break complex challenges into intermediate steps, enabling more granular assessment of agent capabilities and partial credit evaluation \parencite{zhang2025cybench}. This approach allows researchers to identify exactly where language models fail in multi-step exploitation processes.
 
 The results of the experiment these researchers at Stanford did is shown below:
 
@@ -525,6 +525,37 @@ To show the limits of compute, I will go through trying to run one of these mode
 \subsection{Using External Providers}
 
 \subsubsection{Openrouter}
+
+Openrouter is a platform that provides API access to almost every publicly available large language model. There are companies and services that provide compute to Openrouter, along with access to an LLM model. In exchange, these services get paid for every token that Openrouter generates.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{openrouter.png}
+\caption{Openrouter API to use External Providers Instead of Hosting Open Source LLMS Locally}
+    \label{fig:openrouter_platform}
+\end{figure}
+
+Openrouter has access to both open source and proprietary models, but when using a proprietary model, the only provider that will be available is the one coming from the official company providing the services for that model. For open source models, the different providers and pricing will vary, because these models are free to the public to host. 
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{GPT_Providers.png}
+        \caption{OpenAI Providing the ChatGPT model}
+        \label{fig:OpenAI-GPT-5.1}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Deepseek_Providers.png}
+        \caption{Deepseek Providers for Deepseek R1 0528}
+        \label{fig:Deepseek-Providers}
+    \end{subfigure}
+
+    \caption{Different models available and Openrouter and their providers}
+    \label{fig:Openrouter-Providers}
+\end{figure}
 
 \subsubsection{Continue.dev}
 
