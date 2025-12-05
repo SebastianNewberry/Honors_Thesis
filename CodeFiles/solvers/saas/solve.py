@@ -99,18 +99,4 @@ s = pow(m, d, n)
 print(f"[+] m = {m}")
 print(f"[+] s = {s}")
 
-# Optional: send signature back to server to retrieve flag (uncomment to actually submit)
-# Note: some servers expect s printed as decimal followed by newline.
-# print("[*] sending signature back to server...")
-# r.sendline(str(s).encode())
-# try:
-#     # read responses (flag or "Wrong signature!")
-#     while True:
-#         out = r.recvline(timeout=2)
-#         if not out:
-#             break
-#         print("[<] ", out.decode().strip())
-# except Exception:
-#     pass
-
 r.close()

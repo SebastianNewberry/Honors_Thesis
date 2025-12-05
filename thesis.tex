@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}        % fallback scalable fonts
 % If you prefer a Times-like document, use newtx (uncomment next two lines)
+\usepackage{dirtree}  % for directory tree visualization
 \usepackage{newtxtext,newtxmath}
 
 % -----------------------
@@ -23,7 +24,6 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}  % loads amsmath extras
 \usepackage{tikz}  % for drawing diagrams
-
 % -----------------------
 % Graphics, floats & captions
 % -----------------------
@@ -50,6 +50,14 @@
 % Code listings
 % -----------------------
 \usepackage{listings}
+\lstset{
+    literate=
+      {—}{{---}}1
+      {–}{{--}}1
+      {…}{{...}}1
+      {“}{{``}}1
+      {”}{{''}}1
+}
 \usepackage{xcolor}
 \lstdefinestyle{mypython}{
   language=Python,
@@ -77,12 +85,17 @@
 
 \lstdefinestyle{mypython}{
   language=Python,
-  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\footnotesize,
   keywordstyle=\color{blue},
   commentstyle=\color{gray},
   stringstyle=\color{orange},
   showstringspaces=false,
   breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=single
 }
 
 % -----------------------
@@ -484,45 +497,13 @@ Overall, Explicit reasoning generally provides more fine-grained logical structu
 
 In this paper, we will be testing a model that utilizes lots of explicit thinking (Kimi K2 Thinking) against a model that uses implicit thinking (Kimi K2 0905). Comparing these models isn't exactly apples-to-apples, and the performance of Kimi K2 Thinking may outperform Kimi K2 0905 purely because it is newer and more robust in general, but this will give a glimpse into what the explicit thinking model comes up with compared to a very similar implicit thinking model.
 
-The different thinking mechanisms along with the specific AI models used in this paper, are shown in the table below:
-
-\begin{table}[H]
-\centering
-\caption{Classification of LLMs by Reasoning Transparency}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Model} & \textbf{Thinking Type} & \textbf{Date Created} \\
-\midrule
-GLM-4.6                & Explicit & 2025-09 \\
-Kimi K2 Thinking       & Explicit & 2025-11 \\
-DeepSeek R1            & Explicit & 2025-01 \\
-Kimi K2 0905           & Implicit & 2025-09 \\
-\midrule
-GPT-5.1                & Implicit & 2025-11 \\
-Claude Sonnet 4.5      & Implicit & 2025-02 \\
-Grok 4.1               & Implicit & 2025-11 \\
-Gemini 3.0 Pro Preview & Implicit & 2025-11 \\
-\bottomrule
-\end{tabular}
-\end{table}
+The different thinking mechanisms along with the specific AI models used in this paper, are shown in table ~\ref{tab:models}. It is seen that most of the good proprietary models, and all of the proprietary models used in this report are implicit thinking models. This is partially because companies don't want to leak the reasoning processes of their models to other companies to train off of.
 
 \section{Methods}
 
-For my experimentation on whether open-source LLMs can effectively replace closed-source LLMs for solving company cybersecurity problems, I will be using external providers that give me access to models hosted on their platforms. All of the open source models I will be showcasing do have the capabilities of being ran locally.
-
-The downside to running models locally is the limit of available compute power to the common individual. For example, my computer hardware specs are:
-
-\begin{itemize}
-  \item \textbf{CPU}: AMD Ryzen 9 9950X 16-Core Processor
-  \item \textbf{RAM}: 4 sticks of 32 GB DDR6 RAM running at 3600 MT/s
-  \item \textbf{GPU}: NVIDIA GeForce RTX 3090 (24 GB VRAM)
-\end{itemize}
-
-To show the limits of compute, I will go through trying to run one of these models locally on my own computer. The model I will attempt to run is GLM 4.5-air.
-
-
-
 \subsection{Using External Providers}
+
+For my experimentation on whether open-source LLMs can effectively replace closed-source LLMs for solving company cybersecurity problems, I will be using external providers that give me access to models hosted on their platforms. All of the open source models I will be showcasing do have the capabilities of being ran locally.
 
 \subsubsection{Openrouter}
 
@@ -583,63 +564,220 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
     \end{subfigure}
 
     \caption{Continue.dev features}
-    \label{fig:4_5}
+        \label{fig:4_5}
+    \end{figure}
+
+    \subsection{Challenge Files and Standardized Prompt for All LLMs}
+    In table ~\ref{tab:models}, the different LLMs that will be used in these experiments are displayed. These LLMs will be provided a standard script to solve each individual challenge:
+
+    \subsubsection{SmileyCTF 2025 -- SaaS (Cryptography)}
+    For the cryptography challenge Saas from SmileyCTF 2025, the following prompt will be used:
+
+    "The code files you have been given contain a cryptography CTF challenge. Can you explain this challenge, and write me a file called solve.py that will solve it? Use pwntools in your solver script to interact with the remote server to get the flag. Assume that the remote server is on 127.0.0.1."
+\begin{figure}[H]
+\dirtree{%
+  .1 saas/.
+  .2 chall.py.
+  .2 docker-compose.yml.
+  .2 Dockerfile.
+  .2 flag.txt.
+}
+\caption{SaaS challenge file structure provided to LLMs}
+\label{fig:crypto-saas-structure}
 \end{figure}
+    
+    
 
-\subsection{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
+    \begin{table}[H]
+\centering
+\caption{Classification of LLMs by Reasoning Transparency}
+\label{tab:models}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Model} & \textbf{Thinking Type} & \textbf{Release Date} \\
+\midrule
+GLM-4.6                & Explicit & 2025-09 \\
+Kimi K2 Thinking       & Explicit & 2025-11 \\
+DeepSeek R1            & Explicit & 2025-01 \\
+Kimi K2 0905           & Implicit & 2025-09 \\
+Deepseek V3.2 Speciale & Explicit & 2025-12 \\
+\midrule
+GPT-5.1                & Implicit & 2025-11 \\
+Claude Sonnet 4.5      & Implicit & 2025-02 \\
+Grok 4.1               & Implicit & 2025-11 \\
+Gemini 3.0 Pro Preview & Implicit & 2025-11 \\
+GPT-5.1 Codex          & Implicit & 2025-11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+  
+  I will use the following prompt to all Artificial Intelligence models in the 
+  
+    \section{Results}
+    
+    \subsection{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
+
+    \subsubsection{Challenge Code}
+    
+    Consider the following cryptography challenge from SmileyCTF 2025 which is a difficult challenge for beginners in the cryptography space to solve, but somewhat simple for experts. During the CTF, this challenge was marked as "easy" difficulty, but SmileyCTF is generally known to have very difficult challenges.
+\begin{figure}[H]
+\centering
+
+\begin{minipage}[t]{0.46\textwidth}
+\lstinputlisting[
+    style=mypython,
+    caption={Challenge file: \texttt{chall.py}},
+    basicstyle=\ttfamily\tiny
+]{CodeFiles/crypto/saas/chall.py}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.46\textwidth}
+\lstinputlisting[
+    style=mypython,
+    caption={Official Solve Script: \texttt{solve.py}},
+    basicstyle=\ttfamily\tiny
+]{CodeFiles/solvers/saas/solve.py}
+\end{minipage}
+
+\end{figure}
+\newpage
+
+    
+    \subsubsection*{Solution Approach}
+    
+    See appendix A for the complete solution. The solution involves several mathematical steps that require understanding of number theory concepts:
+    
+    \begin{enumerate}
+      \item Repeatedly query the oracle with a fixed number (not necessarily a quadratic residue) to collect several modular roots.
+      \item Compute \(n\) as the sum of the smallest and largest of the four roots.
+      \item Use the difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover \(p\) (and then compute \(q=n/p\)).
+      \item Compute \(d = e^{-1} \pmod{\varphi(n)}\) and then \(s \equiv m^d \pmod{n}\). Submit this to the server and retrieve the flag.
+    \end{enumerate}
+
+    \subsubsection*{LLM Results}
+
+    Open source and proprietary models will be tested in this section. The first 4 models are the different open-source models to test.
+    
+    \section{Further Work: Model Context Protocol in Cybersecurity and CTFs}
+    
+    The Model Context Protocol (MCP) is a standardized interface that allows Large Language Models (LLMs) to securely call functions from external systems. Introduced as an open-source standard in 2024, MCP serves as a universal translator between AI models and security tools, enabling seamless integration and automation of cybersecurity workflows. This protocol transforms how AI systems can access, control, and analyze cybersecurity infrastructure, opening new possibilities for both offensive and defensive security operations.
+    
+    HackTheBox has developed an open-source MCP implementation that provides LLMs with access to CTF challenges and automated testing scripts within a structured environment. Their implementation offers a standardized interface for connecting AI assistants to the HackTheBox platform functionality, enabling seamless integration of AI into CTF competitions and cybersecurity training \parencite{hackthebox_mcp_server}. This open-source solution demonstrates how MCP can be practically applied to cybersecurity challenges by creating a controlled environment where LLMs can interact with pre-configured cybersecurity challenges, rather than providing direct access to external security tools like Nmap or Burp Suite.
+    
+    According to HackTheBox, "MCP provides a standardized way to plug modern capabilities into competitions, making CTFs a closer mirror of real-world security operations" \parencite{hackthebox_mcp_server}. This standardization is particularly valuable when comparing open-source and closed-source models, as it ensures that any performance differences are due to the models' inherent capabilities rather than environmental factors or implementation advantages.
+
+    \subsection{Standardized Testing Environments for Model Evaluation}
+    
+    The integration of MCP servers with CTF platforms creates a standardized testing environment that provides more accurate evaluation for both open-source and closed-source models. Unlike traditional benchmarks that may favor one model architecture over another, MCP-based CTF environments establish a level playing field where all models interact with identical challenges through the same standardized interface. This approach addresses several key limitations in current LLM evaluation methodologies:
+    
+    \begin{itemize}
+      \item \textbf{Consistent Environment Access}: All models access the same challenges through identical MCP interfaces, eliminating variations in tool access or implementation differences that could skew results
+      \item \textbf{Reproducible Testing Conditions}: MCP servers ensure that each model faces the same challenge parameters, time constraints, and resource limitations, enabling fair comparison between open and closed-source systems
+      \item \textbf{Real-World Complexity}: Unlike simplified benchmarks, CTF challenges accessed through MCP maintain the complexity and multi-step nature of actual cybersecurity scenarios, providing more meaningful performance metrics
+      \item \textbf{Transparent Evaluation}: The standardized nature of MCP interfaces allows researchers to observe exactly how each model approaches problems, making it easier to identify strengths and weaknesses across model types
+    \end{itemize}
+        
+    The emerging ecosystem of MCP servers for cybersecurity evaluation includes several specialized implementations that further enhance standardized testing:
+    
+    \begin{itemize}
+      \item \textbf{Kali MCP Server}: Acts as a bridge to Kali Linux environments, allowing AI models to access professional security tools through a standardized interface, ensuring consistent tool access regardless of whether the model is open-source or closed-source \parencite{wh0am1232024kalimcpserver}
+      \item \textbf{DeepEval MCP Framework}: Provides standardized evaluation primitives for testing LLM performance across different cybersecurity tasks, enabling fair comparison between model architectures \parencite{confident2024deepeval}
+    \end{itemize}
+    
+    These implementations demonstrate how MCP servers create a unified testing methodology that applies equally to both open-source and closed-source models. By providing identical interfaces to the same security tools and challenges, MCP environments eliminate the advantages that might arise from proprietary integrations or specialized optimizations that favor one model type over another.
+    
+    \subsection{Implications for Open-Source vs. Closed-Source Evaluation}
+    
+    The standardized MCP environments with CTFs provide a more accurate evaluation methodology that applies equally to both open-source and closed-source models. This approach addresses several inherent biases in traditional benchmarking:
+    
+    \begin{itemize}
+      \item \textbf{Eliminating Access Advantages}: Closed-source models often have privileged access to specialized tools or APIs that may not be available to open-source models. MCP servers ensure all models access the same tools through the same interface
+      \item \textbf{Consistent Resource Allocation}: By standardizing computational resources and time limits through MCP interfaces, evaluations prevent scenarios where well-funded proprietary models have inherent advantages over community-developed open-source alternatives
+      \item \textbf{Transparent Methodology}: The open nature of MCP specifications allows researchers to understand exactly how models interact with security tools, making it possible to identify whether performance differences are due to model architecture or implementation details
+    \end{itemize}
+    
+    This standardized approach is particularly relevant to the broader thesis theme about open-source versus closed-source models. As demonstrated throughout this research, the gap between these model types is often smaller than traditional benchmarks suggest when evaluated under fair conditions. MCP-based CTF environments provide exactly those fair conditions, allowing for a more nuanced understanding of each model type's true capabilities.
+    
+    Research from HackTheBox indicates that "nearly two-thirds (63\%) of CTF participants are already using AI tools like ChatGPT or GitHub Copilot during events" \parencite{hackthebox_mcp_server}, suggesting that the integration of AI into cybersecurity workflows is already widespread. The standardized MCP approach simply ensures that this integration can be evaluated and compared systematically across different model types.
+    
+    \subsection{Real-World Implementations}
+    
+    HackTheBox's MCP server exemplifies how this technology is transforming cybersecurity education and practice. Their implementation provides AI assistants with programmatic access to the HackTheBox platform's CTF challenges and automated testing environments, enabling seamless integration of AI into CTF competitions and cybersecurity training \parencite{hackthebox_mcp_server}.
+    
+    According to Hackthebox:
+    
+    "We’re laying the foundation for a new mode of competition where speed, automation, and machine intelligence become part of the game. At Hack The Box we always champion “learning by doing,” and now “doing” includes leveraging advanced tools and AI to enhance your capabilities, automate tedious processes, and reinvent how challenges are approached" \parencite{hackthebox_mcp_server}.
+    
+    Key capabilities include:
+    
+    \begin{itemize}
+      \item \textbf{Seamless Event Management}: Access and explore all available CTF events via the MCP interface, with real-time visibility into participants and active challenges
+      \item \textbf{Performance Insights}: Monitor team scores, retrieve challenge solve data, and analyze success rates to guide strategy
+      \item \textbf{Challenge Lifecycle Automation}: Start, stop, and monitor challenge environments automatically, reducing manual operations during high-stakes competitions
+      \item \textbf{Flag Submission}: Submit flags through validated, automated processes with immediate feedback and scoring confirmation
+    \end{itemize}
+    
+    The impact of this integration is already evident in the cybersecurity community, with research showing that nearly two-thirds (63\%) of CTF participants are already using AI tools like ChatGPT or GitHub Copilot during events \parencite{hackthebox_mcp_server}. MCP support lowers entry barriers for newcomers while enabling experienced practitioners to automate tedious processes and focus on strategic thinking.
+    
+    \subsection{Structured Interfaces for Security Tools}
+    
+    MCPs provide standardized interfaces for a wide range of cybersecurity tools, transforming how AI systems interact with security infrastructure. The "Awesome Cyber Security MCP" repository catalogs numerous implementations that demonstrate the protocol's versatility across the security domain \parencite{awesome_cyber_security_mcp}:
+    
+    \begin{itemize}
+      \item \textbf{Web Application Security}: Burp Suite MCP enables AI-driven web application testing by connecting Burp Suite to AI clients through MCP, allowing for automated vulnerability discovery and exploitation \parencite{burp_suite_mcp}
+      \item \textbf{Network Reconnaissance}: Tools like Nuclei MCP provide fast vulnerability scanning capabilities, while Shodan MCP offers AI access to comprehensive internet-connected device search and CVE information
+      \item \textbf{Reverse Engineering}: Ghidra MCP and IDA Pro MCP enable autonomous binary analysis, allowing AI systems to perform complex reverse engineering tasks with minimal human guidance
+      \item \textbf{Password Recovery}: Hashcat MCP provides natural language-driven hash cracking, making password recovery more accessible to security analysts
+      \item \textbf{Threat Intelligence}: VirusTotal MCP and AlienVault OTX MCP enable AI systems to query threat intelligence feeds and analyze malicious indicators
+    \end{itemize}
+    
+    These implementations demonstrate how MCPs create a unified ecosystem where AI can leverage specialized security tools without requiring deep knowledge of each tool's specific interface or implementation details.
+    
+    \subsection{Security Implications and Benefits}
+    
+    The adoption of MCPs in cybersecurity presents both significant benefits and important security considerations. On the positive side, MCPs enable:
+    
+    \begin{itemize}
+      \item \textbf{Enhanced Automation}: Security teams can automate routine tasks, allowing human experts to focus on strategic decision-making and complex threat analysis
+      \item \textbf{Improved Consistency}: AI-driven processes reduce human error and ensure consistent application of security methodologies
+      \item \textbf{Accelerated Response Times}: Automated threat detection and response can significantly reduce the dwell time of attackers in compromised systems
+      \item \textbf{Democratization of Expertise}: Advanced security capabilities become accessible to organizations with limited cybersecurity resources
+    \end{itemize}
+    
+    However, these benefits come with security considerations that must be addressed:
+    
+    \begin{itemize}
+      \item \textbf{Privilege Escalation Risks}: MCPs that provide AI systems with control over security tools could potentially be exploited by malicious actors if not properly secured
+      \item \textbf{Data Privacy Concerns}: As noted by PortSwigger, "Any data sent to external tools via this extension is subject to their data processing policies" \parencite{burp_suite_mcp}, raising potential confidentiality issues
+      \item \textbf{Dependency Risks}: Over-reliance on AI-driven security operations could reduce human expertise over time and create new vulnerabilities if AI systems fail
+      \item \textbf{Adversarial Attacks}: AI systems connected to security infrastructure through MCPs could be targeted by adversaries seeking to manipulate security operations
+    \end{itemize}
+    
+    Organizations implementing MCPs must establish robust security frameworks that include proper authentication, authorization, logging, and monitoring to mitigate these risks while maximizing the benefits of AI-driven security operations.
+\newpage
 
 
+\printbibliography
 
-\subsubsection{Solution}
+\newpage
 
-The server selects primes \(p, q\) with
-\[
-p \equiv q \equiv 3 \pmod{4}, \qquad n = p q, \qquad e = 65537.
-\]
-For an input \(x \in \mathbb{Z}_n\), the oracle computes square roots modulo each prime and combines them using the Chinese Remainder Theorem (CRT). Concretely, let
-\[
-r_p \equiv x^{\frac{p+1}{4}} \pmod{p}, 
-\qquad 
-r_q \equiv x^{\frac{q+1}{4}} \pmod{q},
-\]
-which are square roots of \(x\) modulo \(p\) and \(q\) respectively (when \(x\) is a quadratic residue).  
-The oracle picks independent signs \(a, b \in \{\pm 1\}\) and returns the CRT recombination
-\[
-r = a\, r_p A + b\, r_q B \pmod{n},
-\]
-where the CRT basis elements are defined as
-\[
-A \equiv q \cdot (q^{-1} \bmod p),
-\qquad
-B \equiv p \cdot (p^{-1} \bmod q),
-\]
-so that
-\[
-A \equiv 1 \pmod{p}, \quad A \equiv 0 \pmod{q},
-\qquad
-B \equiv 0 \pmod{p}, \quad B \equiv 1 \pmod{q}.
-\]
+\appendix
+\section{Mathematical Derivation for SmileyCTF 2025 SaaS Challenge}
 
-Thus the oracle's output is one of the four values
-\[
-R = \{\, a r_p A + b r_q B \pmod{n} \;:\; a,b\in\{\pm 1\} \,\}.
-\]
+\subsection*{Square roots modulo \(n\) and factor recovery}
 
-\subsubsection*{Square roots modulo \(n\) and factor recovery}
-
-Let \(p\) and \(q\) be distinct primes with \(p \equiv q \equiv 3 \pmod{4}\), and let \(n = pq\).  
+Let \(p\) and \(q\) be distinct primes with \(p \equiv q \equiv 3 \pmod{4}\), and let \(n = pq\).
 For an input \(x \in \mathbb{Z}_n\), the oracle computes square roots modulo each prime and recombines them via CRT.
 
-\subsubsection*{Square roots modulo a prime}
+\subsection*{Square roots modulo a prime}
 
-Let \(p\) be an odd prime with \(p \equiv 3 \pmod{4}\).  
-If \(x\) is a quadratic residue modulo \(p\) (and \(x \not\equiv 0 \pmod{p}\)), Euler’s criterion gives
+Let \(p\) be an odd prime with \(p \equiv 3 \pmod{4}\).
+If \(x\) is a quadratic residue modulo \(p\) (and \(x \not\equiv 0 \pmod{p}\)), Euler's criterion gives
 \[
 x^{\frac{p-1}{2}} \equiv 1 \pmod{p}.
 \]
 Consider
 \[
-\left(x^{\frac{p+1}{4}}\right)^2 
+\left(x^{\frac{p+1}{4}}\right)^2
 = x^{\frac{p+1}{2}}
 = x \cdot x^{\frac{p-1}{2}}
 \equiv x \cdot 1
@@ -662,7 +800,7 @@ r_p^2 \equiv \pm x \pmod{p},
 r_q^2 \equiv \pm x \pmod{q}.
 \]
 
-\subsubsection*{CRT recombination of square roots modulo \(n\)}
+\subsection*{CRT recombination of square roots modulo \(n\)}
 
 Let
 \[
@@ -672,8 +810,8 @@ r_q \equiv x^{\frac{q+1}{4}} \pmod{q},
 \]
 and define
 \[
-A \equiv q(q^{-1} \bmod p), 
-\qquad 
+A \equiv q(q^{-1} \bmod p),
+\qquad
 B \equiv p(p^{-1} \bmod q).
 \]
 Then for independent signs \(a,b\in\{\pm1\}\),
@@ -681,7 +819,7 @@ Then for independent signs \(a,b\in\{\pm1\}\),
 r_{a,b} \equiv a r_p A + b r_q B \pmod{n}.
 \]
 
-\subsubsection*{Recovering \(n\) from complementary roots}
+\subsection*{Recovering \(n\) from complementary roots}
 
 If two roots correspond to opposite signs, say \((a,b)\) and \((-a,-b)\), then
 \[
@@ -696,7 +834,7 @@ Thus, after sorting the four roots,
 \boxed{n = r_{\min} + r_{\max}}.
 \]
 
-\subsubsection*{Extracting a prime via a GCD}
+\subsection*{Extracting a prime via a GCD}
 
 Consider a pair differing only in the \(q\)-component:
 \[
@@ -719,18 +857,18 @@ Thus,
 \[
 \boxed{\gcd(r_{a,b}-r_{a,-b},\, n) = p}.
 \]
-Similarly, a pair differing only in the \(p\)-component yields \(q\).  
+Similarly, a pair differing only in the \(p\)-component yields \(q\).
 In practice, collect the four roots and compute:
 \[
 p = \gcd(r_i - r_j,\, n), \qquad q = \frac{n}{p}.
 \]
 
-\subsubsection*{Forge the signature}
+\subsection*{Forge the signature}
 
 Once \(p\) and \(q\) are known:
 \[
-\varphi(n) = (p-1)(q-1), 
-\qquad 
+\varphi(n) = (p-1)(q-1),
+\qquad
 d \equiv e^{-1} \pmod{\varphi(n)}.
 \]
 Given the challenge value \(m\), the RSA signature is:
@@ -740,18 +878,7 @@ Given the challenge value \(m\), the RSA signature is:
 
 Submitting \(s\) satisfies \(s^e \equiv m \pmod{n}\) and reveals the flag.
 
-\subsubsection*{Summary of steps used in the exploit}
-
-\begin{enumerate}
-  \item Repeatedly query the oracle with a fixed number (not necessarily a quadratic residue — the solver uses \(x = 3\)) to collect several modular roots.
-  \item Compute \(n\) as the sum of the smallest and largest of the four roots.
-  \item Use the difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover \(p\) (and then compute \(q=n/p\)).
-  \item Compute \(d = e^{-1} \pmod{\varphi(n)}\) and then \(s \equiv m^d \pmod{n}\).
-\end{enumerate}
-
-\newpage
-\printbibliography
-
 \end{document}
+
 
 
