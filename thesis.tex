@@ -501,7 +501,7 @@ According to DigAI Lab,
 
 "Implicit reasoning inherently suppresses intermediate outputs, rendering the underlying computation process opaque. This lack of visibility prevents us from knowing whether the model is performing genuine multi-step reasoning or merely exploiting memorized knowledge and spurious correlations."\parencite{li2025implicitreasoninglargelanguage}
 
-Overall, Explicit reasoning generally provides more fine-grained logical structure, which can reduce hallucination in multi-step tasks by forcing the model to commit to intermediate steps. Implicit reasoning, by contrast, relies on latent internal states, which can make errors harder to detect and can lead to confident but incorrect conclusions. In the methods of this paper, both explicit and implicit thinking models will be tested. Explicit-thinking models may be particularly valuable for cybersecurity organizations because they provide detailed, step-by-step reasoning traces. These logs allow analysts to audit how the model arrived at its conclusions, verify that each step is logically sound, and detect any hallucinations or incorrect assumptions that may influence the final answer.
+Explicit reasoning generally provides more fine-grained logical structure, which can reduce hallucination in multi-step tasks by forcing the model to commit to intermediate steps. Implicit reasoning, by contrast, relies on latent internal states, which can make errors harder to detect and can lead to confident but incorrect conclusions. In the methods of this paper, both explicit and implicit thinking models will be tested. Explicit-thinking models may be particularly valuable for cybersecurity organizations because they provide detailed, step-by-step reasoning traces. These logs allow analysts to audit how the model arrived at its conclusions, verify that each step is logically sound, and detect any hallucinations or incorrect assumptions that may influence the final answer.
 
 In this paper, we will be testing a model that utilizes lots of explicit thinking (Kimi K2 Thinking) against a model that uses implicit thinking (Kimi K2 0905). Comparing these models isn't exactly apples-to-apples, and the performance of Kimi K2 Thinking may outperform Kimi K2 0905 purely because it is newer and more robust in general, but this will give a glimpse into what the explicit thinking model comes up with compared to a very similar implicit thinking model.
 
@@ -614,13 +614,11 @@ GPT-5.1                & Implicit & 2025-11 \\
 Claude Sonnet 4.5      & Implicit & 2025-02 \\
 Grok 4.1 Fast          & Implicit & 2025-11 \\
 Gemini 3.0 Pro Preview & Implicit & 2025-11 \\
-GPT-5.1 Codex          & Implicit & 2025-11 \\
+Claude Opus 4.5          & Implicit & 2025-11 \\
 \bottomrule
 \end{tabular}
 \end{table}
-  
-  I will use the following prompt to all Artificial Intelligence models in the 
-  
+
     \section{Results}
     
     \subsection{SmileyCTF 2025 -- SaaS (Cryptography)\quad\textit{(Difficulty: Easy)}}
@@ -640,8 +638,6 @@ GPT-5.1 Codex          & Implicit & 2025-11 \\
     See appendix A for the complete solution, along with a high level overview of the approach needed to solve the problem. This challenge was provided by SmileyCTF \parencite{ctf-gg_smileyctf-2025_2025}. The official challenge code can be found on \href{https://github.com/ctf-gg/smileyctf-2025/blob/main/crypto/saas/chall/chall.py}{SmileyCTF's github}.
 
     \subsubsection*{LLM Results}
-
-    Open source and proprietary models will be tested in this section. The first 4 models are the different open-source models to test.
 
     \subsection{Hackthebox - MSS (Cryptography)\quad\textit{(Difficulty: Easy)}}
 
@@ -713,7 +709,9 @@ GPT-5.1 Codex          & Implicit & 2025-11 \\
 
     \subsection{Future Benchmarks}
 
-    The performance of LLMs on CTFs must be further studied by giving LLMs access to this an MCP protocol that allows them to analyze the challenge, and test different solutions autonomously. The future of benchmarking these LLMs in order to determine how well they are able to solve CTF challenges should involve MCP access to a wide variety of tools and services. These tools allow the LLM to solve a problem similarly to how a human would, and therefore they can better demonstrate how they can solve real-world challenges instead of giving the LLM the code of the challenge in a prompt with no added context, and asking it to solve it. When an LLM doesn't know how to solve a problem, it can try different approaches by using a variety of tools like Ghidra for vulnerable binaries, and Burp Suite for testing vulnerable web applications. 
+    The performance of LLMs on CTFs must be further studied by giving LLMs access to this an MCP protocol that allows them to analyze the challenge, and test different solutions autonomously. The future of benchmarking these LLMs in order to determine how well they are able to solve CTF challenges should involve MCP access to a wide variety of tools and services. These tools allow the LLM to solve a problem similarly to how a human would, and therefore they can better demonstrate how they can solve real-world challenges instead of giving the LLM the code of the challenge in a prompt with no added context, and asking it to solve it. When an LLM doesn't know how to solve a problem, it can try different approaches by using a variety of tools like Ghidra for vulnerable binaries, and Burp Suite for testing vulnerable web applications.
+
+    Some LLMs are better at agentic tasks that involve using tools to help them solve problems. These LLMs should have full capabilities to use this to their advantage. Tools like web searching, Ghidra, Burp Suite, and much more are tools that a human would use during a typical CTF to figure out how to solve the problem. LLMs should be given the same tools in order to make an accurate portrayal of which open-source and proprietary LLMs are the best at solving these challenges, and the best at solving cyber security related issues in general.
 \newpage
 
 
@@ -892,9 +890,9 @@ For this challenge, we:
 
 \subsection*{Implementation Approach}
 
-\subsection*{Solution Code}
+\subsection*{Solution}
 
-View \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/htb/solver.py}{HackTheBox's github} for the official solution to the problem.
+View \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/htb/solver.py}{HackTheBox's github solution code} for the official solution, and \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/README.md}{HackTheBox's github solution explanation} for an official explanation on how to solve the problem.
 
 \end{document}
 
