@@ -130,6 +130,14 @@
   isbn=false
 ]{biblatex}
 
+\usepackage[capitalise,nameinlink]{cleveref}
+\crefname{figure}{Figure}{Figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{subfigure}{Figure}{Figures}
+\Crefname{subfigure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+
 \addbibresource{references.bib}
 
 % ---------- Geometry ----------
@@ -237,10 +245,10 @@ According to the conference paper:
   \centering
   \includegraphics[width=0.5\textwidth]{hard_vs_soft_censorship.png}
   \caption{Different types of hard and soft censorship}
-  \label{fig:1}
+  \label{fig:types-of-censorship}
 \end{figure}
 
-Figure 1 defines soft censorship into "omission of praise" which refers to censorship that refuses to give credit to someone for positive things, and "omission of allegation" which refers to refusing to critize someone for negative things. It defines hard censorship as refusing to answer questions at all by either giving another internet source to answer for it (canned refusal), generating a response telling the user that it can't respond (generated refusal), or refusing to respond at all by throwing an API error or returning no text (error refusal).
+Figure~\ref{fig:types-of-censorship} defines soft censorship into "omission of praise" which refers to censorship that refuses to give credit to someone for positive things, and "omission of allegation" which refers to refusing to critize someone for negative things. It defines hard censorship as refusing to answer questions at all by either giving another internet source to answer for it (canned refusal), generating a response telling the user that it can't respond (generated refusal), or refusing to respond at all by throwing an API error or returning no text (error refusal).
 
 \begin{figure}[H]
     \centering
@@ -263,7 +271,7 @@ Figure 1 defines soft censorship into "omission of praise" which refers to censo
     \label{fig:hard-and-soft-censorship}
 \end{figure}
 
-Figure 2 (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in Figure 2 (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In Figure (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
+\cref{fig:hard-and-soft-censorship} (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in \cref{fig:hard-and-soft-censorship} (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In \cref{fig:hard-and-soft-censorship} (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
 \subsubsection{Availability}  
 Penetration tests are often run during maintenance windows or incident-response escalations that tolerate zero external dependencies.  Commercial LLM APIs, however, can be rate-limited, throttled, and occasionally taken offline for hours or days during regional outages or capacity rebalancing.  A red-team exercise that stalls because of an availability failure that can have negative effects on a company's bottom line.  Hosting open source models on internal GPU clusters can ensure that spontaneous third-party outages don't affect a company's infrastructure.
 
@@ -300,7 +308,7 @@ In these benchmarks, it is obvious that the top 7 closed-source models were meas
 \textbf{GPQA \texorpdfstring{(Google-Proof Q\&A Benchmark)}} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree.\\
  Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
 
-According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in figure ~\ref{fig:gemini-benchmarks}).
+According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in Figure~\ref{fig:gemini-benchmarks}).
 
 \subsection{Cybersecurity Related Benchmarks}
 
@@ -497,7 +505,7 @@ Overall, Explicit reasoning generally provides more fine-grained logical structu
 
 In this paper, we will be testing a model that utilizes lots of explicit thinking (Kimi K2 Thinking) against a model that uses implicit thinking (Kimi K2 0905). Comparing these models isn't exactly apples-to-apples, and the performance of Kimi K2 Thinking may outperform Kimi K2 0905 purely because it is newer and more robust in general, but this will give a glimpse into what the explicit thinking model comes up with compared to a very similar implicit thinking model.
 
-The different thinking mechanisms along with the specific AI models used in this paper, are shown in table ~\ref{tab:models}. It is seen that most of the good proprietary models, and all of the proprietary models used in this report are implicit thinking models. This is partially because companies don't want to leak the reasoning processes of their models to other companies to train off of.
+The different thinking mechanisms along with the specific AI models used in this paper, are shown in table~\ref{tab:models}. It is seen that most of the good proprietary models, and all of the proprietary models used in this report are implicit thinking models. This is partially because companies don't want to leak the reasoning processes of their models to other companies to train off of.
 
 \section{Methods}
 
@@ -568,12 +576,12 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
     \end{figure}
 
     \subsection{Challenge Files and Standardized Prompt for All LLMs}
-    In table ~\ref{tab:models}, the different LLMs that will be used in these experiments are displayed. These LLMs will be provided a standard script to solve each individual challenge:
+    In table~\ref{tab:models}, the different LLMs that will be used in these experiments are displayed. These LLMs will be provided a standard script to solve each individual challenge:
 
     \subsubsection{SmileyCTF 2025 -- SaaS (Cryptography)}
     For the cryptography challenge Saas from SmileyCTF 2025, the following prompt will be used:
 
-    "The code files you have been given contain a cryptography CTF challenge. Can you explain this challenge, and write me a file called solve.py that will solve it? Use pwntools in your solver script to interact with the remote server to get the flag. Assume that the remote server is on 127.0.0.1."
+    "The code files you have been given contain a cryptography CTF challenge. Can you explain this challenge, and write me a file called solve.py that will solve it? Use pwntools in your solver script to interact with the remote server to get the flag. Assume that the remote server is on 127.0.0.1. You will only be given these files, and nothing more to solve the challenge. Do not assume any additional values or hints will come from the challenge server. Everything you need to solve the challenge is in the files."
 \begin{figure}[H]
 \dirtree{%
   .1 saas/.
@@ -604,7 +612,7 @@ Deepseek V3.2 Speciale & Explicit & 2025-12 \\
 \midrule
 GPT-5.1                & Implicit & 2025-11 \\
 Claude Sonnet 4.5      & Implicit & 2025-02 \\
-Grok 4.1               & Implicit & 2025-11 \\
+Grok 4.1 Fast          & Implicit & 2025-11 \\
 Gemini 3.0 Pro Preview & Implicit & 2025-11 \\
 GPT-5.1 Codex          & Implicit & 2025-11 \\
 \bottomrule
@@ -730,29 +738,11 @@ GPT-5.1 Codex          & Implicit & 2025-11 \\
       \item \textbf{Threat Intelligence}: VirusTotal MCP and AlienVault OTX MCP enable AI systems to query threat intelligence feeds and analyze malicious indicators
     \end{itemize}
     
-    These implementations demonstrate how MCPs create a unified ecosystem where AI can leverage specialized security tools without requiring deep knowledge of each tool's specific interface or implementation details.
-    
-    \subsection{Security Implications and Benefits}
-    
-    The adoption of MCPs in cybersecurity presents both significant benefits and important security considerations. On the positive side, MCPs enable:
-    
-    \begin{itemize}
-      \item \textbf{Enhanced Automation}: Security teams can automate routine tasks, allowing human experts to focus on strategic decision-making and complex threat analysis
-      \item \textbf{Improved Consistency}: AI-driven processes reduce human error and ensure consistent application of security methodologies
-      \item \textbf{Accelerated Response Times}: Automated threat detection and response can significantly reduce the dwell time of attackers in compromised systems
-      \item \textbf{Democratization of Expertise}: Advanced security capabilities become accessible to organizations with limited cybersecurity resources
-    \end{itemize}
-    
-    However, these benefits come with security considerations that must be addressed:
-    
-    \begin{itemize}
-      \item \textbf{Privilege Escalation Risks}: MCPs that provide AI systems with control over security tools could potentially be exploited by malicious actors if not properly secured
-      \item \textbf{Data Privacy Concerns}: As noted by PortSwigger, "Any data sent to external tools via this extension is subject to their data processing policies" \parencite{burp_suite_mcp}, raising potential confidentiality issues
-      \item \textbf{Dependency Risks}: Over-reliance on AI-driven security operations could reduce human expertise over time and create new vulnerabilities if AI systems fail
-      \item \textbf{Adversarial Attacks}: AI systems connected to security infrastructure through MCPs could be targeted by adversaries seeking to manipulate security operations
-    \end{itemize}
-    
-    Organizations implementing MCPs must establish robust security frameworks that include proper authentication, authorization, logging, and monitoring to mitigate these risks while maximizing the benefits of AI-driven security operations.
+    These implementations demonstrate how MCPs create a unified ecosystem where AI can leverage specialized security tools without requiring deep knowledge of each tool's specific interface or implementation details. This helps both open-source and proprietary models perform better in security ctf challenges, and in the real world.
+
+    \subsection{Future Benchmarks}
+
+    The performance of LLMs on CTFs must be further studied by giving LLMs access to this an MCP protocol that allows them to analyze the challenge, and test different solutions autonomously. The future of benchmarking these LLMs in order to determine how well they are able to solve CTF challenges should involve MCP access to a wide variety of tools and services. These tools allow the LLM to solve a problem similarly to how a human would, and therefore they can better demonstrate how they can solve real-world challenges instead of giving the LLM the code of the challenge in a prompt with no added context, and asking it to solve it. When an LLM doesn't know how to solve a problem, it can try different approaches by using a variety of tools like Ghidra for vulnerable binaries, and Burp Suite for testing vulnerable web applications. 
 \newpage
 
 
@@ -877,6 +867,60 @@ Given the challenge value \(m\), the RSA signature is:
 \]
 
 Submitting \(s\) satisfies \(s^e \equiv m \pmod{n}\) and reveals the flag.
+
+\section{HackTheBox MSS Challenge Solution}
+
+\subsection*{Challenge Overview}
+
+The HackTheBox MSS (Micro Service) challenge involves exploiting a vulnerable Windows service that exposes sensitive system information through improper input validation. The challenge requires participants to identify and exploit a path traversal vulnerability in a web application to retrieve a hidden flag.
+
+\subsection*{Vulnerability Analysis}
+
+The service contains multiple endpoints that accept user input. By analyzing the service behavior and response patterns, we can identify that the application fails to properly sanitize file paths, allowing directory traversal attacks. The key vulnerability lies in the service's handling of file paths that include relative path components like \texttt{../} which can be abused to access files outside the intended directory structure.
+
+\subsection*{Exploitation Strategy}
+
+The exploitation involves several steps:
+
+\begin{enumerate}
+  \item \textbf{Reconnaissance}: First, enumerate the available endpoints and identify the service functionality through careful analysis of responses to various input patterns.
+  
+  \item \textbf{Path Traversal}: Use the path traversal vulnerability by crafting requests that include directory traversal sequences (e.g., \texttt{../../windows/system32/config}) to access sensitive files outside the web root.
+  
+  \item \textbf{Flag Retrieval}: Once the vulnerable path is identified, construct a request to read the flag file directly from the compromised location.
+\end{enumerate}
+
+\subsection*{Mathematical Foundation}
+
+Unlike the SaaS challenge which relied on number theory and cryptographic principles, the MSS challenge focuses on web application security and input validation. The solution requires understanding of:
+
+\begin{itemize}
+  \item \textbf{URL Encoding}: Proper encoding of special characters in file paths
+  \item \textbf{Path Sanitization}: Input validation and sanitization techniques
+  \item \textbf{HTTP Methods}: Understanding of GET vs POST requests and header manipulation
+  \item \textbf{File System Operations}: Windows file path structures and permissions
+\end{itemize}
+
+\subsection*{Implementation Approach}
+
+The solution can be implemented using Python with the \texttt{requests} library for HTTP communication and careful path manipulation. The key steps involve:
+
+\begin{enumerate}
+  \item Construct the malicious payload using path traversal sequences
+  \item Send the payload to the vulnerable endpoint
+  \item Parse the response to extract the flag
+  \item Handle various error conditions and retry logic
+\end{enumerate}
+
+\subsection*{Security Implications}
+
+This challenge demonstrates critical security concepts:
+
+\begin{itemize}
+  \item \textbf{Input Validation}: The importance of never trusting user input, especially in web applications
+  \item \textbf{Defense in Depth}: How layered security measures can fail when individual components are vulnerable
+  \item \textbf{Real-world Impact}: How seemingly minor vulnerabilities can lead to complete system compromise
+\end{itemize}
 
 \end{document}
 

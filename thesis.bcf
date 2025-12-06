@@ -3117,7 +3117,6 @@
     <bcf:citekey order="45" intorder="1">hackthebox_mcp_server</bcf:citekey>
     <bcf:citekey order="46" intorder="1">awesome_cyber_security_mcp</bcf:citekey>
     <bcf:citekey order="47" intorder="1">burp_suite_mcp</bcf:citekey>
-    <bcf:citekey order="48" intorder="1">burp_suite_mcp</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">
