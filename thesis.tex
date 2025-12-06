@@ -638,6 +638,29 @@ Claude Opus 4.5          & Implicit & 2025-11 \\
     See appendix A for the complete solution, along with a high level overview of the approach needed to solve the problem. This challenge was provided by SmileyCTF \parencite{ctf-gg_smileyctf-2025_2025}. The official challenge code can be found on \href{https://github.com/ctf-gg/smileyctf-2025/blob/main/crypto/saas/chall/chall.py}{SmileyCTF's github}.
 
     \subsubsection*{LLM Results}
+    
+    \begin{table}[H]
+\centering
+\caption{SmileyCTF SaaS Challenge Results by Model}
+\label{tab:saas-results}
+\begin{tabular}{lc}
+\toprule
+\textbf{Model} & \textbf{Challenge Solved} \\
+\midrule
+GLM-4.6                & $\times$ \\
+Kimi K2 Thinking       & \checkmark \\
+DeepSeek R1            & $\times$ \\
+Kimi K2 0905           & $\times$ \\
+Deepseek V3.2 Speciale & $\times$ \\
+\midrule
+GPT-5.1                & $\times$ \\
+Claude Sonnet 4.5      & $\times$ \\
+Grok 4.1 Fast          & \checkmark \\
+Gemini 3.0 Pro Preview & $\times$ \\
+Claude Opus 4.5        & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
 
     \subsection{Hackthebox - MSS (Cryptography)\quad\textit{(Difficulty: Easy)}}
 
