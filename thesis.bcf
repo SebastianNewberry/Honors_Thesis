@@ -3107,16 +3107,17 @@
     <bcf:citekey order="35" intorder="1">google_gemini3_2025</bcf:citekey>
     <bcf:citekey order="36" intorder="1">cot_thinking_2022</bcf:citekey>
     <bcf:citekey order="37" intorder="1">li2025implicitreasoninglargelanguage</bcf:citekey>
-    <bcf:citekey order="38" intorder="1">hackthebox_mcp_server</bcf:citekey>
-    <bcf:citekey order="39" intorder="1">hackthebox_mcp_server</bcf:citekey>
-    <bcf:citekey order="40" intorder="1">wh0am1232024kalimcpserver</bcf:citekey>
-    <bcf:citekey order="41" intorder="1">confident2024deepeval</bcf:citekey>
-    <bcf:citekey order="42" intorder="1">hackthebox_mcp_server</bcf:citekey>
-    <bcf:citekey order="43" intorder="1">hackthebox_mcp_server</bcf:citekey>
+    <bcf:citekey order="38" intorder="1">ctf-gg_smileyctf-2025_2025</bcf:citekey>
+    <bcf:citekey order="39" intorder="1">uni_ctf_2023</bcf:citekey>
+    <bcf:citekey order="40" intorder="1">hackthebox_mcp_server</bcf:citekey>
+    <bcf:citekey order="41" intorder="1">hackthebox_mcp_server</bcf:citekey>
+    <bcf:citekey order="42" intorder="1">wh0am1232024kalimcpserver</bcf:citekey>
+    <bcf:citekey order="43" intorder="1">confident2024deepeval</bcf:citekey>
     <bcf:citekey order="44" intorder="1">hackthebox_mcp_server</bcf:citekey>
     <bcf:citekey order="45" intorder="1">hackthebox_mcp_server</bcf:citekey>
-    <bcf:citekey order="46" intorder="1">awesome_cyber_security_mcp</bcf:citekey>
-    <bcf:citekey order="47" intorder="1">burp_suite_mcp</bcf:citekey>
+    <bcf:citekey order="46" intorder="1">hackthebox_mcp_server</bcf:citekey>
+    <bcf:citekey order="47" intorder="1">awesome_cyber_security_mcp</bcf:citekey>
+    <bcf:citekey order="48" intorder="1">burp_suite_mcp</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">

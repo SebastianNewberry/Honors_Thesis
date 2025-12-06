@@ -631,40 +631,26 @@ GPT-5.1 Codex          & Implicit & 2025-11 \\
 \begin{figure}[H]
 \centering
 
-\begin{minipage}[t]{0.46\textwidth}
-\lstinputlisting[
-    style=mypython,
-    caption={Challenge file: \texttt{chall.py}},
-    basicstyle=\ttfamily\tiny
-]{CodeFiles/crypto/saas/chall.py}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.46\textwidth}
-\lstinputlisting[
-    style=mypython,
-    caption={Official Solve Script: \texttt{solve.py}},
-    basicstyle=\ttfamily\tiny
-]{CodeFiles/solvers/saas/solve.py}
-\end{minipage}
-
 \end{figure}
 \newpage
 
     
     \subsubsection*{Solution Approach}
     
-    See appendix A for the complete solution. The solution involves several mathematical steps that require understanding of number theory concepts:
-    
-    \begin{enumerate}
-      \item Repeatedly query the oracle with a fixed number (not necessarily a quadratic residue) to collect several modular roots.
-      \item Compute \(n\) as the sum of the smallest and largest of the four roots.
-      \item Use the difference of an appropriate pair and \(\gcd(\cdot,n)\) to recover \(p\) (and then compute \(q=n/p\)).
-      \item Compute \(d = e^{-1} \pmod{\varphi(n)}\) and then \(s \equiv m^d \pmod{n}\). Submit this to the server and retrieve the flag.
-    \end{enumerate}
+    See appendix A for the complete solution, along with a high level overview of the approach needed to solve the problem. This challenge was provided by SmileyCTF \parencite{ctf-gg_smileyctf-2025_2025}. The official challenge code can be found on \href{https://github.com/ctf-gg/smileyctf-2025/blob/main/crypto/saas/chall/chall.py}{SmileyCTF's github}.
 
     \subsubsection*{LLM Results}
 
     Open source and proprietary models will be tested in this section. The first 4 models are the different open-source models to test.
+
+    \subsection{Hackthebox - MSS (Cryptography)\quad\textit{(Difficulty: Easy)}}
+
+    \subsubsection{Challenge Code}
+
+    This challenge was provided by Hackthebox \parencite{uni_ctf_2023}. See appendix B, for a high level approach on the general solution to solve the problem. The solution can be found on \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/htb/solver.py}{HackTheBox's github}. The challenge code is only available to VIP subscribers on the platform.
     
+    \subsubsection*{LLM Results}
+
     \section{Discussion: Model Context Protocol in Cybersecurity and CTFs}
     
     The Model Context Protocol (MCP) is a standardized interface that allows Large Language Models (LLMs) to securely call functions from external systems. Introduced as an open-source standard in 2024, MCP serves as a universal translator between AI models and security tools, enabling seamless integration and automation of cybersecurity workflows. This protocol transforms how AI systems can access, control, and analyze cybersecurity infrastructure, opening new possibilities for both offensive and defensive security operations.
@@ -692,21 +678,7 @@ GPT-5.1 Codex          & Implicit & 2025-11 \\
     \end{itemize}
     
     These implementations demonstrate how MCP servers create a unified testing methodology that applies equally to both open-source and closed-source models. By providing identical interfaces to the same security tools and challenges, MCP environments eliminate the advantages that might arise from proprietary integrations or specialized optimizations that favor one model type over another.
-    
-    \subsection{Implications for Open-Source vs. Closed-Source Evaluation}
-    
-    The standardized MCP environments with CTFs provide a more accurate evaluation methodology that applies equally to both open-source and closed-source models. This approach addresses several inherent biases in traditional benchmarking:
-    
-    \begin{itemize}
-      \item \textbf{Eliminating Access Advantages}: Closed-source models often have privileged access to specialized tools or APIs that may not be available to open-source models. MCP servers ensure all models access the same tools through the same interface
-      \item \textbf{Consistent Resource Allocation}: By standardizing computational resources and time limits through MCP interfaces, evaluations prevent scenarios where well-funded proprietary models have inherent advantages over community-developed open-source alternatives
-      \item \textbf{Transparent Methodology}: The open nature of MCP specifications allows researchers to understand exactly how models interact with security tools, making it possible to identify whether performance differences are due to model architecture or implementation details
-    \end{itemize}
-    
-    This standardized approach is particularly relevant to the broader thesis theme about open-source versus closed-source models. As demonstrated throughout this research, the gap between these model types is often smaller than traditional benchmarks suggest when evaluated under fair conditions. MCP-based CTF environments provide exactly those fair conditions, allowing for a more nuanced understanding of each model type's true capabilities.
-    
-    Research from HackTheBox indicates that "nearly two-thirds (63\%) of CTF participants are already using AI tools like ChatGPT or GitHub Copilot during events" \parencite{hackthebox_mcp_server}, suggesting that the integration of AI into cybersecurity workflows is already widespread. The standardized MCP approach simply ensures that this integration can be evaluated and compared systematically across different model types.
-    
+
     \subsection{Real-World Implementations}
     
     HackTheBox's MCP server exemplifies how this technology is transforming cybersecurity education and practice. Their implementation provides AI assistants with programmatic access to the HackTheBox platform's CTF challenges and automated testing environments, enabling seamless integration of AI into CTF competitions and cybersecurity training \parencite{hackthebox_mcp_server}.
@@ -735,7 +707,6 @@ GPT-5.1 Codex          & Implicit & 2025-11 \\
       \item \textbf{Network Reconnaissance}: Tools like Nuclei MCP provide fast vulnerability scanning capabilities, while Shodan MCP offers AI access to comprehensive internet-connected device search and CVE information
       \item \textbf{Reverse Engineering}: Ghidra MCP and IDA Pro MCP enable autonomous binary analysis, allowing AI systems to perform complex reverse engineering tasks with minimal human guidance
       \item \textbf{Password Recovery}: Hashcat MCP provides natural language-driven hash cracking, making password recovery more accessible to security analysts
-      \item \textbf{Threat Intelligence}: VirusTotal MCP and AlienVault OTX MCP enable AI systems to query threat intelligence feeds and analyze malicious indicators
     \end{itemize}
     
     These implementations demonstrate how MCPs create a unified ecosystem where AI can leverage specialized security tools without requiring deep knowledge of each tool's specific interface or implementation details. This helps both open-source and proprietary models perform better in security ctf challenges, and in the real world.
@@ -868,59 +839,62 @@ Given the challenge value \(m\), the RSA signature is:
 
 Submitting \(s\) satisfies \(s^e \equiv m \pmod{n}\) and reveals the flag.
 
-\section{HackTheBox MSS Challenge Solution}
+\subsection*{Solution Code}
 
-\subsection*{Challenge Overview}
+\lstinputlisting[
+    style=mypython,
+    caption={Example solve script},
+]{CodeFiles/solvers/saas/solve.py}
 
-The HackTheBox MSS (Micro Service) challenge involves exploiting a vulnerable Windows service that exposes sensitive system information through improper input validation. The challenge requires participants to identify and exploit a path traversal vulnerability in a web application to retrieve a hidden flag.
+\section{Mathematical Derivation for HackTheBox MSS Challenge Solution}
 
-\subsection*{Vulnerability Analysis}
-
-The service contains multiple endpoints that accept user input. By analyzing the service behavior and response patterns, we can identify that the application fails to properly sanitize file paths, allowing directory traversal attacks. The key vulnerability lies in the service's handling of file paths that include relative path components like \texttt{../} which can be abused to access files outside the intended directory structure.
-
-\subsection*{Exploitation Strategy}
-
-The exploitation involves several steps:
-
+The server provides two main operations:
 \begin{enumerate}
-  \item \textbf{Reconnaissance}: First, enumerate the available endpoints and identify the service functionality through careful analysis of responses to various input patterns.
-  
-  \item \textbf{Path Traversal}: Use the path traversal vulnerability by crafting requests that include directory traversal sequences (e.g., \texttt{../../windows/system32/config}) to access sensitive files outside the web root.
-  
-  \item \textbf{Flag Retrieval}: Once the vulnerable path is identified, construct a request to read the flag file directly from the compromised location.
+  \item \texttt{get\_share(x)}: Returns a share of the secret as a point on a polynomial of degree 30
+  \item \texttt{encrypt\_flag()}: Returns the AES-encrypted flag using SHA256 of the key
 \end{enumerate}
+
+The polynomial is defined as:
+\[f(x) = a_0 + a_1x + a_2x^2 + \ldots + a_{30}x^{30}\]
+where \(a_0 = \text{key}\).
+
+The challenge limits us to only 19 shares, but the polynomial has degree 30, making direct polynomial interpolation impossible.
 
 \subsection*{Mathematical Foundation}
 
-Unlike the SaaS challenge which relied on number theory and cryptographic principles, the MSS challenge focuses on web application security and input validation. The solution requires understanding of:
+The key insight is that if we evaluate the polynomial modulo \(x\), we get:
+\[f(x) \equiv a_0 \pmod{x}\]
 
-\begin{itemize}
-  \item \textbf{URL Encoding}: Proper encoding of special characters in file paths
-  \item \textbf{Path Sanitization}: Input validation and sanitization techniques
-  \item \textbf{HTTP Methods}: Understanding of GET vs POST requests and header manipulation
-  \item \textbf{File System Operations}: Windows file path structures and permissions
-\end{itemize}
+This means for any prime \(p\):
+\[\text{key} \equiv f(p) \pmod{p}\]
+
+By collecting multiple such congruences with different primes, we can use the Chinese Remainder Theorem (CRT) to recover the original key.
+
+\subsection*{Chinese Remainder Theorem Application}
+
+Given a system of congruences:
+\[\begin{cases}
+x \equiv a_1 \pmod{m_1} \\
+x \equiv a_2 \pmod{m_2} \\
+\vdots \\
+x \equiv a_n \pmod{m_n}
+\end{cases}\]
+
+where \(m_1, m_2, \ldots, m_n\) are pairwise coprime, CRT guarantees a unique solution modulo \(M = m_1m_2\ldots m_n\).
+
+For this challenge, we:
+\begin{enumerate}
+  \item Select 19 different 15-bit primes
+  \item For each prime \(p_i\), compute \(a_i = f(p_i) \bmod p_i\)
+  \item Apply CRT to find the unique solution \(x\) such that \(x \equiv a_i \pmod{p_i}\) for all \(i\)
+  \item Ensure the product of all primes exceeds the key size p (256 bits)
+\end{enumerate}
 
 \subsection*{Implementation Approach}
 
-The solution can be implemented using Python with the \texttt{requests} library for HTTP communication and careful path manipulation. The key steps involve:
+\subsection*{Solution Code}
 
-\begin{enumerate}
-  \item Construct the malicious payload using path traversal sequences
-  \item Send the payload to the vulnerable endpoint
-  \item Parse the response to extract the flag
-  \item Handle various error conditions and retry logic
-\end{enumerate}
-
-\subsection*{Security Implications}
-
-This challenge demonstrates critical security concepts:
-
-\begin{itemize}
-  \item \textbf{Input Validation}: The importance of never trusting user input, especially in web applications
-  \item \textbf{Defense in Depth}: How layered security measures can fail when individual components are vulnerable
-  \item \textbf{Real-world Impact}: How seemingly minor vulnerabilities can lead to complete system compromise
-\end{itemize}
+View \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/htb/solver.py}{HackTheBox's github} for the official solution to the problem.
 
 \end{document}
 
