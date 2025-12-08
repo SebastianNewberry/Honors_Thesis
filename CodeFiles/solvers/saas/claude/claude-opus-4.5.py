@@ -82,7 +82,6 @@ def solve():
     log.info(f"Signature s = {s}")
 
     conn.sendlineafter(b">>>", str(s).encode())
-    
     # Get flag
     response = conn.recvall().decode()
     print(response)

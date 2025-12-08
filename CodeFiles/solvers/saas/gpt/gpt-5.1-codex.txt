@@ -1,1 +1,0 @@
-I'm piecing together how to use gcd computations of expressions like (r - a) and (r + a) from multiple square root oracle outputs to isolate factors p or q. By querying many values and analyzing gcds pairwise, I hope to identify shared prime divisors without knowing n, relying on randomness and sign patterns in modular roots to reveal the primes from integer gcds.

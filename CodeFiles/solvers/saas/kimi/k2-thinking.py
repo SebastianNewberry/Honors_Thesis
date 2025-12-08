@@ -36,7 +36,6 @@ def factor_modulus(n, pairs):
     return None
 
 def main():
-    # Connect to the service
     conn = remote('127.0.0.1', 5000)
     
     # Stage 1: Collect pairs from the oracle
@@ -86,7 +85,6 @@ def main():
     
     flag = conn.recvline().strip().decode()
     print(f"[+] Flag: {flag}")
-    
     conn.close()
 
 if __name__ == "__main__":
