@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from pwn import *
-
 HOST = "127.0.0.1"
 PORT = 5000
 
@@ -10,32 +9,25 @@ def solve():
     # We need to factor n using the square root oracle
     # If we get sqrt(x) where x is a quadratic residue, we can factor n
     # by computing gcd(sqrt(x) - x^(1/2), n) for different roots
-    
     # First, let's gather information to factor n
     # Send 1 to get sqrt(1) which could be ±1 or other roots
-    
     # Better approach: use the oracle to factor n
     # If we query with some value and get back a square root r,
     # then r^2 ≡ x (mod n). If we find two different roots r1, r2
     # of the same value where r1 ≠ ±r2 (mod n), then gcd(r1-r2, n) gives a factor
-    
     # Query with a known square to try to factor n
     results = []
     test_val = 4  # 2^2
-    
     for _ in range(50):
         conn.sendline(str(test_val).encode())
         r = int(conn.recvline().split()[1].strip())
         results.append(r)
-    
     # Try to find n by looking at differences
     # r^2 ≡ 4 (mod n), so r^2 - 4 ≡ 0 (mod n)
     from math import gcd
-    
     candidates = []
     for r in results:
         candidates.append(r * r - 4)
-    
     # n divides all of these
     n = candidates[0]
     for c in candidates[1:]:

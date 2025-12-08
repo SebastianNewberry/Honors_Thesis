@@ -623,7 +623,6 @@ Claude Opus 4.5          & Implicit & 2025-11 \\
     See appendix A for the complete solution, along with a high level overview of the approach needed to solve the problem. This challenge was provided by SmileyCTF \parencite{ctf-gg_smileyctf-2025_2025}. The official challenge code can be found on \href{https://github.com/ctf-gg/smileyctf-2025/blob/main/crypto/saas/chall/chall.py}{SmileyCTF's github}.
 
     \subsubsection{LLM Results}
-    
     \begin{table}[H]
 \centering
 \caption{SmileyCTF SaaS Challenge Results by Model}
@@ -654,9 +653,7 @@ Claude Opus 4.5        & \checkmark \\
 \begin{minipage}[t]{0.48\textwidth}
 \centering
 \textbf{Claude Opus 4.5}
-
 \lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/claude/claude-opus-4.5.py}
-
 \vspace{0.3em}
 \footnotesize
 \textbf{Reasoning:} Query the oracle repeatedly with the value $4$. Since $r^2 \equiv 4 \pmod{n}$, we have $n \mid (r^2 - 4)$. Taking $\gcd$ values from multiple such outputs recovers $n$. For factoring, if we obtain a non-trivial root $r$ satisfying $r \not\equiv \pm 2 \pmod{n}$, then $\gcd(r-2, n)$ or $\gcd(r+2, n)$ yields a factor. Once $p$ and $q$ are known, compute $d = e^{-1} \bmod \varphi(n)$ and then compute the signature $s = m^{d} \bmod n$.
