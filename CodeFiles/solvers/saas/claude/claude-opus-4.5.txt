@@ -1,0 +1,5 @@
+Recovering n: Query the oracle multiple times with a known square (4). Since r² ≡ 4 (mod n), we have n | (r² - 4). Taking GCD of multiple such values recovers n.
+
+Factoring n: The oracle returns random square roots. For x = 4, the roots are ±2 and two other "non-trivial" roots. If we get a non-trivial root r where r ≢ ±2 (mod n), then gcd(r-2, n) or gcd(r+2, n) gives a factor.
+
+Forging the signature: Once we have p and q, we compute d = e⁻¹ mod φ(n) and the signature s = m^d mod n.

@@ -1,0 +1,19 @@
+The Solution Strategy
+Since we have access to an Oracle that provides square roots modulo $n$, we can factor $n$ using a known attack on Rabin Cryptosystems.
+
+Leak $n$:
+
+We don't initially know $n$. However, if we send a small number $x$ (like 2), the server returns $r = \sqrt{x} \pmod n$.
+This implies $r^2 - x = k \cdot n$.
+By doing this for two numbers (e.g., 2 and 3) and taking the Greatest Common Divisor (GCD) of the results, we can recover $n$.
+Factor $n$:
+
+Pick a random value $u$.
+Calculate $y = u^2 \pmod n$.
+Send $y$ to the Oracle. It will return a root $z$.
+Since $y$ was generated from $u$, we know $u$ is a root. The Oracle returns $z$, which is also a root.
+There is a 50% chance that $z \not\equiv \pm u \pmod n$. If this happens, $\gcd(u - z, n)$ will reveal one of the prime factors ($p$ or $q$).
+Sign the Message:
+
+Once we have $p$ and $q$, we calculate the private key $d$.
+We sign the challenge message $m$ and get the flag.

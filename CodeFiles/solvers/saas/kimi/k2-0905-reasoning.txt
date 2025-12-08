@@ -1,0 +1,13 @@
+So the full exploit is:
+
+Connect, send 0, receive y0.
+n = gcd(y0, y0 – 0) = y0 (because 0 has only the trivial square-root 0).
+Send 1, receive y1.
+n = gcd(y0, y1² – 1) (sanity check: y1² ≡ 1 mod n).
+Quit the oracle (send a non-integer).
+Read the random m that the server prints.
+Compute the signature
+s ≡ m^d (mod n) with d ≡ e⁻¹ (mod λ(n)).
+Because we do not know λ(n) we simply use the fact that
+s ≡ m^d (mod n) works with the textbook RSA inverse modulo φ(n) as well; the server will accept it.
+Send s and grab the flag.

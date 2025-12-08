@@ -1,0 +1,3 @@
+Query f(1) multiple times to recover n: the square roots of 1 mod n are 1, n-1, and two mixed CRT combinations. The maximum output is n-1, so n = max(y) + 1. Query ~100 times to hit n-1 with overwhelming probability, and verify all y^2 ≡ 1 mod n.
+Use the oracle to factor n: pick random k, query f(k^2 mod n) to get y (a random square root), compute d = gcd(|k - y|, n). With probability 1/2, d is p or q.
+Compute phi(n) = (p-1)(q-1), d = e^{-1} mod phi(n), s = m^d mod n, and submit s.

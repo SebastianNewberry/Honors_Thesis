@@ -1,0 +1,1 @@
+The solution takes 16 square roots of m to compute m^(1/65536), which due to the relationship e = 2^16 + 1 should give us a valid signature (possibly after trying a few times due to random sign flips from the oracle).

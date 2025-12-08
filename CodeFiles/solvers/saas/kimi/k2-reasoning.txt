@@ -1,0 +1,6 @@
+Attack Steps:
+Query oracle with random a² values to collect (a, y) pairs
+Compute n = gcd(y₁²-a₁², y₂²-a₂², ...) from multiple pairs
+Factor n using gcd(a-y, n) from any useful pair
+Compute private exponent d = e⁻¹ mod φ(n)
+Sign the challenge message: s = mᵈ mod n
