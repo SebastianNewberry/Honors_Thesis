@@ -37,48 +37,39 @@ def factor_modulus(n, pairs):
 
 def main():
     conn = remote('127.0.0.1', 5000)
-    
     # Stage 1: Collect pairs from the oracle
     print("[*] Collecting pairs from oracle...")
     pairs = collect_pairs(conn, 15)
-    
     # Stage 2: Break the loop to get the challenge message
     print("[*] Breaking oracle loop...")
     conn.sendline("break")  # Any non-integer string triggers exception
-    
     # Receive the challenge message
     conn.recvuntil(b"m = ")
     m = int(conn.recvline().strip())
     print(f"[+] Challenge message: {m}")
-    
     # Stage 3: Compute modulus n
     print("[*] Computing modulus n...")
     n = compute_modulus(pairs)
     print(f"[+] Recovered n: {n}")
-    
     # Stage 4: Factor n
     print("[*] Factoring n...")
     factors = factor_modulus(n, pairs)
     if not factors:
         print("[-] Failed to factor n")
         return
-    
     p, q = factors
     print(f"[+] Factored: p={p}, q={q}")
     assert p * q == n, "Factorization verification failed"
-    
     # Stage 5: Compute RSA private key
     print("[*] Computing private exponent...")
     e = 0x10001
     phi = (p - 1) * (q - 1)
     d = inverse(e, phi)
     print("[+] Private exponent computed")
-    
     # Stage 6: Sign the message
     print("[*] Signing message...")
     s = pow(m, d, n)
     print(f"[+] Signature: {s}")
-    
     # Stage 7: Submit signature and get flag
     print("[*] Submitting signature...")
     conn.sendline(str(s).encode())
