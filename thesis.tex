@@ -156,9 +156,9 @@
 \predate{\begin{center}\small}
 \postdate{\end{center}}
 
-\title{Can Open-Source Large Language Models Replace Proprietary Closed-Source Models? An Empirical Study of CTF Problem-Solving Accuracy}
+\title{Can Open-Source Large Language Models Replace Proprietary Models in Cybersecurity? An Empirical Study of CTF Problem-Solving Accuracy}
 \author{Sebastian Newberry}
-\date{\today}
+\date{December 15\textsuperscript{th}, 2025}
 
 
 
@@ -187,7 +187,7 @@
 
 
 \begin{abstract}
-  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally retain an edge. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) often can match peers in coding and web-agent tasks (e.g. SWE-bench Verified), especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 shines on code but not always on long-form reasoning, and Kimi K2 leads some agentic evaluations yet lags top closed-source models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity issues. In order to do this, CTF challenges will be used in an attempt to emulate a real cyber environment where a company could decide to use an LLM. A CTF (capture the flag) challenge is a problem where users are tasked to exploit vulnerabilities in a practice cybersecurity environment. Once the user is successful in exploiting the practice environment, they receive a string of text which is the flag. Many times these challenges can have multiple solutions, but they almost all require complex thinking and problem-solving abilities to work through them. These CTF challenges are all multi-step problems that require lots of thinking and effort to solve correctly. Measuring the ability for LLMs to solve cybersecurity challenges presents a unique trial for them to apply mathematic and programming knowledge to the real world.
+  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally  over open source LLMs. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) can often match peers in coding and web-agent tasks, especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 excels at coding but not always at long-form reasoning, and Kimi K2 leads in some agentic evaluations yet lags behind top closed-source models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity issues. To accomplish this, capture the flag (CTF) challenges will be used in an attempt to emulate a real-world cyber environment where a company could decide to use an LLM. In a CTF challenge, users are tasked with challenges to exploit vulnerabilities in a simulated environment. Once the user is successful in exploiting the controlled environment, they receive a string of text which is the flag. The challenges vary in complexity and often have multiple solutions, but they almost all require complex thinking and problem-solving abilities to work through them. The CTF challenge in this report is a multi-step problems that requires lots of thinking and effort to solve correctly. By measuring the ability for LLMs to solve cybersecurity challenges, we create a unique opportunity to use them as tools for defending against real-world cyber threats.
 \end{abstract}
 
 \clearpage
@@ -211,27 +211,28 @@ The CIA triad stands for Confidentiality, Integrity, and Availability. According
   \item \textbf{Availability}: Guarantees that data, systems, and resources remain accessible to authorized users when needed, minimizing downtime and disruptions.
 \end{itemize}
 
-Overall, this serves as a guide to companies on to how to properly protect, maintain, and upkeep internal systems, networks, and customer data policies. 
+Overall, this serves as a guide for companies on to how to properly protect, maintain, and protect internal systems, networks, and customer data policies. 
 
 \subsubsection{Confidentiality}  
-When a provider fine-tunes or prompts a model on customer data, that content may be stored or reused for future training. Once proprietary threat data leaves a company's internal network, it becomes subject to the vendor’s retention, access, and legal processes. This poses unique risks for both blue and red teams. Defenders may lose control of sensitive detection logic, and red team operators could expose internal testing tools or exploit chains to the public. Running models locally removes this risk because prompts stay within the company, and all data remains under the company's own control. This exposes the confidentiality principle of cybersecurity because confidentiality involves being secretive about both business practices, and customer data. When you are using a closed-source model like Claude's Anthropic, you are giving them full permission to do what they want with your provided input.
+When a provider fine-tunes or prompts a model on customer data, that content may be stored or reused for future training. Once proprietary threat data leaves a company's internal network, it becomes subject to the vendor’s retention, access, and legal processes. This poses unique risks for both blue and red teams. Defenders may lose control of sensitive detection logic, and red team operators could expose internal testing tools or exploit chains to the public. Running models locally removes this risk because prompts stay within the company, and all data remains under the company's control. This supports the confidentiality principle of cybersecurity because confidentiality involves protecting both business practices and customer data. When a company uses a closed-source model like Claude's Anthropic, they are giving the LLM provider full permission to do what they want with that company's provided input.
 
 According to the \textit{Anthropic terms of service}, \begin{quote}We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings. Even if you opt out, we will use Materials for model training when: (1) you provide Feedback to us regarding any Materials, or (2) your Materials are flagged for safety review to improve our ability to detect harmful content, enforce our policies, or advance our safety research.\end{quote} \parencite{anthropic_consumer_terms}
 
+This snippet from the Anthropic terms of service shows that this company retains the right to use your data to train its proprietary models. Other closed source providers like OpenAI and xAI have similar policies. They phrase their terms of service to make it appear like clients can easily opt out of any sort of data training, but the conditions offer no reliable way to ensure data protection. Using an open source LLM prevents this risk.
 
-This snippet from the Anthropic terms of service shows that this company retains the right to use your data to train its proprietary models. Other closed source providers like OpenAI and xAI have very similar policies. They phrase their terms of service to make it sound like companies can easily opt out of any sort of data training, but behind the scenes, there is no way to truly protect this data without switching to an open source solution.
 \subsubsection{Integrity}
+
 Large language model providers face intense pressure to moderate and censor model outputs when user interactions trigger sensitive issues. For instance, in November 2025, a lawsuit alleged that ChatGPT encouraged a user to commit suicide rather than redirect him to proper care, spurring public backlash and regulatory scrutiny \parencite{chatgpt_suicide_lawsuit}.
 
-Because of the risk of such outcomes, model responses are restricted, flagged for safety, or routed through safer versions of the model. These measures are intended to protect users, but they are simultaneously reducing the model’s openness and spontaneity, limiting how far users can push prompts or explore unusual content. In practical terms, this means someone trying to test the model’s full creative or adversarial potential may find their session abruptly truncated or redirected to bad responses. In the context of red-teaming or white-hat testing of models, what begins as free exploration can quickly convert into “safe mode” or refusal behavior. Often times when end users ask these AI models things like, \enquote{Can you help me hack into this system?} The AI will refuse because it is unethical. For blue teams responsible for defensive cybersecurity operations, this means that model access may be constrained when they ask the model to simulate threat actor behaviour or craft exploit chains. The system may refuse or degrade answers, citing policy violation. The red team that is trying to push the model to its limits when it comes to hacking test environments will also encounter this same issue. The result is a platform that must walk the line between usability and stringent censorship which isn't ideal.
+Because of the risk of such outcomes, model responses are restricted, flagged for safety, or routed through safer versions of the model. These measures are intended to protect users, but they are simultaneously reducing the model’s openness and spontaneity, limiting how far users can customize prompts or explore unusual content. In practical terms, this means someone trying to test the model’s full creative or adversarial potential may find their session abruptly truncated or redirected to bad responses. In the context of red-teaming, what begins as free exploration can quickly convert into “safe mode” or refusal behavior. Often times when end users ask these AI models things like, \enquote{Can you help me hack into this system?} The AI will refuse because the request is unethical. For blue teams responsible for defensive cybersecurity operations, this means that model access may be constrained when they ask the model to simulate threat actor behaviour or generate exploit chains. The system may refuse or degrade answers, citing policy violation. The red team that is trying to push the model to its limits when it comes to hacking test environments will also encounter this same limitation. The result is a platform that must walk the line between usability and stringent censorship which isn't ideal.
 
-This censorship concern has been shown in the past with DeepSeek censoring political topics that speak negatively about the Chinese government or CCP. Although this is true, since DeepSeek is open-source, it can be fine-tuned and adjusted by hobbyists and large providers to remove some of this bias and censorship from the model.
+This censorship concern has been shown in the past with DeepSeek censoring political content critical of the Chinese government or CCP. However, because DeepSeek is open-source, hobbyists and organizations can fine-tune and adjust the model to remove or reduce bias and censorship.
 
-According to Wired, \enquote{Hugging Face is also working on a project called Open R1 based on DeepSeek’s model. This project aims to 'deliver a fully open-source framework,' Yakefu says. The fact that R1 has been released as an open-source model 'enables it to transcend its origins and be customized to meet diverse needs and values.'} \parencite{wired_deepseek_censorship}
+According to Wired, \enquote{Hugging Face is also working on a project called Open R1 based on DeepSeek’s model. This project aims to \enquote{deliver a fully open-source framework,} Yakefu says. The fact that R1 has been released as an open-source model \enquote{enables it to transcend its origins and be customized to meet diverse needs and values.}} \parencite{wired_deepseek_censorship}
 
-In this conference paper by Noels, the authors of this paper thoroughly studied the censorship of AI by classifying it into soft and hard censorship \parencite{noels_llm_censorship}:
+In this conference paper by Noels, the authors thoroughly studied the censorship of AI by classifying it into soft and hard censorship \parencite{noels_llm_censorship}:
 
-The authors of this conference paper conducted an experiment in order to determine how drastic censorship is in LLMs. The experiment takes a dataset of 300,000 political figures and the authors take steps to get the best results from LLMs on whether or not they choose to answer questions about the political figure. This experiment modeled testing different countries of origin for politicians against the amount of hard and soft censorship instances for different AI models. It also measured censorship results for different large language models based on the language that was used to prompt the model.
+The authors of this conference paper conducted an experiment in order to determine how prominent censorship is in LLMs. The experiment evaluated a dataset of 300,000 descriptions of political figures by LLMs filtered to 2,371 persons with occupations of social activists, political scientists, diplomats, politicians, and military personnel. The authors reviewed how the LLMs answered questions about these figures, comparing instances of hard and soft censorship across countries of origin and different models. They also also measured censorship results for different large language models based on the phrasing that was used to prompt the model.
 
 According to the conference paper:
 
@@ -246,7 +247,7 @@ According to the conference paper:
   \label{fig:types-of-censorship}
 \end{figure}
 
-Figure~\ref{fig:types-of-censorship} defines soft censorship into \enquote{omission of praise" which refers to censorship that refuses to give credit to someone for positive things, and "omission of allegation} which refers to refusing to critize someone for negative things. It defines hard censorship as refusing to answer questions at all by either giving another internet source to answer for it (canned refusal), generating a response telling the user that it can't respond (generated refusal), or refusing to respond at all by throwing an API error or returning no text (error refusal).
+Figure~\ref{fig:types-of-censorship} categorizes soft censorship into two types: \enquote{omission of praise} which refers to censorship that withholds credit for a positive contribution to accepted standards, and \enquote{omission of allegation} which refers to refusing to acknowledge a negative action or standard violation. It defines hard censorship as refusing to answer prompts by either giving another internet source to refer to (canned refusal), generating a response telling the user that it can't respond (generated refusal), or explicitly refusing to respond generating an API error or returning no text (error refusal).
 
 \begin{figure}[H]
     \centering
@@ -269,9 +270,11 @@ Figure~\ref{fig:types-of-censorship} defines soft censorship into \enquote{omiss
     \label{fig:hard-and-soft-censorship}
 \end{figure}
 
-\cref{fig:hard-and-soft-censorship} (a) and (b) demonstrate the results of the experiment that these authors conducted. In these results, it is shown that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language shows hard censorship in \cref{fig:hard-and-soft-censorship} (a). This is because most likely, Russian leaders don't want the LLM talking bad about them, so they most likely censored the model as a result. In \cref{fig:hard-and-soft-censorship} (b), it is shown that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The results out of this study also show that soft censorship occurs much more often than hard censorship which is a bad thing for users of these artificial intelligence platforms because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
-\subsubsection{Availability}  
-Penetration tests are often run during maintenance windows or incident-response escalations that tolerate zero external dependencies.  Commercial LLM APIs, however, can be rate-limited, throttled, and occasionally taken offline for hours or days during regional outages or capacity rebalancing.  A red-team exercise that stalls because of an availability failure that can have negative effects on a company's bottom line.  Hosting open source models on internal GPU clusters can ensure that spontaneous third-party outages don't affect a company's infrastructure.
+\cref{fig:hard-and-soft-censorship} (a) and (b) demonstrate the results of the experiment that these authors conducted. These results demonstrate that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language. This model shows hard censorship in \cref{fig:hard-and-soft-censorship} (a). This is most likely due to Russian authorities restricting the model from returning negative content about political leaders.\cref{fig:hard-and-soft-censorship} (b) shows that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The study also shows that soft censorship occurs more often than hard censorship. This poses a problem for users because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
+
+\subsubsection{Availability}
+
+Penetration tests are often run during maintenance windows or incident-response escalations that tolerate zero external dependencies.  Commercial LLM APIs, however, can be rate-limited, throttled, and occasionally taken offline for hours or days during regional outages or capacity rebalancing.  A red-team exercise that stalls because of an availability failure can have negative effects on a company's bottom line.  Hosting open source models on internal GPU clusters can ensure that spontaneous third-party outages don't impact or negatively affect a company's infrastructure.
 
 \section{Literature Review}
 
@@ -281,7 +284,7 @@ To determine whether a new model represents an improvement, AI researchers rely 
 
 \subsubsection{MMLU, GPQA, HLE, and SWE Bench-Verified}
 
-\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark mostly consist of multiple choice questions that mostly only required knowledge to solve and not reasoning. Figure 3 shows some examples of what a question coming from the MMLU benchmark looks like:
+\textbf{Massive Multitask Language Understanding (MMLU)} is a benchmark focused on measuring the ability for language models to complete multi-task problems in a variety of domains. MMLU-PRO was designed to improve on this benchmark. The questions in the original MMLU benchmark consist of multiple choice questions that primarily only required knowledge to solve and not reasoning. Figure 3 shows some examples of what a question coming from the MMLU benchmark looks like:
 
 \begin{figure}[H]
     \centering
@@ -812,13 +815,6 @@ Claude Opus 4.5 and Kimi K2 Thinking both successfully recovered $n$ by exploiti
 Grok 4.1 Fast was the only AI that was able to solve this challenge in one attempt. It used a clever observation about the square roots of 1 modulo $n$: since $r^2 \equiv 1 \pmod{n}$, the possible roots are $1$, $n-1$, and two mixed CRT combinations. By querying $f(1)$ multiple times and observing that the maximum output value was always $n-1$, it deduced that $n = \max(y) + 1$. This elegant approach works because for any square root $r$ of 1, either $r$ or $n-r$ must be a valid root, and since the server outputs values in the range $[0, n-1]$, the maximum observed value directly reveals $n$.
 
 All three of these solutions are slightly different in how they recovered $n$, and they all recovered $p$ and $q$ the same way that the solution in appendix A does it. They all use addition or subtraction on two distinct roots on $p$ and $q$ to factor $n$. These unique methods of finding $n$ show how ctf challenges can be solved in different ways, and present solid benchmarks for LLMs due to their wide variety of solutions once the LLM is able to figure out the main idea of how to solve the problem.
-\subsection{Hackthebox - MSS (Cryptography)\quad\textit{(Difficulty: Easy)}}
-
-    \subsubsection{Challenge Code}
-
-    This challenge was provided by Hack The Box \parencite{uni_ctf_2023}. See appendix B, for a high level approach on the general solution to solve the problem. The solution can be found on \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/htb/solver.py}{HackTheBox's github}. The challenge code is only available to VIP subscribers on the platform.
-    
-    \subsubsection*{LLM Results}
 
     \section{Discussion: Model Context Protocol in Cybersecurity and CTFs}
     
@@ -1016,56 +1012,6 @@ Submitting \(s\) satisfies \(s^e \equiv m \pmod{n}\) and reveals the flag.
     style=mypython,
     caption={Example solve script},
 ]{CodeFiles/solvers/saas/solve.py}
-
-\section{Mathematical Derivation for HackTheBox MSS Challenge Solution}
-
-The server provides two main operations:
-\begin{enumerate}
-  \item \texttt{get\_share(x)}: Returns a share of the secret as a point on a polynomial of degree 30
-  \item \texttt{encrypt\_flag()}: Returns the AES-encrypted flag using SHA256 of the key
-\end{enumerate}
-
-The polynomial is defined as:
-\[f(x) = a_0 + a_1x + a_2x^2 + \ldots + a_{30}x^{30}\]
-where \(a_0 = \text{key}\).
-
-The challenge limits us to only 19 shares, but the polynomial has degree 30, making direct polynomial interpolation impossible.
-
-\subsection*{Mathematical Foundation}
-
-The key insight is that if we evaluate the polynomial modulo \(x\), we get:
-\[f(x) \equiv a_0 \pmod{x}\]
-
-This means for any prime \(p\):
-\[\text{key} \equiv f(p) \pmod{p}\]
-
-By collecting multiple such congruences with different primes, we can use the Chinese Remainder Theorem (CRT) to recover the original key.
-
-\subsection*{Chinese Remainder Theorem Application}
-
-Given a system of congruences:
-\[\begin{cases}
-x \equiv a_1 \pmod{m_1} \\
-x \equiv a_2 \pmod{m_2} \\
-\vdots \\
-x \equiv a_n \pmod{m_n}
-\end{cases}\]
-
-where \(m_1, m_2, \ldots, m_n\) are pairwise coprime, CRT guarantees a unique solution modulo \(M = m_1m_2\ldots m_n\).
-
-For this challenge, we:
-\begin{enumerate}
-  \item Select 19 different 15-bit primes
-  \item For each prime \(p_i\), compute \(a_i = f(p_i) \bmod p_i\)
-  \item Apply CRT to find the unique solution \(x\) such that \(x \equiv a_i \pmod{p_i}\) for all \(i\)
-  \item Ensure the product of all primes exceeds the key size p (256 bits)
-\end{enumerate}
-
-\subsection*{Implementation Approach}
-
-\subsection*{Solution}
-
-View \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/htb/solver.py}{HackTheBox's github solution code} for the official solution, and \href{https://github.com/hackthebox/uni-ctf-2023/blob/main/uni-ctf-2023/crypto/%5BEasy%5D%20MSS/README.md}{HackTheBox's github solution explanation} for an official explanation on how to solve the problem.
 
 \end{document}
 
