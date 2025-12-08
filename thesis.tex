@@ -310,6 +310,30 @@ In these benchmarks, it is obvious that the top 7 closed-source models were meas
 
 According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in Figure~\ref{fig:gemini-benchmarks}).
 
+\textbf{Humanity's Last Exam (HLE)} is a multi-modal benchmark designed to evaluate AI models at the frontier of human knowledge across diverse academic disciplines. Developed collaboratively by subject-matter experts worldwide, HLE consists of 2,500 expert-level questions spanning mathematics, humanities, natural sciences, and other specialized fields \parencite{phan2025humanitys}.
+
+Unlike traditional benchmarks that have become saturated with model performance exceeding 90\% accuracy, HLE was specifically created to be challenging enough that current state-of-the-art models demonstrate low accuracy and calibration. The benchmark includes both multiple-choice and short-answer questions with unambiguous, verifiable solutions that cannot be quickly answered through internet retrieval. This design ensures that HLE measures genuine reasoning capabilities rather than memorization or information retrieval.
+
+The questions in HLE are developed by experts in their respective fields and vetted for clarity, correctness, and appropriate difficulty level. Each question is designed to test deep understanding and complex reasoning abilities that represent the current frontier of human academic achievement.
+
+HLE represents an important evolution in benchmark design, addressing the issue of benchmark saturation that has plagued earlier evaluation suites. By focusing on questions that require genuine expertise and multi-step reasoning, HLE provides a more accurate assessment of how close AI models are coming to truly human-level academic capabilities across diverse knowledge domains.
+
+\textbf{SWE-bench Verified} is a human-validated subset of the original SWE-bench benchmark designed to more reliably evaluate AI models' ability to solve real-world software engineering problems \parencite{jimenez2024swebench}. The original SWE-bench consists of 2,294 software engineering problems drawn from real GitHub issues and corresponding pull requests across 12 popular Python repositories \parencite{jimenez2024swebench}.
+
+The SWE-bench Verified dataset addresses several limitations identified in the original benchmark through a comprehensive human annotation process conducted with 93 professional software developers \parencite{openai2024swebench_verified}. The key improvements include:
+
+\begin{itemize}
+  \item \textbf{Improved Unit Tests}: Many unit tests in the original SWE-bench were found to be overly specific or sometimes unrelated to the actual issue, potentially causing correct solutions to be rejected.
+  \item \textbf{Better-Specified Problem Statements}: A significant portion (38.3\%) of original samples were flagged for underspecified problem statements that created ambiguity about what constituted a successful solution.
+  \item \textbf{Reliable Evaluation Environments}: The new evaluation harness uses containerized Docker environments to make evaluating on SWE-bench easier and more reliable.
+\end{itemize}
+
+The filtering process resulted in removing 68.3\% of original SWE-bench samples due to underspecification, unfair unit tests, or other issues. The final SWE-bench Verified dataset contains 500 high-quality samples with difficulty ratings ranging from tasks estimated to take less than 15 minutes to those requiring more than 4 hours for experienced developers.
+
+Performance on SWE-bench Verified shows significant improvement compared to the original benchmark. For instance, GPT-4o's performance increased from 16\% on the original SWE-bench to 33.2\% on SWE-bench Verified when using the best-performing scaffold \parencite{openai2024swebench_verified}. This suggests that the original SWE-bench was systematically underestimating model capabilities due to problematic samples rather than accurately reflecting their software engineering abilities.
+
+SWE-bench Verified represents a crucial advancement in software engineering evaluation, providing a more accurate and reliable benchmark for assessing AI models' practical coding abilities in real-world scenarios.
+
 \subsection{Cybersecurity Related Benchmarks}
 
 \subsubsection{CyberMetric}
