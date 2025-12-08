@@ -297,8 +297,7 @@ The following benchmarks are provided by the MMLU-PRO paper:
 
 In these benchmarks, it is obvious that the top 7 closed-source models were measured to be more perfomant than the top 7 open source models based on overall percentage scores for number of questions answered correctly from the MMLU-PRO question bank. This is a significant finding, but I believe that it isn't as applicable to the competition between open and closed source models today. This paper was made on November 6th, 2024. Since then a multitude of newer models have come out.
 
-\textbf{GPQA \texorpdfstring{(Google-Proof Q\&A Benchmark)}} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree.\\
- Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
+\textbf{GPQA \texorpdfstring{(Google-Proof Q\&A Benchmark)}} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree. Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
 
 According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in figure ~\ref{fig:gemini-benchmarks}).
 
@@ -388,7 +387,7 @@ The results from the vulnerability and exploitation evaluation in this study are
 
 According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection ctf challenges, and also basic buffer overflow challenges. Additionally, the closed-source GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in this report. I am going to be testing newer, more robust open source models and one of the challenges I will be testing on will involve a sql injection vulnerability.
 
-\subsubsection{NYU Cyber Bench}
+\subsubsection{NYU CTF Bench}
 
 NYU CTF Bench is a specialized benchmark dataset designed specifically for evaluating large language models in offensive security tasks. Unlike general cybersecurity benchmarks that focus on theoretical knowledge or simplified vulnerability detection, NYU CTF Bench provides a comprehensive evaluation framework that more closely mirrors real-world cybersecurity scenarios. It is one of the first CTF benchmarks to include a large sample size of challenges in order to accurately measure LLM performance against hard ctf challenges.
 
@@ -400,9 +399,7 @@ NYU CTF Bench is a specialized benchmark dataset designed specifically for evalu
 \end{figure}
 
 
-What distinguishes NYU CTF Bench from other benchmarks is its focus on interactive cybersecurity challenges. The benchmark utilizes Capture The Flag (CTF) challenges sourced from the CSAW competitions, which are well-established in the cybersecurity community for testing practical offensive security skills \parencite{shao2025nyuctfbenchscalable}. \\
-These challenges require multi-step reasoning, vulnerability identification, and exploit development. \\
-The benchmark allows researchers to assess not only whether LLMs can solve security challenges, but also how effectively they can plan and execute multi-step attack sequences.
+What distinguishes NYU CTF Bench from other benchmarks is its focus on interactive cybersecurity challenges. The benchmark utilizes Capture The Flag (CTF) challenges sourced from the CSAW competitions, which are well-established in the cybersecurity community for testing practical offensive security skills \parencite{shao2025nyuctfbenchscalable}. These challenges require multi-step reasoning, vulnerability identification, and exploit development. The benchmark allows researchers to assess not only whether LLMs can solve security challenges, but also how effectively they can plan and execute multi-step attack sequences.
 
 
 
