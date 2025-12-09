@@ -253,14 +253,14 @@ According to the conference paper:
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{hard_censorship_stats.png}
-        \caption{hard censorship statistics}
+        \caption{Hard censorship statistics}
         \label{fig:hard-censorship}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{selective_omission.png}
-        \caption{soft censorship statistics}
+        \caption{Soft censorship statistics}
         \label{fig:soft-censorship}
     \end{subfigure}
 
@@ -287,7 +287,7 @@ To determine whether a new model represents an improvement over an old model, AI
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{MMLU_Sample_Questions.png}
-    \caption{Examples from the Conceptual Physics and College Mathematics STEM tasks. \parencite{hendrycks2021measuringmassivemultitasklanguage}}
+    \caption{Examples from the conceptual physics and college mathematics STEM tasks. \parencite{hendrycks2021measuringmassivemultitasklanguage}}
     \label{fig:MMLU-Sample-Questions}
 \end{figure}
 
@@ -317,7 +317,7 @@ The questions in HLE are developed by experts in their respective fields and vet
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{HLE_Bench_Results.png}
-    \caption{Compared against the saturation of some existing benchmarks, HUMANITY’S LAST EXAM accuracy remains low across several frontier models, demonstrating its effectiveness for measuring advanced, closed-ended, academic capabilities. \parencite{hendrycks2021measuringmassivemultitasklanguage}}
+    \caption{Compared against the saturation of some existing benchmarks, HUMANITY’S LAST EXAM accuracy remains low across several frontier models, demonstrating its effectiveness for measuring advanced, closed-ended, academic capabilities \parencite{hendrycks2021measuringmassivemultitasklanguage}.}
     \label{fig:HLE-Bench}
 \end{figure}
 
@@ -373,7 +373,7 @@ The authors of this paper first conducted an experiment on a subset of cybersecu
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.2\textwidth]{CyberMetric_accuracy.png}
-    \caption{CyberMetric benchmarks validating dataset. \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
+    \caption{CyberMetric benchmarks validating dataset \parencite{tihanyi2024cybermetricbenchmarkdatasetbased}}
     \label{fig:CyberMetric-dataset}
 \end{figure}
 
@@ -445,7 +445,7 @@ The benchmark also uses open-source models in their experimentation, but the pro
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{NYU_CTF_Bench_Table.png}
-    \caption{Performance and solve times of different LLMs \parencite{shao2025nyuctfbenchscalable}}
+    \caption{Performance and solve times of different LLMs on CTF challenges \parencite{shao2025nyuctfbenchscalable}}
     \label{fig:NYU-Cyber-Bench-Performance}
 \end{figure}
 
@@ -475,7 +475,7 @@ The results of the experiment these researchers at Stanford did is shown below:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{cybench_results.png}
-    \caption{Performance and Failure Rates of Different LLMs. \parencite{zhang2025cybench}}
+    \caption{Performance and failure rates of different LLMs \parencite{zhang2025cybench}}
     \label{fig:Cybench-Performance}
 \end{figure}
 
@@ -513,7 +513,7 @@ This is an example of Chain-of-Thought prompting from the official paper,
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{chain_of_thought.png}
-    \caption{Chain of Thought Thinking Process \parencite{cot_thinking_2022}}
+    \caption{Chain of thought thinking process \parencite{cot_thinking_2022}}
     \label{fig:cot-thinking}
 \end{figure}
 
@@ -544,7 +544,7 @@ Openrouter is a platform that provides API access to almost every publicly avail
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{openrouter.png}
-\caption{Openrouter API to use external providers instead of hosting open-source LLMs locally}
+\caption{Openrouter API to access external providers instead of hosting open-source LLMs locally}
     \label{fig:openrouter_platform}
 \end{figure}
 
@@ -556,13 +556,13 @@ Openrouter has access to both open-source and proprietary models, but when using
 \begin{subfigure}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{GPT_Providers.png}
-    \caption{OpenAI Providing the ChatGPT model}
+    \caption{OpenAI providing the ChatGPT model}
     \label{fig:OpenAI-GPT-5.1}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Deepseek_Providers.png}
-    \caption{Deepseek Providers for Deepseek R1 0528}
+    \caption{Deepseek providers for Deepseek R1 0528}
     \label{fig:Deepseek-Providers}
 \end{subfigure}
 
@@ -704,7 +704,7 @@ $n = \gcd(y_1^2 - a_1^2,\, y_2^2 - a_2^2,\, \ldots)$ because each output satisfi
 To factor $n$, use $\gcd(a - y, n)$ from any pair where $y \not\equiv \pm a \pmod{n}$. 
 Then compute the private exponent $d = e^{-1} \bmod \varphi(n)$ and sign the challenge message as $s = m^{d} \bmod n$.
 \end{minipage}
-\caption{Successful LLM Solutions: Claude Opus 4.5 and Kimi K2 Thinking}
+\caption{Successful LLM solutions: Claude Opus 4.5 and Kimi K2 Thinking}
 \label{fig:successful-llms-1}
 \end{figure}
 
@@ -738,7 +738,7 @@ Then compute $\varphi(n) = (p-1)(q-1)$, $d = e^{-1} \bmod \varphi(n)$, and final
 This ignores the RSA requirement that $s^{\,e} \equiv m \pmod{n}$, not $s^{2} \equiv m \pmod{n}$. 
 The model shows no understanding of the need to factor $n$ or compute the private exponent, and simply attempts to submit $\sqrt{m}$ as the signature, which cannot work mathematically.
 \end{minipage}
-\caption{Successful vs Unsuccessful: Grok 4.1 Fast and GLM-4.6}
+\caption{Successful vs unsuccessful: Grok 4.1 Fast and GLM-4.6}
 \label{fig:llm-comparison-1}
 \end{figure}
 
@@ -768,7 +768,7 @@ This shows how the Deepseek model thinks a lot and can start to overthink answer
 \footnotesize
 \textbf{Summary of Reasoning:} Made critical error assuming n = y\(_0\) when querying f(0). Also incorrectly used d = inverse(e, n-1) instead of \(\phi\)(n) for computing the private exponent. The approach shows fundamental misunderstanding of RSA mathematics and the square root oracle's behavior.
 \end{minipage}
-\caption{Unsuccessful LLM Solutions: DeepSeek R1 and Kimi K2 0905}
+\caption{Unsuccessful LLM solutions: DeepSeek R1 and Kimi K2 0905}
 \label{fig:unsuccessful-llms-1}
 \end{figure}
 
@@ -802,7 +802,7 @@ I think about computing a gcd using the differences of square roots:
 $\gcd(r_1^{2} - r_2^{2}) = \gcd((r_1-r_2)(r_1+r_2))$, but again, we lack $n$.'' 
 The reasoning never came to a solution.
 \end{minipage}
-\caption{Unsuccessful LLM Solutions: Deepseek V3.2 Speciale and GPT-5.1}
+\caption{Unsuccessful LLM solutions: Deepseek V3.2 Speciale and GPT-5.1}
 \label{fig:unsuccessful-llms-2}
 \end{figure}
 
@@ -830,7 +830,7 @@ This approach attempts to compute $m^{1/65536}$ and submit it as the signature, 
 \footnotesize
 \textbf{Summary of Reasoning:} Understood the correct theory: recover $n$ using $\gcd(r^2 - x)$ values and factor $n$ using non-trivial square roots. 
 However, it incorrectly attempted to take 16 successive square roots to compute $m^{1/65536}$, which is not feasible due to modular wrap-around and the lack of guaranteed integer roots.\end{minipage}
-\caption{Unsuccessful LLM Solutions: Claude Sonnet 4.5 and Gemini 3.0 Pro Preview}
+\caption{Unsuccessful LLM solutions: Claude Sonnet 4.5 and Gemini 3.0 Pro Preview}
 \label{fig:unsuccessful-llms-3}
 \end{figure}
 
