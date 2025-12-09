@@ -187,7 +187,7 @@
 
 
 \begin{abstract}
-  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally  over open source LLMs. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) can often match peers in coding and web-agent tasks, especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 excels at coding but not always at long-form reasoning, and Kimi K2 leads in some agentic evaluations yet lags behind top closed-source models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity issues. To accomplish this, capture the flag (CTF) challenges will be used in an attempt to emulate a real-world cyber environment where a company could decide to use an LLM. In a CTF challenge, users are tasked with challenges to exploit vulnerabilities in a simulated environment. Once the user is successful in exploiting the controlled environment, they receive a string of text which is the flag. The challenges vary in complexity and often have multiple solutions, but they almost all require complex thinking and problem-solving abilities to work through them. The CTF challenge in this report is a multi-step problems that requires lots of thinking and effort to solve correctly. By measuring the ability for LLMs to solve cybersecurity challenges, we create a unique opportunity to use them as tools for defending against real-world cyber threats.
+  Open-source large language models (LLMs) have closed much, but not all, of the gap with frontier proprietary systems, and their relative standing varies sharply by benchmark family. On knowledge-heavy and long-horizon reasoning tasks (e.g., Humanity’s Last Exam, GPQA-Diamond, MMLU-Pro), top closed models such as GPT-5, Claude Sonnet 4.5, and Grok 4 generally have the edge over open source LLMs. By contrast, recent open models (DeepSeek, GLM-4.6, Kimi K2) can often match peers in coding and web-agent tasks, especially when tool use is allowed. Still, performance is benchmark-sensitive: DeepSeek R1/V3 trails on human-preference arenas despite strong math/coding abilities, GLM-4.6 excels at coding but not always at long-form reasoning, and Kimi K2 leads in some agentic evaluations yet lags behind top proprietary models on others. In this report, both closed and open source LLMs will be tested to determine their ability to apply knowledge to complex cybersecurity problems. To accomplish this, capture the flag (CTF) challenges will be used in an attempt to emulate a real-world cyber environment where a company could decide to use an LLM. In a CTF challenge, users are tasked with challenges to exploit vulnerabilities in a simulated environment. Once the user is successful in exploiting the controlled environment, they receive a string of text which is the flag. The challenges vary in complexity and often have multiple solutions, but they almost all require complex thinking and problem-solving abilities to work through them. The CTF challenge in this report is a multi-step problem that requires lots of thinking and effort to solve correctly. By measuring the ability for LLMs to solve cybersecurity challenges, we can determine if they are suitable for solving real-world cybersecurity problems.
 \end{abstract}
 
 \clearpage
@@ -197,7 +197,7 @@
 \clearpage
 
 \section{Introduction}
-Companies today are turning to automated solutions like large language models to penetration test their infrastructure. Closed-source models like OpenAI's GPT, Anthropic's Claude, and xAI's Grok offer strong performance, but also offer drawbacks in terms of different aspects of the CIA triad that are vital to cybersecurity. The CIA triad stands for confidentiality, integrity, and availability. Each aspect of this triad is challenged in some way when a company decides to rely on a commercial LLM over an open-source LLM that is hosted on local infrastructure.
+Companies today are turning to automated solutions like large language models to penetration test their infrastructure. Proprietary models like OpenAI's GPT, Anthropic's Claude, and xAI's Grok offer strong performance, but also have drawbacks in terms of different aspects of the CIA triad that are vital to cybersecurity. The CIA triad stands for confidentiality, integrity, and availability. Each aspect of this triad is challenged in some way when a company decides to rely on a proprietary LLM over an open-source LLM that is hosted on local infrastructure.
 
 \subsection{CIA Triad}
 
@@ -214,11 +214,11 @@ The CIA triad stands for Confidentiality, Integrity, and Availability. According
 Overall, this serves as a guide for companies on to how to properly protect, maintain, and protect internal systems, networks, and customer data policies. 
 
 \subsubsection{Confidentiality}  
-When a provider fine-tunes or prompts a model on customer data, that content may be stored or reused for future training. Once proprietary threat data leaves a company's internal network, it becomes subject to the vendor’s retention, access, and legal processes. This poses unique risks for both blue and red teams. Defenders may lose control of sensitive detection logic, and red team operators could expose internal testing tools or exploit chains to the public. Running models locally removes this risk because prompts stay within the company, and all data remains under the company's control. This supports the confidentiality principle of cybersecurity because confidentiality involves protecting both business practices and customer data. When a company uses a closed-source model like Claude's Anthropic, they are giving the LLM provider full permission to do what they want with that company's provided input.
+When a provider fine-tunes or prompts a model on customer data, that content may be stored or reused for future training. Once proprietary threat data leaves a company's internal network, it becomes subject to the vendor’s retention, access, and legal processes. This poses unique risks for both blue and red teams. Defenders may lose control of sensitive detection logic, and red team operators could expose internal testing tools or exploit chains to the public. Running models locally removes this risk because prompts stay within the company, and all data remains under the company's control. This supports the confidentiality principle of cybersecurity because confidentiality involves protecting both business practices and customer data. When a company uses a proprietary model like Claude's Anthropic, they are giving the LLM provider full permission to do what they want with that company's provided input.
 
 According to the \textit{Anthropic terms of service}, \begin{quote}We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings. Even if you opt out, we will use Materials for model training when: (1) you provide Feedback to us regarding any Materials, or (2) your Materials are flagged for safety review to improve our ability to detect harmful content, enforce our policies, or advance our safety research.\end{quote} \parencite{anthropic_consumer_terms}
 
-This snippet from the Anthropic terms of service shows that this company retains the right to use your data to train its proprietary models. Other closed source providers like OpenAI and xAI have similar policies. They phrase their terms of service to make it appear like clients can easily opt out of any sort of data training, but the conditions offer no reliable way to ensure data protection. Using an open source LLM prevents this risk.
+This snippet from the Anthropic terms of service shows that this company retains the right to use your data to train its proprietary models. Other proprietary providers like OpenAI and xAI have similar policies. They phrase their terms of service to make it appear like clients can easily opt out of any sort of data training, but these conditions offer no reliable way to ensure data protection. Using an open source LLM prevents this risk.
 
 \subsubsection{Integrity}
 
@@ -230,9 +230,7 @@ This censorship concern has been shown in the past with DeepSeek censoring polit
 
 According to Wired, \enquote{Hugging Face is also working on a project called Open R1 based on DeepSeek’s model. This project aims to \enquote{deliver a fully open-source framework,} Yakefu says. The fact that R1 has been released as an open-source model \enquote{enables it to transcend its origins and be customized to meet diverse needs and values.}} \parencite{wired_deepseek_censorship}
 
-In this conference paper by Noels, the authors thoroughly studied the censorship of AI by classifying it into soft and hard censorship \parencite{noels_llm_censorship}:
-
-The authors of this conference paper conducted an experiment in order to determine how prominent censorship is in LLMs. The experiment evaluated a dataset of 300,000 descriptions of political figures by LLMs filtered to 2,371 persons with occupations of social activists, political scientists, diplomats, politicians, and military personnel. The authors reviewed how the LLMs answered questions about these figures, comparing instances of hard and soft censorship across countries of origin and different models. They also also measured censorship results for different large language models based on the phrasing that was used to prompt the model.
+In this conference paper by Noels, the authors thoroughly studied the censorship of AI by classifying it into soft and hard censorship \parencite{noels_llm_censorship}. The authors of this conference paper conducted an experiment in order to determine how prominent censorship is in LLMs. The experiment evaluated a dataset of 300,000 descriptions of political figures by LLMs filtered to 2,371 persons with occupations of social activists, political scientists, diplomats, politicians, and military personnel. The authors reviewed how the LLMs answered questions about these figures, comparing instances of hard and soft censorship across countries of origin and different models. They also also measured censorship results for different large language models based on the phrasing that was used to prompt the model.
 
 According to the conference paper:
 
@@ -270,7 +268,7 @@ According to the conference paper:
     \label{fig:hard-and-soft-censorship}
 \end{figure}
 
-\cref{fig:hard-and-soft-censorship} (a) and (b) demonstrate the results of the experiment that these authors conducted. These results demonstrate that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language. This model shows hard censorship in \cref{fig:hard-and-soft-censorship} (a). This is most likely due to Russian authorities restricting the model from returning negative content about political leaders.\cref{fig:hard-and-soft-censorship} (b) shows that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The study also shows that soft censorship occurs more often than hard censorship. This poses a problem for users because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of Artificial Intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
+\cref{fig:hard-and-soft-censorship} (a) and (b) demonstrate the results of the experiment that these authors conducted. These results demonstrate that LLMs don't often exhibit hard censorship on political leaders besides the GigaChat model for the Russian language. This model shows hard censorship in \cref{fig:hard-and-soft-censorship} (a). This is most likely due to Russian authorities restricting the model from returning negative content about political leaders. \cref{fig:hard-and-soft-censorship} (b) shows that Wenxiaoyan and YandexGPT have high rates of both praise and accusation omission. The study also shows that soft censorship occurs more often than hard censorship. This poses a problem for users because soft censorship involves the AI censoring by excluding relevant information instead of refusing to answer. This would be terrible for something like an automated red team exercise where an AI excludes information about how to hack into a system in its response because of soft censorship. Users of artificial intelligence for cybersecurity purposes would much rather have an AI refuse to answer a question than provide wrong, or incomplete information due to censorship.
 
 \subsubsection{Availability}
 
@@ -280,7 +278,7 @@ Penetration tests are often run during maintenance windows or incident-response 
 
 \subsection{General Benchmarks}
 
-To determine whether a new model represents an improvement, AI researchers rely on benchmarks. Benchmarks are standardized, validated question sets that evaluate specific abilities or properties of a large language model. By using these shared tests, researchers can compare the performance of a new model against earlier versions or against competing models in a fair and reproducible manner.
+To determine whether a new model represents an improvement over an old model, AI researchers rely on benchmarks. Benchmarks are standardized, validated question sets that evaluate specific abilities or properties of a large language model. By using these shared tests, researchers can compare the performance of a new model against earlier versions or against competing models in a fair and reproducible manner.
 
 \subsubsection{MMLU, GPQA, HLE, and SWE Bench-Verified}
 
@@ -293,20 +291,20 @@ To determine whether a new model represents an improvement, AI researchers rely 
     \label{fig:MMLU-Sample-Questions}
 \end{figure}
 
-According to the MMLU-PRO paper, \enquote{The questions in MMLU are mostly knowledge-driven without requiring too much reasoning, especially in the STEM subjects, which reduces its difficulty. In fact, most models achieve better performance with \enquote{direct} answer prediction without chain-of-thought}
+According to the MMLU-PRO paper, \enquote{The questions in MMLU are mostly knowledge-driven without requiring too much reasoning, especially in the STEM subjects, which reduces its difficulty. In fact, most models achieve better performance with \enquote{direct} answer prediction without chain-of-thought} \parencite{hendrycks2021measuringmassivemultitasklanguage}.
 
 The following benchmarks are provided by the MMLU-PRO paper:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{MMLU_PRO.png}
-    \caption{MMLU-PRO benchmark results for open and closed source models \parencite{hendrycks2021measuringmassivemultitasklanguage}}
+    \caption{MMLU-PRO benchmark results for open-source and proprietary models \parencite{hendrycks2021measuringmassivemultitasklanguage}}
     \label{fig:MMLU-PRO}
 \end{figure}
 
-In these benchmarks, it is obvious that the top 7 closed-source models were measured to be more perfomant than the top 7 open source models based on overall percentage scores for number of questions answered correctly from the MMLU-PRO question bank. This is a significant finding, but I believe that it isn't as applicable to the competition between open and closed source models today. This paper was made on November 6th, 2024. Since then a multitude of newer models have come out.
+In these benchmarks, it is obvious that the top 7 proprietary models were measured to be more perfomant than the top 7 open source models based on overall percentage scores for number of questions answered correctly from the MMLU-PRO question bank. This is a significant finding, but I believe that it isn't as applicable to the competition between open-source and proprietary models today. This paper was made on November 6th, 2024. Since then a multitude of newer models have come out.
 
-\textbf{GPQA \texorpdfstring{(Google-Proof Q\&A Benchmark)}} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree. Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate level questions.
+\textbf{GPQA \texorpdfstring{(Google-Proof Q\&A Benchmark)}} is a benchmark focused on making multiple choice problems that are difficult to answer even by PHD researchers. These questions are all considered graduate-level and are intended for college students who are either pursuing a masters or PhD degree. Additionally, a subset of these problems, called a "diamond" set was created to only include questions where experts in the field answer correctly, and a majority of non-experts in the field answer incorrectly. This subset of problems also has a requirement that involves multiple experts either answering correctly, or one expert answering incorrectly while the other answers correctly, and the expert that answers incorrectly having the ability to explain their mistake after seeing the answer. This unique set of constraints makes the GPQA a suitable set for difficult, but fair graduate-level questions.
 
 According to the paper, one of the most robust models at the time (GPT-4 with search) scored a 38.8\% on the diamond set \parencite{rein2023gpqagraduatelevelgoogleproofqa}. To put this in perspective of how far AI models have come since November 2023, Gemini 3.0 Pro scored 91.8\% on the same set of questions (shown in \cref{fig:gemini-benchmarks}).
 
@@ -381,7 +379,7 @@ The authors of this paper first conducted an experiment on a subset of cybersecu
 
 The LLMs then were tested against the multiple-choice questions in the CyberMetric benchmark by measuring the percentage of questions they answered correctly. They tested different subsets of the question bank (80 Qs, 500 Qs, 2k Qs, 10k Qs) to ensure that the LLMs perform similarly on the different subsets of questions. The CyberMetric-80 and CyberMetric-500 datasets were fully verified by human experts according to the paper.
 
-The result of the study was that this test concluded that machine intelligence has already surpassed humans in answering questions related to cybersecurity. This was the finding of the answer to the first research question, and the top performing model was GPT-4o which is a closed-source, proprietary model. According to the paper, these were the results:
+The result of the study was that this test concluded that machine intelligence has already surpassed humans in answering questions related to cybersecurity. This was the finding of the answer to the first research question, and the top performing model was GPT-4o which is a proprietary model. According to the paper, these were the results:
 
 \begin{figure}[H]
     \centering
@@ -389,7 +387,7 @@ The result of the study was that this test concluded that machine intelligence h
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{human_vs_llm_performance.png}
-        \caption{Comparing Human vs LLM performance on CyberMetric-80}
+        \caption{Comparing human vs LLM performance on CyberMetric-80}
         \label{fig:CyberMetric_human_vs_llm_performance}
     \end{subfigure}\hfill
     \begin{subfigure}[t]{0.48\textwidth}
@@ -403,7 +401,7 @@ The result of the study was that this test concluded that machine intelligence h
     \label{fig:2_3}
 \end{figure}
 
-The experiment in this report provides a unique comparison to the results in the CyberMetric report because as of today, closed and open source models are not only better than humans at solving cybersecurity challenges, but they are both starting to score very high on multiple benchmarks. In this report, it is shown that the open source model \enquote{Mixtral} scores almost as good as GPT 4o in the image above. Nowadays, there are far more advanced open and closed source models, and I will determine if this result is consistent with more recent models and ctf challenges.
+The experiment in this report provides a unique comparison to the results in the CyberMetric report because as of today, closed and open source models are not only better than humans at solving cybersecurity challenges, but they are both starting to score very high on multiple benchmarks. In the CyberMetric paper, it is shown that the open source model \enquote{Mixtral} scores almost as good as GPT 4o in the image above. Nowadays, there are far more advanced open-source and proprietary models, and I will determine if this result is consistent with more recent models and ctf challenges.
 
 \subsubsection{CyberSecEval 2}
 
@@ -413,7 +411,7 @@ The CyberSecEval 2 benchmark was created to test 3 major aspects of LLM security
 The first aspect involved testing for prompt injection. For example, if the user gave an LLM a secret key, and then later asked for the LLM to repeat that secret key, the benchmark would measure whether the LLM would actually repeat that secret key or refuse to answer the user's question based on the privacy implications of leaking a secret key.
 
 \paragraph{vulnerability exploitation evaluation}
-The second type of test, which is what our focus will be on in this report, is the ability for LLMs to exploit vulnerabilities. In order to measure this, the creators of the experiment used ctf challenges that were not too challenging, but challenging enough so that LLMs could solve them at least some of the time. In the paper, it also focused on drawing inspiration from actual vulnerabilities in software.
+The second type of test, which is what our focus will be on in this report, is the ability for LLMs to exploit vulnerabilities. In order to measure this, the creators of the experiment used CTF challenges that were not too challenging, but challenging enough so that LLMs could solve them at least some of the time. In the paper, it also focused on drawing inspiration from actual vulnerabilities in software.
 
 \paragraph{code interpreter abuse evaluation}
 The last type of vulnerability that this benchmark evaluated is the willingness of an LLM to execute vulnerable code inside of a code interpreter. This can be crucial for things like an LLM executing code that it downloads from an untrusted website. It can be easy to trick a human into executing malicious programs or scripts downloaded from the internet, and with careful prompt engineering, it is most likely even easier to trick an LLM into doing this. In order to test this, the authors of the paper created a set of prompts that try to manipulate the LLM into running malicious code to take control of the system that the LLM is running on.
@@ -423,11 +421,11 @@ The results from the vulnerability and exploitation evaluation in this study are
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{exploit_security_concepts_cysec_eval_2.png}
-    \caption{Exploitation capability scores broken down by model and test category. \parencite{bhatt2024cyberseceval2widerangingcybersecurity}}
+    \caption{Exploitation capability scores broken down by model and test category \parencite{bhatt2024cyberseceval2widerangingcybersecurity}}
     \label{fig:cysec-eval-2}
 \end{figure}
 
-According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection ctf challenges, and also basic buffer overflow challenges. Additionally, the closed-source GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in this report. I am going to be testing newer, more robust open source models and one of the challenges I will be testing on will involve a sql injection vulnerability.
+According to the results of this experiment, it seems that LLMs struggled solving some CTF challenges like SQL injection CTF challenges, and also basic buffer overflow challenges. Additionally, the proprietary GPT-4-turbo model performed the best in solving these challenges. Since this paper was created in April, 2024, I believe the results coming out of this experiment may differ from the results in my report. I am going to be testing newer, more robust open source models.
 
 \subsubsection{NYU CTF Bench}
 
@@ -436,7 +434,7 @@ NYU CTF Bench is a specialized benchmark dataset designed specifically for evalu
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{NYU_CTF_Bench_Vs_Others.png}
-    \caption{Comparison of LLM-Driven CTF Solving. \parencite{shao2025nyuctfbenchscalable}}
+    \caption{Comparison of LLM-driven CTF solving \parencite{shao2025nyuctfbenchscalable}}
     \label{fig:NYU-Cyber-Bench_Models}
 \end{figure}
 
@@ -447,7 +445,7 @@ The benchmark also uses open-source models in their experimentation, but the pro
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{NYU_CTF_Bench_Table.png}
-    \caption{Performance and Failure Rates of Different LLMs. \parencite{shao2025nyuctfbenchscalable}}
+    \caption{Performance and solve times of different LLMs \parencite{shao2025nyuctfbenchscalable}}
     \label{fig:NYU-Cyber-Bench-Performance}
 \end{figure}
 
@@ -481,11 +479,11 @@ The results of the experiment these researchers at Stanford did is shown below:
     \label{fig:Cybench-Performance}
 \end{figure}
 
-The Cybench evaluation revealed that even the best-performing models (Claude 3.5 Sonnet at 17.5\% and GPT-4o at 12.5\%) could only solve tasks with first solve times of 11 minutes or less, with none successfully solving challenges that took human teams longer than 11 minutes \parencite{zhang2025cybench}. This demonstrates the significant gap between current language model capabilities and human expertise in complex cybersecurity challenges. Additionally, it showed that LLMs even struggled with \enquote{subtask-guided performance} which involves breaking a problem down into pieces before attempting to solve it, then giving those separate steps and pieces to the LLM to solve by itself, and piece together those steps to solve the entire challenge. The LLMs were able to solve the subtasks pretty effectively compared to piecing together the subtasks to solve the challenge.
+The Cybench evaluation revealed that even the best-performing models (Claude 3.5 Sonnet at 17.5\% and GPT-4o at 12.5\%) could only solve tasks with first solve times of 11 minutes or less, with none successfully solving challenges that took human teams longer than 11 minutes \parencite{zhang2025cybench}. This demonstrates the significant gap between current language model capabilities and human expertise in complex cybersecurity challenges. Additionally, it showed that LLMs even struggled with \enquote{subtask-guided performance} which involves breaking a problem down into pieces before attempting to solve it, then giving those separate steps and pieces to the LLM to solve by itself, and piecing together those steps to solve the entire challenge. The LLMs were able to solve the subtasks pretty effectively compared to piecing together the subtasks to solve the challenge.
 
 Cybench has been adopted by major AI safety organizations including the US and UK AISI, Anthropic, Amazon, and OWASP, establishing it as the current state-of-the-art benchmark for evaluating language model cybersecurity capabilities \parencite{zhang2025cybench}.
 
-Even though this paper provides an in-depth view into how LLMs work with solving multi-step CTFs similar to what this report will provide, this benchmark was created in April 2025, and it also doesn't include some of the most robust open-source models that will be featured in this report like Kimi, GLM, and Deepseek.
+Even though this paper provides an in-depth view into how LLMs work with solving multi-step CTFs similar to what my report will provide, this benchmark was created in April 2025, and it also doesn't include some of the most robust open-source models that will be featured in this report like Kimi, GLM, and Deepseek.
 \subsection{Gemini 3.0}
 
 In November 2025, Gemini 3.0 was released and it beat almost all benchmarks. The only major benchmark it didn't outright beat was the SWE-bench verified benchmark.
@@ -508,18 +506,18 @@ Large Language Models do not “think” in a human sense, but they do perform m
 
 Two major paradigms have emerged in the design of reasoning-capable LLMs: implicit thinking and explicit thinking. Understanding the distinction between the two is critical for evaluating correctness, security, reproducibility, and susceptibility to reasoning errors such as hallucination or overthinking.
 
-Chain-of-Thought (CoT) is a prompting technique in which a model is instructed to generate step-by-step intermediate reasoning before giving its final answer. Both implicit and explicit thinking use CoT to derive the final answer, but In practice, explicit-thinking models tend to produce CoT-like traces automatically, while implicit-thinking models often perform similar multi-step reasoning internally but suppress these steps in the final output. Thus, CoT serves as an observable proxy for explicit reasoning: when CoT is visible, the reasoning is transparent and auditable; when it is hidden, the model’s reasoning occurs implicitly, making validation more difficult.
+Chain-of-Thought (CoT) is a prompting technique in which a model is instructed to generate step-by-step intermediate reasoning before giving its final answer. Both implicit and explicit thinking use CoT to derive the final answer, but in practice, explicit-thinking models tend to produce CoT-like traces automatically, while implicit-thinking models often perform similar multi-step reasoning internally but suppress these steps in the final output. Thus, CoT serves as an observable proxy for explicit reasoning: when CoT is visible, the reasoning is transparent and auditable; when it is hidden, the model’s reasoning occurs implicitly, making validation more difficult.
 
 This is an example of Chain-of-Thought prompting from the official paper,
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{chain_of_thought.png}
-    \caption{Chain of Thought Thinking Process}
+    \caption{Chain of Thought Thinking Process \parencite{cot_thinking_2022}}
     \label{fig:cot-thinking}
 \end{figure}
 
-In the image above, the first box of each prompting method is the prompt that was used for the AI. The box below it is response from the AI model. the chain-of-thought prompt comes up with the correct answer to the user question, while the standard prompting gives an incorrect answer. This is because with chain-of-thought, the model is being given context about how to reason about solving a problem. It then can apply this reasoning method to actually solving the problem, instead of trying to solve it directly. This is how humans mostly solve problems, they reason through it before directly giving an answer. Modern AI models are adopting this method of \enquote{reasoning} more and more which is what makes them so powerful. They adopt CoT thinking by using either implicit or explicit thinking methods. \parencite{cot_thinking_2022}
+In the image above, the first box of each prompting method is the prompt that was used for the AI. The box below it is response from the AI model. the chain-of-thought prompt comes up with the correct answer to the user question, while the standard prompting gives an incorrect answer. This is because with chain-of-thought, the model is being given context about how to reason about solving a problem. It then can apply this reasoning method to actually solving the problem, instead of trying to solve it directly. This is how humans mostly solve problems, they reason through it before directly giving an answer. Modern AI models are adopting this method of \enquote{reasoning} more and more which is what makes them so powerful. They adopt CoT thinking by using either implicit or explicit thinking methods.
 
 \subsubsection{Implicit vs Explicit Thinking}
 
@@ -531,13 +529,13 @@ Explicit reasoning generally provides more fine-grained logical structure, which
 
 In this paper, we will be testing a model that utilizes lots of explicit thinking (Kimi K2 Thinking) against a model that uses implicit thinking (Kimi K2 0905). Comparing these models isn't exactly apples-to-apples, and the performance of Kimi K2 Thinking may outperform Kimi K2 0905 purely because it is newer and more robust in general, but this will give a glimpse into what the explicit thinking model comes up with compared to a very similar implicit thinking model.
 
-The different thinking mechanisms along with the specific AI models used in this paper, are shown in table~\ref{tab:models}. It is seen that some of the good open-source models, and all of the proprietary models used in this report are implicit thinking models. This is partially because companies don't want to leak the reasoning processes of their models to other companies to train off of.
+The different thinking mechanisms along with the specific AI models used in this paper, are shown in \cref{tab:models}. It is shown in this table that some of the good open-source models, and all of the proprietary models used in this report are implicit thinking models. This is partially because companies don't want to leak the reasoning processes of their models to other companies to train off of.
 
 \section{Methods}
 
 \subsection{Using External Providers}
 
-For my experimentation on whether open-source LLMs can effectively replace closed-source LLMs for solving company cybersecurity problems, I will be using external providers that give me access to models hosted on their platforms. All of the open source models I will be showcasing do have the capabilities of being ran locally.
+For my experimentation on whether open-source LLMs can effectively replace proprietary LLMs for solving company cybersecurity problems, I will be using external providers that give me access to models hosted on their platforms. All of the open source models I will be showcasing do have the capabilities of being ran locally.
 
 \subsubsection{Openrouter}
 
@@ -546,11 +544,11 @@ Openrouter is a platform that provides API access to almost every publicly avail
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{openrouter.png}
-\caption{Openrouter API to use External Providers Instead of Hosting Open Source LLMS Locally}
+\caption{Openrouter API to use external providers instead of hosting open-source LLMs locally}
     \label{fig:openrouter_platform}
 \end{figure}
 
-Openrouter has access to both open source and proprietary models, but when using a proprietary model, the only provider that will be available is the one coming from the official company providing the services for that model. For open source models, the different providers and pricing will vary, because these models are free to the public to host. 
+Openrouter has access to both open-source and proprietary models, but when using a proprietary model, the only provider that will be available is the one coming from the official company providing the services for that model. For open-source models, the different providers and pricing will vary, because these models are free to the public to host. 
 
 \begin{figure}[H]
 \centering
@@ -572,13 +570,13 @@ Openrouter has access to both open source and proprietary models, but when using
 \label{fig:Openrouter-Providers}
 \end{figure}
 
-In the images above, the only available provider for OpenAI's GPT 5.1 is OpenAI, the providers for Deepseek R1 include Parasail, DeepInfra, SiliconFlow, and NovitaAI, and many more. This shows the advantage to using open source. The end user can either host their own models, or use cheap external providers to get solid value for their cost.
+In the images above, the only available provider for OpenAI's GPT 5.1 is OpenAI, the providers for Deepseek R1 include Parasail, DeepInfra, SiliconFlow, and NovitaAI, and many more. This shows the advantage to using open source. The end user can either host their own models, or use cheap external providers to get solid value for the amount they pay.
 
 \subsubsection{Continue.dev}
 
-Continue.dev is an open source VSCode extension and also offers a CLI to allow AI to interact with your filesystem. I will be using this tool to allow LLMs to read my CTF files, and have a consistent prompt to test all LLMs equally.
+Continue.dev is an open-source VSCode extension and also offers a CLI to allow AI to interact with your filesystem. I will be using the VSCode extension to allow LLMs to read my CTF files, and have a consistent prompt to test all LLMs equally.
 
-Continue.dev supports both open and closed source LLMs, and supports any OpenAI API compatible model to connect to it.
+Continue.dev supports both open-source and proprietary LLMs, and supports any OpenAI API compatible model to connect to it.
 
 \begin{figure}[H]
 \centering
@@ -586,14 +584,14 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
 \begin{subfigure}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{vscode_extension.png}
-    \caption{Continue.dev VSCode Extension}
+    \caption{Continue.dev VSCode extension}
     \label{fig:4}
 \end{subfigure}
 \hfill
 \begin{subfigure}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{models.png}
-    \caption{Continue.dev Supported Models}
+    \caption{Continue.dev supported models}
     \label{fig:5}
 \end{subfigure}
 
@@ -602,7 +600,7 @@ Continue.dev supports both open and closed source LLMs, and supports any OpenAI 
 \end{figure}
 
 \subsection{Challenge Files and Standardized Prompt for All LLMs}
-In table~\ref{tab:models}, the different LLMs that will be used in these experiments are displayed. These LLMs will be provided a standard script to solve the challenge. Additionally, these LLMs will not have any access to the internet, or other resources to give them an upper hand over other LLMs. They will be expected to use their knowledge of pure math and cryptography to solve these specific challenges. The LLMs will be given 3 tries to solve the challenge. If they have started to produce output that is close to an answer, but they are stopped due to hitting a max token output limit, I will prompt them again with the text, "Continue." This will allow them to continue trying on that specific trial. If after 3 trials, they cannot write a script to get the general solution to an answer, that attempt will be considered a fail to solve the challenge. If an LLM generates the general solution and everything is correct in terms of the mathematical derivations of answers, but they get something simple wrong like accidentally adding a number instead of subtracting, or not communicating with the server correctly (not encoding input into bytes correctly, hallucinating responses from the server, etc...), I will fix the minor issues with the script, test it, and if it works, that answer will be considered correct.
+In \cref{tab:models}, the different LLMs that will be used in this experiment are displayed. These LLMs will be provided a standard script to solve the challenge. Additionally, these LLMs will not have any access to the internet, or other resources to give them an upper hand over other LLMs. They will be expected to use their knowledge of pure math and cryptography to solve this specific challenge. The LLMs will be given 3 tries to solve the challenge. If they have started to produce output that is close to an answer, but they are stopped due to hitting a max token output limit, I will prompt them again with the text, "Continue." This will allow them to continue trying on that specific trial. If after 3 trials, they cannot write a script to get the general solution to an answer, that attempt will be considered a fail to solve the challenge. If an LLM generates the general solution and everything is correct in terms of the mathematical derivations of answers, but they get something simple wrong like accidentally adding a number instead of subtracting, or not communicating with the server correctly (not encoding input into bytes correctly, hallucinating responses from the server, etc...), I will fix the minor issues with the script, test it, and if it works, that answer will be considered correct.
 
 The LLM results with the best code that the LLM was able to come up with will be displayed, along with a summary of the reasoning that the LLM outputted as to why it thinks it has a good solution.
 \subsubsection{SmileyCTF 2025 -- SaaS (Cryptography)}
@@ -621,8 +619,9 @@ For the cryptography challenge Saas from SmileyCTF 2025, the following prompt wi
 \caption{SaaS challenge file structure provided to LLMs}
 \label{fig:crypto-saas-structure}
 \end{figure}
-    
-    
+
+\subsection{LLMs Used in The Experiment}
+The following table includes all of the LLMs used in this experiment, along with their "thinking type" for reasoning:    
 
 \begin{table}[H]
 \centering
@@ -658,7 +657,7 @@ Claude Opus 4.5          & Implicit & 2025-11 \\
     \subsubsection{LLM Results}
     \begin{table}[H]
 \centering
-\caption{SmileyCTF SaaS Challenge Results by Model}
+\caption{SmileyCTF SaaS challenge results by model}
 \label{tab:saas-results}
 \begin{tabular}{lc}
 \toprule
@@ -848,31 +847,22 @@ All three of these solutions are slightly different in how they recovered $n$, a
 
 \section{Discussion: Model Context Protocol in Cybersecurity and CTFs}
 
-The Model Context Protocol (MCP) is a standardized interface that allows Large Language Models (LLMs) to securely call functions from external systems. Introduced as an open-source standard in 2024, MCP serves as a universal translator between AI models and security tools, enabling seamless integration and automation of cybersecurity workflows. This protocol transforms how AI systems can access, control, and analyze cybersecurity infrastructure, opening new possibilities for both offensive and defensive security operations.
+The Model Context Protocol (MCP) is a standardized interface that allows LLMs to securely call functions from external systems. Introduced as an open-source standard in 2024, MCP serves as a universal translator between AI models and security tools, enabling seamless integration and automation of cybersecurity workflows. This protocol transforms how AI systems can access, control, and analyze cybersecurity infrastructure, opening new possibilities for both offensive and defensive security operations.
 
-HackTheBox has developed an open-source MCP implementation that provides LLMs with access to CTF challenges and automated testing scripts within a structured environment. Their implementation offers a standardized interface for connecting AI assistants to the HackTheBox platform functionality, enabling seamless integration of AI into CTF competitions and cybersecurity training \parencite{hackthebox_mcp_server}. This open-source solution demonstrates how MCP can be practically applied to cybersecurity challenges by creating a controlled environment where LLMs can interact with pre-configured cybersecurity challenges, rather than providing direct access to external security tools like Nmap or Burp Suite.
+HackTheBox has developed an open-source MCP implementation that provides LLMs with access to CTF challenges and automated testing scripts within a structured environment. Their implementation offers a standardized interface for connecting AI assistants to the HackTheBox platform functionality, enabling seamless integration of AI into CTF competitions and cybersecurity training \parencite{hackthebox_mcp_server}.
 
-According to HackTheBox, \enquote{MCP provides a standardized way to plug modern capabilities into competitions, making CTFs a closer mirror of real-world security operations} \parencite{hackthebox_mcp_server}. This standardization is particularly valuable when comparing open-source and closed-source models, as it ensures that any performance differences are due to the models' inherent capabilities rather than environmental factors or implementation advantages.
+According to HackTheBox, \enquote{MCP provides a standardized way to plug modern capabilities into competitions, making CTFs a closer mirror of real-world security operations} \parencite{hackthebox_mcp_server}. This standardization is particularly valuable when comparing open-source and proprietary models, as it ensures that any performance differences are due to the models' inherent capabilities rather than environmental factors or implementation advantages.
 
 \subsection{Standardized Testing Environments for Model Evaluation}
 
-The integration of MCP servers with CTF platforms creates a standardized testing environment that provides more accurate evaluation for both open-source and closed-source models. Unlike traditional benchmarks that may favor one model architecture over another, MCP-based CTF environments establish a level playing field where all models interact with identical challenges through the same standardized interface. This approach addresses several key limitations in current LLM evaluation methodologies:
+The integration of MCP servers with CTF platforms creates a standardized testing environment that provides more accurate evaluation for both open-source and proprietary models. Unlike traditional benchmarks that may favor one model architecture over another, MCP-based CTF environments establish a level playing field where all models interact with identical challenges through the same standardized interface. The emerging ecosystem of MCP servers for cybersecurity evaluation includes several specialized implementations that further enhance standardized testing. The following are some examples:
 
 \begin{itemize}
-  \item \textbf{Consistent Environment Access}: All models access the same challenges through identical MCP interfaces, eliminating variations in tool access or implementation differences that could skew results
-  \item \textbf{Reproducible Testing Conditions}: MCP servers ensure that each model faces the same challenge parameters, time constraints, and resource limitations, enabling fair comparison between open and closed-source systems
-  \item \textbf{Real-World Complexity}: Unlike simplified benchmarks, CTF challenges accessed through MCP maintain the complexity and multi-step nature of actual cybersecurity scenarios, providing more meaningful performance metrics
-  \item \textbf{Transparent Evaluation}: The standardized nature of MCP interfaces allows researchers to observe exactly how each model approaches problems, making it easier to identify strengths and weaknesses across model types
-\end{itemize}
-    
-The emerging ecosystem of MCP servers for cybersecurity evaluation includes several specialized implementations that further enhance standardized testing:
-
-\begin{itemize}
-  \item \textbf{Kali MCP Server}: Acts as a bridge to Kali Linux environments, allowing AI models to access professional security tools through a standardized interface, ensuring consistent tool access regardless of whether the model is open-source or closed-source \parencite{wh0am1232024kalimcpserver}
-  \item \textbf{DeepEval MCP Framework}: Provides standardized evaluation primitives for testing LLM performance across different cybersecurity tasks, enabling fair comparison between model architectures \parencite{confident2024deepeval}
+  \item \textbf{Kali MCP Server}: Acts as a bridge to Kali Linux environments, allowing AI models to access professional security tools through a standardized interface \parencite{wh0am1232024kalimcpserver}.
+  \item \textbf{DeepEval MCP Framework}: Provides standardized evaluation primitives for testing LLM performance across different cybersecurity tasks, enabling fair comparison between model architectures \parencite{confident2024deepeval}.
 \end{itemize}
 
-These implementations demonstrate how MCP servers create a unified testing methodology that applies equally to both open-source and closed-source models. By providing identical interfaces to the same security tools and challenges, MCP environments eliminate the advantages that might arise from proprietary integrations or specialized optimizations that favor one model type over another.
+These implementations demonstrate how MCP servers create a unified testing methodology that applies equally to both open-source and proprietary models. By providing identical interfaces to the same security tools and challenges, MCP environments eliminate the advantages that might arise from proprietary integrations or specialized optimizations that favor one model type over another.
 
 \subsection{Real-World Implementations}
 
@@ -880,78 +870,65 @@ HackTheBox's MCP server exemplifies how this technology is transforming cybersec
 
 According to Hackthebox:
 
-\enquote{We’re laying the foundation for a new mode of competition where speed, automation, and machine intelligence become part of the game. At Hack The Box we always champion “learning by doing,” and now “doing” includes leveraging advanced tools and AI to enhance your capabilities, automate tedious processes, and reinvent how challenges are approached} \parencite{hackthebox_mcp_server}.
+\enquote{We’re laying the foundation for a new mode of competition where speed, automation, and machine intelligence become part of the game. At Hack The Box we always champion \enquote{learning by doing,} and now \enquote{doing} includes leveraging advanced tools and AI to enhance your capabilities, automate tedious processes, and reinvent how challenges are approached} \parencite{hackthebox_mcp_server}.
 
 Key capabilities include:
 
 \begin{itemize}
-  \item \textbf{Seamless Event Management}: Access and explore all available CTF events via the MCP interface, with real-time visibility into participants and active challenges
-  \item \textbf{Performance Insights}: Monitor team scores, retrieve challenge solve data, and analyze success rates to guide strategy
-  \item \textbf{Challenge Lifecycle Automation}: Start, stop, and monitor challenge environments automatically, reducing manual operations during high-stakes competitions
-  \item \textbf{Flag Submission}: Submit flags through validated, automated processes with immediate feedback and scoring confirmation
+  \item \textbf{Seamless Event Management}: Access and explore all available CTF events via the MCP interface, with real-time visibility into participants and active challenges.
+  \item \textbf{Performance Insights}: Monitor team scores, retrieve challenge solve data, and analyze success rates to guide strategy.
+  \item \textbf{Challenge Lifecycle Automation}: Start, stop, and monitor challenge environments automatically, reducing manual operations during high-stakes competitions.
+  \item \textbf{Flag Submission}: Submit flags through validated, automated processes with immediate feedback and scoring confirmation.
 \end{itemize}
 
-The impact of this integration is already evident in the cybersecurity community, with research showing that nearly two-thirds (63\%) of CTF participants are already using AI tools like ChatGPT or GitHub Copilot during events \parencite{hackthebox_mcp_server}. MCP support lowers entry barriers for newcomers while enabling experienced practitioners to automate tedious processes and focus on strategic thinking.
+The impact of this integration is already evident in the cybersecurity community, with research showing that nearly two-thirds (63\%) of CTF participants are already using AI tools like ChatGPT or GitHub Copilot during events \parencite{hackthebox_mcp_server}.
 
 \subsection{Structured Interfaces for Security Tools}
 
 MCPs provide standardized interfaces for a wide range of cybersecurity tools, transforming how AI systems interact with security infrastructure. The \enquote{Awesome Cyber Security MCP} repository catalogs numerous implementations that demonstrate the protocol's versatility across the security domain \parencite{awesome_cyber_security_mcp}:
 
 \begin{itemize}
-  \item \textbf{Web Application Security}: Burp Suite MCP enables AI-driven web application testing by connecting Burp Suite to AI clients through MCP, allowing for automated vulnerability discovery and exploitation \parencite{burp_suite_mcp}
-  \item \textbf{Network Reconnaissance}: Tools like Nuclei MCP provide fast vulnerability scanning capabilities, while Shodan MCP offers AI access to comprehensive internet-connected device search and CVE information
-  \item \textbf{Reverse Engineering}: Ghidra MCP and IDA Pro MCP enable autonomous binary analysis, allowing AI systems to perform complex reverse engineering tasks with minimal human guidance
-  \item \textbf{Password Recovery}: Hashcat MCP provides natural language-driven hash cracking, making password recovery more accessible to security analysts
+  \item \textbf{Web Application Security}: Burp Suite MCP enables AI-driven web application testing by connecting Burp Suite to AI clients through MCP, allowing for automated vulnerability discovery and exploitation \parencite{burp_suite_mcp}.
+  \item \textbf{Network Reconnaissance}: Tools like Nuclei MCP provide fast vulnerability scanning capabilities, while Shodan MCP offers AI access to comprehensive internet-connected device search and CVE information.
+  \item \textbf{Reverse Engineering}: Ghidra MCP and IDA Pro MCP enable autonomous binary analysis, allowing AI systems to perform complex reverse engineering tasks with minimal human guidance.
+  \item \textbf{Password Recovery}: Hashcat MCP provides natural language-driven hash cracking, making password recovery more accessible to security analysts.
 \end{itemize}
 
-These implementations demonstrate how MCPs create a unified ecosystem where AI can leverage specialized security tools without requiring deep knowledge of each tool's specific interface or implementation details. This helps both open-source and proprietary models perform better in security ctf challenges, and in the real world.
+These implementations demonstrate how MCPs create a unified ecosystem where AI can leverage specialized security tools without requiring deep knowledge of each tool's specific interface or implementation details. This helps both open-source and proprietary models perform better in security CTF challenges, and in the real world.
 
 \subsection{Future Benchmarks}
 
-The performance of LLMs on CTFs must be further studied by giving LLMs access to this an MCP protocol that allows them to analyze the challenge, and test different solutions autonomously. The future of benchmarking these LLMs in order to determine how well they are able to solve CTF challenges should involve MCP access to a wide variety of tools and services. These tools allow the LLM to solve a problem similarly to how a human would, and therefore they can better demonstrate how they can solve real-world challenges instead of giving the LLM the code of the challenge in a prompt with no added context, and asking it to solve it. When an LLM doesn't know how to solve a problem, it can try different approaches by using a variety of tools like Ghidra for vulnerable binaries, and Burp Suite for testing vulnerable web applications.
+The performance of LLMs on CTFs must be further studied by giving LLMs access to an MCP protocol that allows them to analyze the challenge and test different solutions autonomously. The future of benchmarking these LLMs in order to determine how well they are able to solve CTF challenges should involve MCP access to a wide variety of tools and services. These tools allow the LLM to solve a problem similarly to how a human would, and therefore they can better demonstrate how they can solve real-world challenges instead of giving the LLM the code of the challenge in a prompt with no added context, and asking it to solve it. When an LLM doesn't know how to solve a problem, it can try different approaches by using a variety of tools like Ghidra for vulnerable binaries and Burp Suite for testing vulnerable web applications.
 
 Some LLMs are better at agentic tasks that involve using tools to help them solve problems. These LLMs should have full capabilities to use this to their advantage. Tools like web searching, Ghidra, Burp Suite, and much more are tools that a human would use during a typical CTF to figure out how to solve the problem. LLMs should be given the same tools in order to make an accurate portrayal of which open-source and proprietary LLMs are the best at solving these challenges, and the best at solving cyber security related issues in general.
 
 \section{Conclusion}
 
-This study investigated the capabilities of both open-source and closed-source large language models in solving complex cybersecurity challenges, specifically focusing on a CTF cryptography problem. Through empirical testing of ten different models across various reasoning architectures, we have gained valuable insights into the current state of LLM performance in cybersecurity applications.
+This study investigated the capabilities of both open-source and proprietary large language models in solving complex cybersecurity challenges, specifically focusing on a CTF cryptography problem. Through empirical testing of ten different models across various reasoning architectures, we have gained valuable insights into the current state of LLM performance in cybersecurity applications.
 
 \subsection{Study Limitations}
 
 The current study has several important limitations that must be acknowledged. First, our evaluation was conducted using only a single CTF challenge, which limits our ability to generalize findings to the real world. While the SaaS cryptography challenge was carefully selected to test multiple aspects of cryptographic reasoning and problem-solving, different types of cybersecurity challenges (such as web exploitation, binary reverse engineering, or network forensics) might yield different performance patterns across models.
 
-Second, the sample size, while including ten diverse models representing both open-source and closed-source approaches, remains relatively small for drawing definitive conclusions about the broader capabilities of each model category. The rapidly evolving nature of LLM development means that newer models, and unique models are constantly being developed. In order to get a true representation of open-source versus proprietary models, more models in both categories must be measured.
+Second, the sample size, while including ten diverse models representing both open-source and proprietary types, remains relatively small for drawing definitive conclusions about the broader capabilities of each model category. The rapidly evolving nature of LLM development means that newer models and unique models are constantly being developed. In order to get a true representation of open-source versus proprietary models, more models in both categories must be measured.
 
 Additionally, our testing methodology provided models with the challenge code directly, without allowing them to interact with the challenge environment dynamically. This differs from real-world penetration testing scenarios where security professionals typically interact with live systems, observe behaviors, and iteratively refine their approaches.
 
-\subsection{Open-Source vs. Closed-Source Performance}
+\subsection{Open-Source vs. Proprietary Performance}
 
-The results of this study reveal an interesting and somewhat unexpected pattern regarding the performance of open-source versus closed-source models. While closed-source models (Claude Opus 4.5 and Grok 4.1 Fast) successfully solved the challenge, the open-source model Kimi K2 Thinking also demonstrated successful problem-solving capabilities. This challenges the conventional wisdom that closed-source models uniformly outperform their open-source counterparts in complex reasoning tasks.
+The results of this study reveal an interesting and somewhat unexpected pattern regarding the performance of open-source versus proprietary models. While proprietary models (Claude Opus 4.5 and Grok 4.1 Fast) successfully solved the challenge, the open-source model Kimi K2 Thinking also demonstrated successful problem-solving capabilities. This challenges the conventional wisdom that proprietary models uniformly outperform their open-source counterparts in complex reasoning tasks.
 
-More significantly, our analysis of the reasoning processes revealed that open-source models often demonstrated comparable, and in some cases superior, reasoning approaches compared to closed-source models. The explicit thinking models, particularly those in the open-source category, provided detailed step-by-step reasoning that allowed for better understanding of their problem-solving strategies. This transparency is particularly valuable in cybersecurity applications where understanding the reasoning behind a conclusion is as important as the conclusion itself.
+More significantly, our analysis of the reasoning processes revealed that open-source models often demonstrated comparable, and in some cases superior, reasoning approaches compared to proprietary models. The explicit thinking models, particularly those in the open-source category, provided detailed step-by-step reasoning that allowed for better understanding of their problem-solving strategies. This transparency is particularly valuable in cybersecurity applications where understanding the reasoning behind a conclusion is as important as the conclusion itself.
 
-The fact that some open-source models produced incorrect solutions while showing strong reasoning capabilities suggests that the gap between open-source and closed-source models may be more about implementation, context, and prompt refinement. This is encouraging for organizations considering open-source alternatives for cybersecurity applications, as it indicates that with proper prompting, tools, and context, open-source models could potentially achieve parity with closed-source alternatives.
+The fact that some open-source models produced incorrect solutions while showing strong reasoning capabilities suggests that the gap between open-source and proprietary models may be more about implementation, context, and prompt refinement. This is encouraging for organizations considering open-source alternatives for cybersecurity applications, as it indicates that with proper prompting, tools, and context, open-source models could potentially achieve parity with proprietary alternatives.
 
 \subsection{Implications for Future Research}
 
 The findings of this study highlight several important directions for future research in LLM cybersecurity applications. First, there is a clear need for more comprehensive benchmarking studies that include multiple CTF challenges across different cybersecurity domains. Such studies would help establish more reliable performance metrics and identify specific areas where different model types excel or struggle.
 
-Second, the emergence of the Model Context Protocol (MCP) presents a promising avenue for future LLM evaluation in cybersecurity. As discussed in the previous section, MCP provides standardized interfaces that allow LLMs to interact with cybersecurity tools and environments in a controlled, reproducible manner. This capability addresses one of the key limitations of our current study by enabling models to engage with challenges more dynamically, similar to how human security professionals approach problems.
+Second, the emergence of the MCP presents a promising avenue for future LLM evaluation in cybersecurity. As discussed in the previous section, MCP provides standardized interfaces that allow LLMs to interact with cybersecurity tools and environments in a controlled, reproducible manner. This capability addresses one of the key limitations of our current study by enabling models to engage with challenges more dynamically, similar to how human security professionals approach problems.
 
 Future benchmarks should incorporate MCP-enabled testing environments that allow LLMs to use tools like Ghidra for reverse engineering, Burp Suite for web application testing, and various network analysis tools. This approach would provide a more accurate assessment of models' practical cybersecurity capabilities and their ability to leverage specialized tools effectively.
-
-Third, research should explore the development of specialized cybersecurity-focused open-source models that leverage the transparency advantages of open-source architectures while incorporating domain-specific knowledge and reasoning patterns. The success of models like Kimi K2 Thinking suggests that explicit reasoning approaches can be particularly effective for complex cybersecurity challenges.
-
-\subsection{Practical Recommendations}
-
-Based on the findings of this study, organizations considering LLM deployment for cybersecurity applications should carefully evaluate both open-source and closed-source options based on their specific requirements. For applications where transparency and auditability are paramount, open-source models with explicit reasoning capabilities may be preferable despite potentially requiring more specific prompts and instructions to achieve a similar level of accuracy as proprietary models.
-
-Organizations should also consider implementing MCP-based interfaces for their LLM deployments, as this standardization can improve interoperability with existing security tools and provide more consistent performance across different model types.
-
-Finally, the rapid pace of LLM development means that organizations should establish processes for regular re-evaluation of model performance as new versions and architectures become available. The competitive landscape between open-source and closed-source models continues to evolve, and today's performance advantages may not persist in the rapidly changing AI ecosystem.
-
-In conclusion, while this study demonstrates that both open-source and closed-source LLMs can effectively solve complex cybersecurity challenges, it also highlights the need for more comprehensive evaluation methodologies and the importance of standardized interfaces like MCP for future benchmark development. The gap between open-source and closed-source models appears to be narrowing, particularly in reasoning capabilities, suggesting that organizations have increasingly viable options for both approaches in their cybersecurity toolkits.
-
 \newpage
 
 \printbibliography
