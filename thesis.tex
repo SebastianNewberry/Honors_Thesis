@@ -681,159 +681,95 @@ Claude Opus 4.5        & \checkmark \\
 
 \subsubsection{LLM Solution Analysis}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-\centering
 \textbf{Claude Opus 4.5}
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/claude/claude-opus-4.5.py}
-\vspace{0.3em}
-\footnotesize
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/claude/claude-opus-4.5.py}
+
 \textbf{Summary of Reasoning:} Query the oracle repeatedly with the value $4$. Since $r^2 \equiv 4 \pmod{n}$, we have $n \mid (r^2 - 4)$. Taking $\gcd$ values from multiple such outputs recovers $n$. For factoring, if we obtain a non-trivial root $r$ satisfying $r \not\equiv \pm 2 \pmod{n}$, then $\gcd(r-2, n)$ or $\gcd(r+2, n)$ yields a factor. Once $p$ and $q$ are known, compute $d = e^{-1} \bmod \varphi(n)$ and then compute the signature $s = m^{d} \bmod n$.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+
+\clearpage
+
 \textbf{Kimi K2 Thinking}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/kimi/k2-thinking.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/kimi/k2-thinking.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} Query the oracle with random values of $a^2$ to collect pairs $(a, y)$. Compute 
-$n = \gcd(y_1^2 - a_1^2,\, y_2^2 - a_2^2,\, \ldots)$ because each output satisfies $y^2 \equiv a^2 \pmod{n}$. 
-To factor $n$, use $\gcd(a - y, n)$ from any pair where $y \not\equiv \pm a \pmod{n}$. 
+\textbf{Summary of Reasoning:} Query the oracle with random values of $a^2$ to collect pairs $(a, y)$. Compute
+$n = \gcd(y_1^2 - a_1^2,\, y_2^2 - a_2^2,\, \ldots)$ because each output satisfies $y^2 \equiv a^2 \pmod{n}$.
+To factor $n$, use $\gcd(a - y, n)$ from any pair where $y \not\equiv \pm a \pmod{n}$.
 Then compute the private exponent $d = e^{-1} \bmod \varphi(n)$ and sign the challenge message as $s = m^{d} \bmod n$.
-\end{minipage}
-\caption{Successful LLM solutions: Claude Opus 4.5 and Kimi K2 Thinking}
-\label{fig:successful-llms-1}
-\end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+\clearpage
+
 \textbf{Grok 4.1 Fast}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/grok/grok-4.1-fast.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/grok/grok-4.1-fast.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} Query $f(1)$ multiple times to recover $n$. 
-The square roots of $1 \pmod{n}$ are $1$, $n-1$, and two mixed CRT combinations. 
-Since the maximum output is $n-1$, we obtain $n = \max(y) + 1$. 
-To factor $n$, pick random $k$, query $f(k^2 \bmod n)$ to obtain $y$, and compute $d = \gcd(|k - y|, n)$. 
-With probability $1/2$, $d$ equals $p$ or $q$. Repeating this about 40 times ensures success. 
+\textbf{Summary of Reasoning:} Query $f(1)$ multiple times to recover $n$.
+The square roots of $1 \pmod{n}$ are $1$, $n-1$, and two mixed CRT combinations.
+Since the maximum output is $n-1$, we obtain $n = \max(y) + 1$.
+To factor $n$, pick random $k$, query $f(k^2 \bmod n)$ to obtain $y$, and compute $d = \gcd(|k - y|, n)$.
+With probability $1/2$, $d$ equals $p$ or $q$. Repeating this about 40 times ensures success.
 Then compute $\varphi(n) = (p-1)(q-1)$, $d = e^{-1} \bmod \varphi(n)$, and finally the signature $s = m^{d} \bmod n$.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+
+\clearpage
+
 \textbf{GLM-4.6}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/glm/glm.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/glm/glm.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} Incorrectly assumes that the square root of $m$ can serve as a valid signature. 
-This ignores the RSA requirement that $s^{\,e} \equiv m \pmod{n}$, not $s^{2} \equiv m \pmod{n}$. 
+\textbf{Summary of Reasoning:} Incorrectly assumes that the square root of $m$ can serve as a valid signature.
+This ignores the RSA requirement that $s^{\,e} \equiv m \pmod{n}$, not $s^{2} \equiv m \pmod{n}$.
 The model shows no understanding of the need to factor $n$ or compute the private exponent, and simply attempts to submit $\sqrt{m}$ as the signature, which cannot work mathematically.
-\end{minipage}
-\caption{Successful vs unsuccessful: Grok 4.1 Fast and GLM-4.6}
-\label{fig:llm-comparison-1}
-\end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+\clearpage
+
 \textbf{DeepSeek R1}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/deepseek/deepseek-r1.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/deepseek/deepseek-r1.py}
-
-\vspace{0.3em}
-\footnotesize
 \textbf{Summary of Reasoning:} The model recognized that it must collect square roots, and correctly recognized it could add two roots $r_1$, and $r_2$ to get n, but then it gets confused and forgets that it knows how to solve for n.
-It stated: ``We don't know $n$? Actually, we do: the server prints $m$ later, but we don't have $n$ at the beginning. 
-However, note that the function $f$ returns a value modulo $n$. Can we get $n$ by computing the modulus?'' 
+It stated: ``We don't know $n$? Actually, we do: the server prints $m$ later, but we don't have $n$ at the beginning.
+However, note that the function $f$ returns a value modulo $n$. Can we get $n$ by computing the modulus?''
 This shows how the Deepseek model thinks a lot and can start to overthink answers. It got almost the entire reasoning correct at one point, but then forgets that it found out how to solve for n. The model became confused, cycled through its reasoning, and never produced a final solution or code.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+
+\clearpage
+
 \textbf{Kimi K2 0905}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/kimi/k2-0905.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/kimi/k2-0905.py}
-
-\vspace{0.3em}
-\footnotesize
 \textbf{Summary of Reasoning:} Made critical error assuming n = y\(_0\) when querying f(0). Also incorrectly used d = inverse(e, n-1) instead of \(\phi\)(n) for computing the private exponent. The approach shows fundamental misunderstanding of RSA mathematics and the square root oracle's behavior.
-\end{minipage}
-\caption{Unsuccessful LLM solutions: DeepSeek R1 and Kimi K2 0905}
-\label{fig:unsuccessful-llms-1}
-\end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+\clearpage
+
 \textbf{Deepseek V3.2 Speciale}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/deepseek/deepseek-v3.2-spec.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/deepseek/deepseek-v3.2-spec.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} Provided only a partial observation: 
-``Thus, oracle $f$ returns a random square root of one of the four quadratic residues. 
-Actually, $f(x)$ is a number such that $f(x)^2$ is congruent to either $x$ or $-x$ modulo $p$ and modulo $q$ in some combination.'' 
+\textbf{Summary of Reasoning:} Provided only a partial observation:
+``Thus, oracle $f$ returns a random square root of one of the four quadratic residues.
+Actually, $f(x)$ is a number such that $f(x)^2$ is congruent to either $x$ or $-x$ modulo $p$ and modulo $q$ in some combination.''
 No complete strategy or solution was provided. All Deepseek V3.2 could do was think, and it was caught in an endless loop of thinking.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+
+\clearpage
+
 \textbf{GPT-5.1}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/gpt/gpt-5.1.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/gpt/gpt-5.1.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} The model struggled with the requirement that $\gcd(a-b, n)$ computations require knowing $n$. 
-It stated: ``I'm grappling with the fact that $\gcd(a-b, n)$ requires knowledge of $n$, which I don't have. 
-I think about computing a gcd using the differences of square roots: 
-$\gcd(r_1^{2} - r_2^{2}) = \gcd((r_1-r_2)(r_1+r_2))$, but again, we lack $n$.'' 
+\textbf{Summary of Reasoning:} The model struggled with the requirement that $\gcd(a-b, n)$ computations require knowing $n$.
+It stated: ``I'm grappling with the fact that $\gcd(a-b, n)$ requires knowledge of $n$, which I don't have.
+I think about computing a gcd using the differences of square roots:
+$\gcd(r_1^{2} - r_2^{2}) = \gcd((r_1-r_2)(r_1+r_2))$, but again, we lack $n$.''
 The reasoning never came to a solution.
-\end{minipage}
-\caption{Unsuccessful LLM solutions: Deepseek V3.2 Speciale and GPT-5.1}
-\label{fig:unsuccessful-llms-2}
-\end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+\clearpage
+
 \textbf{Claude Sonnet 4.5}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/claude/claude-4.5-sonnet.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/claude/claude-4.5-sonnet.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} Incorrectly focused on the property $e = 2^{16} + 1$, assuming that taking 16 square roots would produce a valid signature. 
+\textbf{Summary of Reasoning:} Incorrectly focused on the property $e = 2^{16} + 1$, assuming that taking 16 square roots would produce a valid signature.
 This approach attempts to compute $m^{1/65536}$ and submit it as the signature, ignoring the fact that it isn't feasible to break RSA like this.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
+
+\clearpage
+
 \textbf{Gemini 3.0 Pro Preview}
+\lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/gemini/gemini-3.0.py}
 
-\lstinputlisting[style=mypython,language=Python,basicstyle=\tiny\ttfamily]{CodeFiles/solvers/saas/gemini/gemini-3.0.py}
-
-\vspace{0.3em}
-\footnotesize
-\textbf{Summary of Reasoning:} Understood the correct theory: recover $n$ using $\gcd(r^2 - x)$ values and factor $n$ using non-trivial square roots. 
-However, it incorrectly attempted to take 16 successive square roots to compute $m^{1/65536}$, which is not feasible due to modular wrap-around and the lack of guaranteed integer roots.\end{minipage}
-\caption{Unsuccessful LLM solutions: Claude Sonnet 4.5 and Gemini 3.0 Pro Preview}
-\label{fig:unsuccessful-llms-3}
-\end{figure}
+\textbf{Summary of Reasoning:} Understood the correct theory: recover $n$ using $\gcd(r^2 - x)$ values and factor $n$ using non-trivial square roots.
+However, it incorrectly attempted to take 16 successive square roots to compute $m^{1/65536}$, which is not feasible due to modular wrap-around and the lack of guaranteed integer roots.
 
 
 Overall, the results of running these models against the challenge are fascinating. One concerning aspect of these results is that models such as Claude Sonnet 4.5, GLM-4.6, and Gemini 3.0 Pro attempt to use multiple square roots in order to solve RSA with a very large $e$ public exponent. This is a very bad practice, and basically indicates that these AI models have no idea on how to solve the RSA problem, so they are trying to brute force the algorithm by taking square roots. This method of solving RSA is not correct at all for this type of problem. It is concerning because LLMs should explain that they do not know how to solve the problem similar to how Deepseek and GPT-5.1 do. Deepseek R1 and Deepseek V3.2 Speciale do not give any answer. They only show their reasoning, and eventually continue thinking about solutions, but refuse to provide answers until they are done. After thinking for a while, these models ran out of output tokens, and failed to produce any answer. This is preferred because it is better for a large language model to admit it does not know the answer to a question rather than give an answer that it is not confident in.
