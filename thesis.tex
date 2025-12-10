@@ -681,7 +681,10 @@ Claude Opus 4.5        & \checkmark \\
 
 \subsubsection{LLM Solution Analysis}
 
+\clearpage
+
 \textbf{Claude Opus 4.5}
+
 \lstinputlisting[style=mypython,language=Python,basicstyle=\small\ttfamily]{CodeFiles/solvers/saas/claude/claude-opus-4.5.py}
 
 \textbf{Summary of Reasoning:} Query the oracle repeatedly with the value $4$. Since $r^2 \equiv 4 \pmod{n}$, we have $n \mid (r^2 - 4)$. Taking $\gcd$ values from multiple such outputs recovers $n$. For factoring, if we obtain a non-trivial root $r$ satisfying $r \not\equiv \pm 2 \pmod{n}$, then $\gcd(r-2, n)$ or $\gcd(r+2, n)$ yields a factor. Once $p$ and $q$ are known, compute $d = e^{-1} \bmod \varphi(n)$ and then compute the signature $s = m^{d} \bmod n$.
